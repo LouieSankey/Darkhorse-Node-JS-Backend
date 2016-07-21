@@ -1,0 +1,14 @@
+{
+  "name": "darkhorse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "availablePlayers.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines":{
+  	"node": "4.2.4"
+  },
+  "author": "",
+  "license": "ISC"
+}
