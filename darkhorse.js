@@ -9,7 +9,7 @@
 
 
 
-var firebase = require("firebase");
+var firebase = require("./node_modules/firebase");
 //will be used for scheduling jobs
 //var CronJob = require('cron').CronJob;
 

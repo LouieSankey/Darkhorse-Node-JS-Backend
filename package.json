@@ -4,16 +4,14 @@
   "description": "",
   "main": "availablePlayers.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "scripts": {
     "start": "darkhorse.js"
   },
-  "engines":{
-  	"node": "4.4.7"
-
+  "engines": {
+    "node": "4.4.7"
   },
-
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "firebase": "^3.2.1"
+  }
 }
