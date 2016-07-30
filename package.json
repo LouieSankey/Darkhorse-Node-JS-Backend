@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "availablePlayers.js",
-  "scripts": {
-    "start": "darkhorse.js"
-  },
+  // "scripts": {
+  //   "start": "darkhorse.js"
+  // },
   "engines": {
     "node": "4.4.7"
   },
