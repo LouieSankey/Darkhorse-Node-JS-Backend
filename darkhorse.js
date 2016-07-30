@@ -33,6 +33,8 @@ initializeEntries.update(firebase);
 updatePrices.update(firebase);
 availablePlayers.update(firebase);
 
+console.log("hello");
+
 // var http = require('http'); 
 // http.createServer(function (req, res) { 
 // 	res.writeHead(200, {
