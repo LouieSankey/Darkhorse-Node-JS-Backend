@@ -1,1 +1,1 @@
-web: node darkhorse.js
+worker: node darkhorse.js
