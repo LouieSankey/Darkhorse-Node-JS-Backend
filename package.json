@@ -6,9 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "scripts": {
+    "start": "darkhorse.js"
+  },
   "engines":{
   	"node": "4.2.4"
   },
+
   "author": "",
   "license": "ISC"
 }
