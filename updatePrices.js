@@ -2,7 +2,7 @@
 
 function update(firebase){
 
-var math = require('math.js');
+var math = require('mathjs');
 
 var firebaseDb = firebase.database();
 
