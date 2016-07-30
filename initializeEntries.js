@@ -9,6 +9,8 @@ var contestRef = firebaseDb.ref("Contests");
 //sets up to listen for new contests
 contestRef.on('child_added', function (contest, prevChildKey) {
 
+      console.log("initialize listening");
+
     var entries = contestRef.child(contest.key).child("Entries");
     var playersInContest = [];
 
@@ -23,6 +25,10 @@ contestRef.on('child_added', function (contest, prevChildKey) {
 //for each contest, sets up to listen for added players
     entries.on('child_added', function (newEntry) {
 
+
+                      
+
+
                         playersInContest.push({
                                "playerKey": newEntry.key,
                                "name": newEntry.val().name
@@ -36,57 +42,63 @@ contestRef.on('child_added', function (contest, prevChildKey) {
 
                   for (var i = 0; i < playersInContest.length; i++) {
 
+
+
                          if(playersInContest[i].playerKey != newEntry.key){
 
+
+
                               vsRef.child(playersInContest[i].playerKey).update({
+
+
                                     
                                     "0": {
                                           "matchSet": false,
-                                          "opponentname": playersInContest[i].name,
+                                          "opponentName": playersInContest[i].name,
                                           "playerBuy": "0",
-                                          "name": newEntry.val().name,
+                                          "playerName": newEntry.val().name,
                                           "statCategory": "Pts",
                                     },
                                     "1": {
                                           "matchSet": false,
-                                          "opponentname": playersInContest[i].name,
+                                          "opponentName": playersInContest[i].name,
                                           "playerBuy": "0",
-                                          "name": newEntry.val().name,
+                                          "playerName": newEntry.val().name,
                                           "statCategory": "Reb",
                                     },
                                     "2": {
                                           "matchSet": false,
-                                          "opponentname": playersInContest[i].name,
+                                          "opponentName": playersInContest[i].name,
                                           "playerBuy": "0",
-                                          "name": newEntry.val().name,
+                                          "playerName": newEntry.val().name,
                                           "statCategory": "Ast",
                                     },
                                     "3": {
                                           "matchSet": false,
-                                          "opponentname": playersInContest[i].name,
+                                          "opponentName": playersInContest[i].name,
                                           "playerBuy": "0",
-                                          "name": newEntry.val().name,
+                                          "playerName": newEntry.val().name,
                                           "statCategory": "Stl",
                                     },
                                     "4": {
                                           "matchSet": false,
-                                          "opponentname": playersInContest[i].name,
+                                          "opponentName": playersInContest[i].name,
                                           "playerBuy": "0",
-                                          "name": newEntry.val().name,
+                                          "playerName": newEntry.val().name,
                                           "statCategory": "Blk",
                                     },
                                     "5": {
                                           "matchSet": false,
-                                          "opponentname": playersInContest[i].name,
+                                          "opponentName": playersInContest[i].name,
                                           "playerBuy": "0",
-                                          "name": newEntry.val().name,
+                                          "playerName": newEntry.val().name,
                                           "statCategory": "3Pt",
                                     },
                                     "6": {
                                           "matchSet": false,
-                                          "opponentname": playersInContest[i].name,
+                                          "opponentName": playersInContest[i].name,
                                           "playerBuy": "0",
-                                          "name": newEntry.val().name,
+                                          "playerName": newEntry.val().name,
                                           "statCategory": "-TO",
                                     }
                                     
@@ -103,51 +115,51 @@ contestRef.on('child_added', function (contest, prevChildKey) {
 
                                     "0": {
                                           "matchSet": false,
-                                          "opponentname": newEntry.val().name,
+                                          "opponentName": newEntry.val().name,
                                           "playerBuy": "0",
-                                          "name": playersInContest[i].name,
+                                          "playerName": playersInContest[i].name,
                                           "statCategory": "Pts",
                                     },
                                     "1": {
                                           "matchSet": false,
-                                          "opponentname": newEntry.val().name,
+                                          "opponentName": newEntry.val().name,
                                           "playerBuy": "0",
-                                          "name": playersInContest[i].name,
+                                          "playerName": playersInContest[i].name,
                                           "statCategory": "Reb",
                                     },
                                     "2": {
                                           "matchSet": false,
-                                          "opponentname": newEntry.val().name,
+                                          "opponentName": newEntry.val().name,
                                           "playerBuy": "0",
-                                          "name": playersInContest[i].name,
+                                          "playerName": playersInContest[i].name,
                                           "statCategory": "Ast",
                                     },
                                     "3": {
                                           "matchSet": false,
-                                          "opponentname": newEntry.val().name,
+                                          "opponentName": newEntry.val().name,
                                           "playerBuy": "0",
-                                          "name": playersInContest[i].name,
+                                          "playerName": playersInContest[i].name,
                                           "statCategory": "Stl",
                                     },
                                     "4": {
                                           "matchSet": false,
-                                          "opponentname": newEntry.val().name,
+                                          "opponentName": newEntry.val().name,
                                           "playerBuy": "0",
-                                          "name": playersInContest[i].name,
+                                          "playerName": playersInContest[i].name,
                                           "statCategory": "Blk",
                                     },
                                     "5": {
                                           "matchSet": false,
-                                          "opponentname": newEntry.val().name,
+                                          "opponentName": newEntry.val().name,
                                           "playerBuy": "0",
-                                          "name": playersInContest[i].name,
+                                          "playerName": playersInContest[i].name,
                                           "statCategory": "3Pt",
                                     },
                                     "6": {
                                           "matchSet": false,
-                                          "opponentname": newEntry.val().name,
+                                          "opponentName": newEntry.val().name,
                                           "playerBuy": "0",
-                                          "name": playersInContest[i].name,
+                                          "playerName": playersInContest[i].name,
                                           "statCategory": "-TO",
                                     }
                                     

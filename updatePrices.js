@@ -31,9 +31,17 @@ var playersRef = firebaseDb.ref("Players");
 		 		_3pt.push(player['3g']);
 		 		to.push(player.tog);
 
-		 };
+		 }
 
 		 var priceAdjust = 600;
+
+		 console.log("pts", math.std(pts));
+		 console.log("rebs", math.std(reb));
+		 console.log("ast", math.std(ast));
+		 console.log("stl", math.std(stl));
+		 console.log("blk", math.std(blk));
+
+
 
 		 var sPts = priceAdjust - math.std(pts) * 100;
 		 var sReb = priceAdjust - math.std(reb) * 100;
