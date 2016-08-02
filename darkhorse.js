@@ -8,10 +8,11 @@ http.createServer(function (req, res) {
 }).listen(process.env.PORT, '0.0.0.0');
 
 
+//a random date from last season, will eventually get the current date
+var date = "Tue Oct 27 2015";
+var httpDate = "10/27/2015";
 
 var firebase = require("./node_modules/firebase");
-//will be used for scheduling jobs
-//var CronJob = require('cron').CronJob;
 
 firebase.initializeApp({
   serviceAccount: "serviceAccountCredentials.json",
@@ -21,8 +22,13 @@ firebase.initializeApp({
 var initializeEntries = require('./initializeEntries.js');
 var updatePrices = require('./updatePrices.js');
 var availablePlayers = require('./availablePlayers.js');
+var updateScores = require('./updateScores.js');
+var initializeContests = require('./initializeContests.js');
 
 initializeEntries.update(firebase);
 updatePrices.update(firebase);
-availablePlayers.update(firebase);
+availablePlayers.update(firebase, date);
+updateScores.update(firebase, httpDate);
+initializeContests.update(firebase, date);
+
 

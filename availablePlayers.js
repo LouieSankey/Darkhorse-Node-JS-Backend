@@ -1,7 +1,12 @@
-function update(firebase){
+function update(firebase, date){
 
 var firebaseDb = firebase.database();
 var rawPlayersRef = firebaseDb.ref("RawPlayerData");
+var nbaSchedule = firebaseDb.ref("2015NBASchedule");
+var availablePlayersRef = firebaseDb.ref("AvailablePlayers");
+
+nbaSchedule.on('value', function (snapshot){
+	var allGames = snapshot.val();
 
 	var pts = 0;
 	var reb = 0;
@@ -11,9 +16,11 @@ var rawPlayersRef = firebaseDb.ref("RawPlayerData");
 	var _3pt = 0;
 	var to = 0;
 
-//loops through the first time to establish an organic upper bound
-
+//loops through the raw player data to establish an organic upper bound
 	rawPlayersRef.on('value', function (snapshot) {
+
+		availablePlayersRef.remove();
+
 
 		var allPlayers = snapshot.val();
 
@@ -46,9 +53,11 @@ var rawPlayersRef = firebaseDb.ref("RawPlayerData");
 
 	}
 
-//loops through the second time to reevaluate each player with a normalized value
 	  var upperBound = ((pts-2)+(reb-2)+(ast-2)+(stl-2)+(blk-2)+(_3pt-2)+(to-2)) / 7;
 	  var lowerBound = 0;
+
+
+//loops through the second time to reevaluate each player with a normalized value
 
 	  for (var j = 0; j < allPlayers.length; j++) {
 
@@ -68,19 +77,45 @@ var rawPlayersRef = firebaseDb.ref("RawPlayerData");
 	  	normalizedPlayer.tog = Math.round(normalizedPlayer.tog * 10 ) / 10;
 	  	normalizedPlayer['3g'] = Math.round(normalizedPlayer['3g'] * 10 ) / 10;
 
+	  	if(normalizedPlayer.Team === "NOR"){
+	  		normalizedPlayer.Team = "NOP";
+	  	}
+
+	
+
+		for (var k = allGames.length - 1; k >= 0; k--) {
+			if(allGames[k].Date === date){
+
+						normalizedPlayer.game_time = allGames[k]['Start (ET)'];
+	  					normalizedPlayer.home = allGames[k].Home;
+	  					normalizedPlayer.visiting = allGames[k].Visitor;
+
+				if(allGames[k].Home === normalizedPlayer.Team){
+
+				
+					availablePlayersRef.child(normalizedPlayer.Name).set(normalizedPlayer);
+	  		 		availablePlayersRef.child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
 
 
-	  	var availablePlayersRef = firebaseDb.ref("AvailablePlayers");
+				}
+				if(allGames[k].Visitor === normalizedPlayer.Team){
 
-	  	availablePlayersRef.child(j).set(normalizedPlayer);
-	  	availablePlayersRef.child(j).update({
+					 availablePlayersRef.child(normalizedPlayer.Name).set(normalizedPlayer);
+	  		 		 availablePlayersRef.child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
+	  		 
 
-	  			  "_3g": normalizedPlayer['3g']
-	  	});
+				}
 
 
-
+			}
 		}
+
+
+
+	}
+
+});
+
 		
 
 
