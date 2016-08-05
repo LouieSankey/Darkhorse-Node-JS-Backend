@@ -93,15 +93,15 @@ nbaSchedule.on('value', function (snapshot){
 				if(allGames[k].Home === normalizedPlayer.Team){
 
 				
-					availablePlayersRef.child(normalizedPlayer.Name).set(normalizedPlayer);
-	  		 		availablePlayersRef.child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
+					availablePlayersRef.child(date).child(normalizedPlayer.Name).set(normalizedPlayer);
+	  		 		availablePlayersRef.child(date).child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
 
 
 				}
 				if(allGames[k].Visitor === normalizedPlayer.Team){
 
-					 availablePlayersRef.child(normalizedPlayer.Name).set(normalizedPlayer);
-	  		 		 availablePlayersRef.child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
+					 availablePlayersRef.child(date).child(normalizedPlayer.Name).set(normalizedPlayer);
+	  		 		 availablePlayersRef.child(date).child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
 	  		 
 
 				}

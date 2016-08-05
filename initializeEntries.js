@@ -1,15 +1,16 @@
 
-function update(firebase){
+function update(firebase, scheduleDate){
 
 var firebaseDb = firebase.database();
 
 
-var contestRef = firebaseDb.ref("Contests");
+var contestRef = firebaseDb.ref("Contests").child(scheduleDate);
+
 
 //sets up to listen for new contests
 contestRef.on('child_added', function (contest, prevChildKey) {
 
-      console.log("initialize listening");
+      console.log("listening to new contest ");
 
     var entries = contestRef.child(contest.key).child("Entries");
     var playersInContest = [];
@@ -22,16 +23,18 @@ contestRef.on('child_added', function (contest, prevChildKey) {
             
     });
 
+
 //for each contest, sets up to listen for added players
     entries.on('child_added', function (newEntry) {
 
-
-                      
+            console.log(newEntry.val());
 
 
                         playersInContest.push({
                                "playerKey": newEntry.key,
-                               "name": newEntry.val().name
+                               "name": newEntry.val().name,
+                               "playerId": newEntry.val().playerId
+
                         });
 
 
@@ -43,13 +46,10 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                   for (var i = 0; i < playersInContest.length; i++) {
 
 
-
                          if(playersInContest[i].playerKey != newEntry.key){
 
 
-
                               vsRef.child(playersInContest[i].playerKey).update({
-
 
                                     
                                     "0": {
@@ -58,6 +58,7 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                                           "playerBuy": "0",
                                           "playerName": newEntry.val().name,
                                           "statCategory": "Pts",
+                                          "playerId": playersInContest[i].playerId
                                     },
                                     "1": {
                                           "matchSet": false,
@@ -114,11 +115,13 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                                oppVsRef.child(newEntry.key).update({
 
                                     "0": {
+
                                           "matchSet": false,
                                           "opponentName": newEntry.val().name,
                                           "playerBuy": "0",
                                           "playerName": playersInContest[i].name,
                                           "statCategory": "Pts",
+                                          "playerId": newEntry.val().playerId
                                     },
                                     "1": {
                                           "matchSet": false,

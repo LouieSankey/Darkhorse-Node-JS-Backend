@@ -1,4 +1,4 @@
-function update(firebase, httpDate){
+function update(firebase, httpDate, scheduleDate){
 
 
 
@@ -55,12 +55,9 @@ request.post(
 
                         for (var i = 0; i < jsonArray.length; i++) {
                             var object = jsonArray[i];
-                            //console.log(object);
 
-                            var date1 = httpDate.replace('/', '-');
-                            var date2 = date1.replace('/', '-');
+                            PlayerStatsRef.child(scheduleDate).child(object.player_id).set(object);
 
-                            PlayerStatsRef.child(date2).child(object.player_id).set(object);
 
                             
                         }
