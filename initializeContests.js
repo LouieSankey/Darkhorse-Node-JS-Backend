@@ -15,6 +15,8 @@ var schedule = firebaseDb.ref('2015NBASchedule');
 var contestsRef = firebaseDb.ref("Contests");
 var fullContestsRef = firebaseDb.ref("FullContests");
 var userRef = firebaseDb.ref("Users");
+var scoreContests = require('./scoreContests');
+
 
 
 //gets earliest game time for today, maybe code runs 8:00 every morning
@@ -45,23 +47,24 @@ schedule.on('value', function (snapshot){
 
 				var utc = moment.utc().valueOf();
 				//for testing, change earliestGameTime to anytime in '00:00' format.
-				var buyingEnds = moment("21:00", 'HH:mm A').utc().valueOf();
-				var buyingWindow = 60000 * 30;
+				var buyingEnds = moment("22:03", 'HH:mm A').utc().valueOf();
+				var buyingWindow = 60000 * 1;
 
 				var hourEnds = moment(earliestGameTime, 'HH').format("HH");
 				var minuteEnds = moment(earliestGameTime, 'mm').format("HH");
 
+
 				contestsRef.once("value", function(location) {
+
 					if(!location.child(scheduleDate).exists()){
 
-						//initialize all begining contests
 
-								contestsRef.child(scheduleDate).push({
+							contestsRef.child(scheduleDate).push({
 									"Entries": "",
-									"gameType": "* NBA Free Round Royal 1 on 1 1",
+									"gameType": "* NBA Free Round Royal 1 on 1",
 									"positionsPaid": 0,
     								"entryAmnt": 0,
-    								"accepting": 2,
+    								"accepting": 7,
     								"prize": 0,
 									"draftEnds":  buyingEnds - buyingWindow,
 									"contestStatus": "drafting",
@@ -69,12 +72,56 @@ schedule.on('value', function (snapshot){
 									"buyingEnds": buyingWindow
 								});
 
+
 								contestsRef.child(scheduleDate).push({
 									"Entries": "",
 									"positionsPaid": 0,
     								"entryAmnt": 0,
     								"prize": 0,
-									"gameType": "* NBA Free Round Royal 1 on 1 2",
+									"gameType": "* NBA Free Heads Up 1 on 1",
+    								"accepting": 2,
+									"draftEnds":  buyingEnds - buyingWindow,
+									"contestStatus": "drafting",
+									"nbaGamesAmnt": gamesInDraft,
+									"buyingEnds": buyingWindow
+								});
+
+						
+
+									contestsRef.child(scheduleDate).push({
+									"Entries": "",
+									"positionsPaid": 1,
+    								"entryAmnt": 50,
+    								"prize": 250,
+									"gameType": "* NBA $50 Round Royal 1 on 1",
+    								"accepting": 5,
+									"draftEnds":  buyingEnds - buyingWindow,
+									"contestStatus": "drafting",
+									"nbaGamesAmnt": gamesInDraft,
+									"buyingEnds": buyingWindow
+								});
+
+
+
+								contestsRef.child(scheduleDate).push({
+									"Entries": "",
+									"positionsPaid": 1,
+    								"entryAmnt": 20,
+    								"prize": 100,
+									"gameType": "* NBA $20 Round Royal 1 on 1",
+    								"accepting": 5,
+									"draftEnds":  buyingEnds - buyingWindow,
+									"contestStatus": "drafting",
+									"nbaGamesAmnt": gamesInDraft,
+									"buyingEnds": buyingWindow
+								});
+
+									contestsRef.child(scheduleDate).push({
+									"Entries": "",
+									"positionsPaid": 1,
+    								"entryAmnt": 10,
+    								"prize": 20,
+									"gameType": "* NBA $10 Round Royal 1 on 1",
     								"accepting": 2,
 									"draftEnds":  buyingEnds - buyingWindow,
 									"contestStatus": "drafting",
@@ -83,21 +130,28 @@ schedule.on('value', function (snapshot){
 								});
 
 
-				
-		
+								contestsRef.child(scheduleDate).push({
+									"Entries": "",
+									"positionsPaid": 1,
+    								"entryAmnt": 100,
+    								"prize": 200,
+									"gameType": "* NBA $100 Heads Up 1 on 1",
+    								"accepting": 2,
+									"draftEnds":  buyingEnds - buyingWindow,
+									"contestStatus": "drafting",
+									"nbaGamesAmnt": gamesInDraft,
+									"buyingEnds": buyingWindow
+								});
 
-//gets the contest ref and goes throught each available contest once
-//if contest are from the night before, all contests should be renewed -- how to tell??? check the draft time remaining
 
-				contestsRef.child(scheduleDate).once('child_added', function (contestSnapshot){
+							}
 
-			
-						contestsRef.child(scheduleDate).child(contestSnapshot.key).on('value', function(childSnapshot){
 
-							console.log(contestSnapshot.key);
-							var playersEntered = childSnapshot.child('Entries').numChildren();
-							var key = childSnapshot.key;
-							var contest = childSnapshot.val();
+						
+						contestsRef.child(scheduleDate).on('child_added', function(contestSnapshot){
+
+							var contest = contestSnapshot.val();
+
 							var accepting = contest.accepting;
 							var draftEnds = contest.draftEnds;
 							var entryAmnt = contest.entryAmnt;
@@ -106,62 +160,56 @@ schedule.on('value', function (snapshot){
 							var prize = contest.prize;
 							var contestStatus = contest.contestStatus;
 
+							var contestEntryRef = contestsRef.child(scheduleDate).child(contestSnapshot.key).child("Entries");
+
+								var i = 0;
+
+								contestEntryRef.on('child_added', function(entrySnapshot){
+
+								var playersEntered = ++i;
+
+									if(playersEntered === accepting){
+
+										contestsRef.child(scheduleDate).child(contestSnapshot.key).child("contestStatus").set("buying");
+
+										contestsRef.child(scheduleDate).push({
+
+											"accepting": accepting,
+											"draftEnds":  buyingEnds - buyingWindow,
+											"contestStatus": "drafting",
+											"gameType": gameType,
+											"nbaGamesAmnt": gamesInDraft,
+											"buyingEnds": buyingWindow,
+											"positionsPaid": positionsPaid,
+											"entryAmnt": entryAmnt,
+											"prize": prize
+
+										});
+
+										updateContestStatus(3 + 60000);
+									}
 
 
-							// if the contest has reached "buying" or the contest is full, remove
-							// if(playersEntered === accepting && contestStatus !== "full"){
-
-							// 	contestsRef.child(scheduleDate).child(key).child('contestStatus').set("full");
+								});
 
 
-							// 	contestsRef.child(scheduleDate).push({
 
-							// 		"accepting": accepting,
-							// 		"draftEnds":  buyingEnds - buyingWindow,
-							// 		"contestStatus": "drafting",
-							// 		"gameType": gameType + "3",
-							// 		"nbaGamesAmnt": gamesInDraft,
-							// 		"buyingEnds": buyingWindow,
-							// 		"positionsPaid": positionsPaid,
-							// 		"entryAmnt": entryAmnt,
-							// 		"prize": prize
-
-							// 	});
-
-						 // //updateContestStatus(key, "buying", buyingEnds - utc - buyingWindow);
-						 // //updateContestStatus(key, "buying ended", buyingEnds - utc);
-
-							// }
-
-					
 						});
-					
 
+
+						});
 	
-			});
-
-			}
-
-
-		
-
-	});
-			
-
-
-				
 
 });
 
 
 
-function updateContestStatus(key, updateText, time){
+function updateContestStatus(time){
+	console.log("set with " + time + "to scoring");
 
 		setTimeout(function() {
 
-			contestsRef.child(scheduleDate).child(key).update({
-				"contestStatus":  updateText			
-			});
+		scoreContests.update(firebase, scheduleDate);
 
 		}, time);
 

@@ -1,3 +1,6 @@
+/*jslint node: true */
+'use strict';
+
 function update(firebase, scheduleDate){
 
 var firebaseDb = firebase.database();
@@ -19,6 +22,8 @@ contestsRef.once('value', function(allContests){
 
     		var playerId = singleEntry.val().playerId;
 
+    		
+
 				var pts;
     			var reb;
     			var ast;
@@ -26,14 +31,6 @@ contestsRef.once('value', function(allContests){
     			var blk;
     			var _3;
     			var to;
-
-    			var ptsScore = 0;
-    			var rebScore = 0;
-    			var astScore = 0;
-    			var stlScore = 0;
-    			var blkScore = 0;
-    			var _3Score = 0;
-    			var toScore = 0;
 
     			var oppPts;
     			var oppReb;
@@ -44,6 +41,7 @@ contestsRef.once('value', function(allContests){
     			var oppTo;
 
     		playerStats.child(playerId).once('value', function(stats){
+
 
     			var stat = stats.val();
     			pts = stat.pts;
@@ -58,12 +56,22 @@ contestsRef.once('value', function(allContests){
 
     		vsRef.once('value', function(entryVS){
 
+    			var ptsScore = 0;
+    			var rebScore = 0;
+    			var astScore = 0;
+    			var stlScore = 0;
+    			var blkScore = 0;
+    			var _3Score = 0;
+    			var toScore = 0;
+
+    			var totalContestScore = 0;
+
+
     			entryVS.forEach(function(opponent){
 
 					playerStats.child(opponent.val()[0].playerId).once('value', function(oppStats){
 
 							var oppStat = oppStats.val();
-							console.log(oppStat);
 
 			    			oppPts = oppStat.pts;
 			    			oppReb = oppStat.oreb + oppStat.dreb;
@@ -76,93 +84,228 @@ contestsRef.once('value', function(allContests){
 	    				for (var i = 0; i < opponent.val().length; i++) {
 	    				
 	    					var scoreRef = vsRef.child(opponent.key).child(i);
-
 	    					var scoreObject = opponent.val()[i];
 
+
+///begin switch statment
 	    					switch(scoreObject.statCategory) {
 							    case 'Pts':
 
 							    	var ptsPlusAmount = scoreObject.plusAmount;
-									var ptsTotal = pts + ptsPlusAmount;
-									scoreRef.child("boxScore").set(pts);
-									scoreRef.child("totalScore").set(ptsTotal);
+									var ptsTotal = Number(pts) + Number(ptsPlusAmount);
+
+									scoreRef.child("boxScore").set(Number(pts));
+									scoreRef.child("totalScore").set(Number(ptsTotal));
+									scoreRef.child("oppBoxScore").set(Number(oppPts));
+
 
 									var oppPtsPlusAmount = scoreObject.opponentPlus;
-									var oppPtsTotal = oppPts + oppPtsPlusAmount;
+									var oppPtsTotal = Number(oppPts) + Number(oppPtsPlusAmount);
+
+									scoreRef.child("oppTotalScore").set(Number(oppPtsTotal));
 							
 
 									if(ptsTotal > oppPtsTotal){
 
 										++ptsScore;
+										++totalContestScore;
 
 									}
-
 							
 							        break;
 							    case 'Reb':
 
 							    	var rebPlusAmount = scoreObject.plusAmount;
-							    	var rebTotal = reb + rebPlusAmount;
-							    	scoreRef.child("boxScore").set(reb);
+							    	var rebTotal = Number(reb) + Number(rebPlusAmount);
+							    	scoreRef.child("boxScore").set(Number(reb));
+									scoreRef.child("totalScore").set(Number(rebTotal));
+									scoreRef.child("oppBoxScore").set(Number(oppReb));
 
 
 							    	var oppRebPlusAmount = scoreObject.opponentPlus;
-							    	var oppRebTotal = oppReb + oppRebPlusAmount;
+							    	var oppRebTotal = Number(oppReb) + Number(oppRebPlusAmount);
+
+							    	scoreRef.child("oppTotalScore").set(Number(oppRebTotal));
+
 
 							    	if(rebTotal > oppRebTotal){
 							    		++rebScore;
+							    		++totalContestScore;
 							    	}
 
-							    	//var rebPlusAmount = opponent.val()[i].plusAmount;
-									//var rebTotal = reb + rebPlusAmount;
-									//scoreRef.child("totalScore").set(rebTotal);
+						
 							        
 							        break;
 							     case 'Ast':
+
+							     	var astPlusAmount = scoreObject.plusAmount;
+									var astTotal = Number(ast) + Number(astPlusAmount);
+									scoreRef.child("boxScore").set(Number(ast));
+									scoreRef.child("totalScore").set(Number(astTotal));
+									scoreRef.child("oppBoxScore").set(Number(oppAst));
+
+									var oppAstPlusAmount = scoreObject.opponentPlus;
+									var oppAstTotal = Number(oppAst) + Number(oppAstPlusAmount);
+
+									scoreRef.child("oppTotalScore").set(Number(oppAstTotal));
+
+							
+
+									if(astTotal > oppAstTotal){
+
+										++astScore;
+										++totalContestScore;
+
+									}
+
 							        
 							        break;
 							    case 'Stl':
+
+							     	var stlPlusAmount = scoreObject.plusAmount;
+									var stlTotal = Number(stl) + Number(stlPlusAmount);
+									scoreRef.child("boxScore").set(Number(stl));
+									scoreRef.child("totalScore").set(Number(stlTotal));
+									scoreRef.child("oppBoxScore").set(Number(oppStl));
+
+									var oppStlPlusAmount = scoreObject.opponentPlus;
+									var oppStlTotal = Number(oppStl) + Number(oppStlPlusAmount);
+
+									scoreRef.child("oppTotalScore").set(Number(oppStlTotal));
+
+									if(stlTotal > oppStlTotal){
+
+										++stlScore;
+										++totalContestScore;
+
+									}
+
+								
 							        
 							        break;
 							    case 'Blk':
+
+							     	var blkPlusAmount = scoreObject.plusAmount;
+									var blkTotal = Number(blk) + Number(blkPlusAmount);
+									scoreRef.child("boxScore").set(Number(blk));
+									scoreRef.child("totalScore").set(Number(blkTotal));
+									scoreRef.child("oppBoxScore").set(Number(oppBlk));
+
+									var oppBlkPlusAmount = scoreObject.opponentPlus;
+									var oppBlkTotal = Number(oppBlk) + Number(oppBlkPlusAmount);
+							
+									scoreRef.child("oppTotalScore").set(Number(oppBlkTotal));
+
+									if(blkTotal > oppBlkTotal){
+
+										++blkScore;
+										++totalContestScore;
+
+									}
+
 							        
 							        break;
-							    case '3PT':
+							    case '3Pt':
+
+							     	var _3PlusAmount = scoreObject.plusAmount;
+									var _3Total = Number(_3) + Number(_3PlusAmount);
+									scoreRef.child("boxScore").set(Number(_3));
+									scoreRef.child("totalScore").set(Number(_3Total));
+									scoreRef.child("oppBoxScore").set(Number(opp_3));
+
+									var opp_3PlusAmount = scoreObject.opponentPlus;
+
+									var opp_3Total = Number(opp_3) + Number(opp_3PlusAmount);
+
+									scoreRef.child("oppTotalScore").set(Number(opp_3Total));
+							
+
+									if(_3Total > opp_3Total){
+
+										++_3Score;
+										++totalContestScore;
+
+									}
+
 							        
 							        break;
 							    case '-TO':
+
+							     	var toPlusAmount = scoreObject.plusAmount;
+									var toTotal = Number(to) - Number(toPlusAmount);
+									scoreRef.child("boxScore").set(Number(to));
+									scoreRef.child("totalScore").set(Number(toTotal));
+									scoreRef.child("oppBoxScore").set(Number(oppTo));
+
+									var oppToPlusAmount = scoreObject.opponentPlus;
+									var oppToTotal = Number(oppTo) - Number(oppToPlusAmount);
+
+									scoreRef.child("oppTotalScore").set(Number(oppToTotal));
+							
+
+									if(toTotal < oppToTotal){
+
+										++toScore;
+										++totalContestScore;
+
+									}
+
+
 							        
 							        break;
 							  
 							    default:
+
+							    break;
 							         
-								}
+								} //end switch statment
 
+	
 
-		    				}
-
-
-    					singleEntryRef.child("Score_Pts").set(ptsScore);
-    					singleEntryRef.child("Score_Reb").set(rebScore);
+		    				} //end for loop
+	    		
+						singleEntryRef.child("score_Pts").set(ptsScore);
+    					singleEntryRef.child("score_Reb").set(rebScore);
+    					singleEntryRef.child("score_Ast").set(astScore);
+    					singleEntryRef.child("score_Blk").set(blkScore);
+    					singleEntryRef.child("score_Stl").set(stlScore);
+    					singleEntryRef.child("score_3pt").set(_3Score);
+    					singleEntryRef.child("score_To").set(toScore);
+    					singleEntryRef.child("score_Total").set(totalContestScore);
 
 	    				});
 
-	    			});
+						
+	
+
+
+	    			}); // end for each opponent
+
+					
 
 
 
-	    		});
+				
+
+    					
+
+
+	    		}); //
+						
 
 
     		});
+					
+				//console.log("bottom " + singleEntry.key);
+						
+					
+						
+    	});  // end for each single entry
+						
 
+		});
 
-
-    	});
-
-
-
-    });
+   
 
 
   });

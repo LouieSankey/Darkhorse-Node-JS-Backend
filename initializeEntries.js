@@ -58,7 +58,9 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                                           "playerBuy": "0",
                                           "playerName": newEntry.val().name,
                                           "statCategory": "Pts",
-                                          "playerId": playersInContest[i].playerId
+                                          "playerId": playersInContest[i].playerId,
+                                          "plusAmount": 0,
+                                          "opponentPlus": 0
                                     },
                                     "1": {
                                           "matchSet": false,
@@ -66,6 +68,8 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                                           "playerBuy": "0",
                                           "playerName": newEntry.val().name,
                                           "statCategory": "Reb",
+                                          "plusAmount": 0,
+                                          "opponentPlus": 0
                                     },
                                     "2": {
                                           "matchSet": false,
@@ -73,6 +77,8 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                                           "playerBuy": "0",
                                           "playerName": newEntry.val().name,
                                           "statCategory": "Ast",
+                                          "plusAmount": 0,
+                                          "opponentPlus": 0
                                     },
                                     "3": {
                                           "matchSet": false,
@@ -80,6 +86,8 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                                           "playerBuy": "0",
                                           "playerName": newEntry.val().name,
                                           "statCategory": "Stl",
+                                          "plusAmount": 0,
+                                          "opponentPlus": 0
                                     },
                                     "4": {
                                           "matchSet": false,
@@ -87,6 +95,8 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                                           "playerBuy": "0",
                                           "playerName": newEntry.val().name,
                                           "statCategory": "Blk",
+                                          "plusAmount": 0,
+                                          "opponentPlus": 0
                                     },
                                     "5": {
                                           "matchSet": false,
@@ -94,6 +104,8 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                                           "playerBuy": "0",
                                           "playerName": newEntry.val().name,
                                           "statCategory": "3Pt",
+                                          "plusAmount": 0,
+                                          "opponentPlus": 0
                                     },
                                     "6": {
                                           "matchSet": false,
@@ -101,6 +113,8 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                                           "playerBuy": "0",
                                           "playerName": newEntry.val().name,
                                           "statCategory": "-TO",
+                                          "plusAmount": 0,
+                                          "opponentPlus": 0
                                     }
                                     
                                     
