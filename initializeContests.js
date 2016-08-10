@@ -7,6 +7,8 @@
 
 function update(firebase, scheduleDate){
 
+	console.log("inside initialize");
+
 var moment = require('moment');
 var cron = require('cron');
 
