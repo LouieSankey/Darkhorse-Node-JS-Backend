@@ -6,11 +6,11 @@
 //no more contests should be created less than 20 min before BUYING CLOSES to allow time
 
 function update(firebase, scheduleDate){
-	
+
 
 
 var moment = require('moment');
-var cron = require('cron');
+var cron = require('node-cron');
 
 var scoreContests = require('./scoreContests');
 
