@@ -6,7 +6,7 @@ var math = require('mathjs');
 
 var firebaseDb = firebase.database();
 
-var playersRef = firebaseDb.ref("Players");
+var playersRef = firebaseDb.ref("RawPlayerData");
 
 	playersRef.on("value", function(snapshot){
 

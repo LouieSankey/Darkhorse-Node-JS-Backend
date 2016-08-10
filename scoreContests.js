@@ -22,23 +22,21 @@ contestsRef.once('value', function(allContests){
 
     		var playerId = singleEntry.val().playerId;
 
-    		
+				var pts = 0.0;
+    			var reb = 0.0;
+    			var ast = 0.0;
+    			var stl = 0.0;
+    			var blk = 0.0;
+    			var _3 = 0.0;
+    			var to = 0.0;
 
-				var pts;
-    			var reb;
-    			var ast;
-    			var stl;
-    			var blk;
-    			var _3;
-    			var to;
-
-    			var oppPts;
-    			var oppReb;
-    			var oppAst;
-    			var oppStl;
-    			var oppBlk;
-    			var opp_3;
-    			var oppTo;
+    			var oppPts = 0.0;
+    			var oppReb = 0.0;
+    			var oppAst = 0.0;
+    			var oppStl = 0.0;
+    			var oppBlk = 0.0;
+    			var opp_3 = 0.0;
+    			var oppTo = 0.0;
 
     		playerStats.child(playerId).once('value', function(stats){
 
@@ -56,15 +54,14 @@ contestsRef.once('value', function(allContests){
 
     		vsRef.once('value', function(entryVS){
 
-    			var ptsScore = 0;
-    			var rebScore = 0;
-    			var astScore = 0;
-    			var stlScore = 0;
-    			var blkScore = 0;
-    			var _3Score = 0;
-    			var toScore = 0;
-
-    			var totalContestScore = 0;
+    			var ptsScore = 0.0;
+    			var rebScore = 0.0;
+    			var astScore = 0.0;
+    			var stlScore = 0.0;
+    			var blkScore = 0.0;
+    			var _3Score = 0.0;
+    			var toScore = 0.0;
+    			var totalContestScore = 0.0;
 
 
     			entryVS.forEach(function(opponent){
@@ -104,13 +101,16 @@ contestsRef.once('value', function(allContests){
 
 									scoreRef.child("oppTotalScore").set(Number(oppPtsTotal));
 							
-
-									if(ptsTotal > oppPtsTotal){
-
+									if(ptsTotal === oppPtsTotal){
+										ptsScore = ptsScore + 0.5;									
+										totalContestScore = totalContestScore + 0.5;
+										console.log("equal " + ptsScore);
+									}else if(ptsTotal > oppPtsTotal){
 										++ptsScore;
 										++totalContestScore;
+									}	
+									
 
-									}
 							
 							        break;
 							    case 'Reb':
@@ -128,13 +128,17 @@ contestsRef.once('value', function(allContests){
 							    	scoreRef.child("oppTotalScore").set(Number(oppRebTotal));
 
 
-							    	if(rebTotal > oppRebTotal){
+							    	if(rebTotal === oppRebTotal){
+										rebScore = rebScore + 0.5;
+										totalContestScore = totalContestScore + 0.5;
+										console.log("equal " + rebScore);
+
+									}else if(rebTotal > oppRebTotal){
 							    		++rebScore;
 							    		++totalContestScore;
 							    	}
 
-						
-							        
+			
 							        break;
 							     case 'Ast':
 
@@ -150,13 +154,18 @@ contestsRef.once('value', function(allContests){
 									scoreRef.child("oppTotalScore").set(Number(oppAstTotal));
 
 							
+									if(astTotal === oppAstTotal){
+										astScore = astScore + 0.5;
+										totalContestScore = totalContestScore + 0.5;
+										console.log("equal " + astScore);
 
-									if(astTotal > oppAstTotal){
+									}else if(astTotal > oppAstTotal){
 
 										++astScore;
 										++totalContestScore;
 
 									}
+
 
 							        
 							        break;
@@ -173,15 +182,17 @@ contestsRef.once('value', function(allContests){
 
 									scoreRef.child("oppTotalScore").set(Number(oppStlTotal));
 
-									if(stlTotal > oppStlTotal){
 
+									if(stlTotal === oppStlTotal){
+										stlScore = stlScore + 0.5;
+										totalContestScore = totalContestScore + 0.5;
+										console.log("equal " + stlScore);
+									}else if(stlTotal > oppStlTotal){
 										++stlScore;
 										++totalContestScore;
-
 									}
 
-								
-							        
+
 							        break;
 							    case 'Blk':
 
@@ -196,14 +207,17 @@ contestsRef.once('value', function(allContests){
 							
 									scoreRef.child("oppTotalScore").set(Number(oppBlkTotal));
 
-									if(blkTotal > oppBlkTotal){
 
+									if(blkTotal === oppBlkTotal){
+										blkScore = blkScore + 0.5;
+										totalContestScore = totalContestScore + 0.5;
+										console.log("equal " + blkScore);										
+									}else if(blkTotal > oppBlkTotal){
 										++blkScore;
 										++totalContestScore;
-
 									}
 
-							        
+
 							        break;
 							    case '3Pt':
 
@@ -219,15 +233,14 @@ contestsRef.once('value', function(allContests){
 
 									scoreRef.child("oppTotalScore").set(Number(opp_3Total));
 							
-
-									if(_3Total > opp_3Total){
-
+									if(_3Total === opp_3Total){
+										_3Score = _3Score + 0.5;
+										totalContestScore = totalContestScore + 0.5;
+									}else if(_3Total > opp_3Total){
 										++_3Score;
 										++totalContestScore;
-
 									}
 
-							        
 							        break;
 							    case '-TO':
 
@@ -243,13 +256,13 @@ contestsRef.once('value', function(allContests){
 									scoreRef.child("oppTotalScore").set(Number(oppToTotal));
 							
 
-									if(toTotal < oppToTotal){
-
+									if(toTotal === oppToTotal){
+										toScore = toScore + 0.5;
+										totalContestScore = totalContestScore + 0.5;
+									}else if(toTotal < oppToTotal){
 										++toScore;
 										++totalContestScore;
-
 									}
-
 
 							        
 							        break;
@@ -272,6 +285,7 @@ contestsRef.once('value', function(allContests){
     					singleEntryRef.child("score_3pt").set(_3Score);
     					singleEntryRef.child("score_To").set(toScore);
     					singleEntryRef.child("score_Total").set(totalContestScore);
+    					contestsRef.child(singleContest.key).child("contestStatus").set("results");
 
 	    				});
 
@@ -281,13 +295,6 @@ contestsRef.once('value', function(allContests){
 
 	    			}); // end for each opponent
 
-					
-
-
-
-				
-
-    					
 
 
 	    		}); //
@@ -312,6 +319,8 @@ contestsRef.once('value', function(allContests){
 
 
 });
+
+
 
 
 

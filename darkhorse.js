@@ -26,9 +26,7 @@ var updatePrices = require('./updatePrices.js');
 var availablePlayers = require('./availablePlayers.js');
 var updateScores = require('./updateScores.js');
 var initializeContests = require('./initializeContests.js');
-var scoreContests = require('./scoreContests');
-
-
+//var scoreContests = require('./scoreContests');
 
  updatePrices.update(firebase);
  availablePlayers.update(firebase, scheduleDate);

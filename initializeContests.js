@@ -23,18 +23,23 @@ var scoreContests = require('./scoreContests');
 schedule.on('value', function (snapshot){
 	
 	var earliestGameTime = moment('23:59', ["h:mm A"]).format("HH:mm");
-
 	var gamesInDraft = 0;
+
 
 	for (var i = 0; i < snapshot.val().length; i++) {
 		
 		var scheduledGame = snapshot.val()[i];
 		if(scheduledGame.Date === scheduleDate){
-			++gamesInDraft;
+
 			var gameTime = moment(scheduledGame['Start (ET)'], ["h:mm A"]).format("HH:mm");
 
-			if(gameTime < earliestGameTime){
+
+			++gamesInDraft;
+
+			if(gameTime <= earliestGameTime){
+
 				earliestGameTime = gameTime;
+
 			}
 
 		}
@@ -47,12 +52,11 @@ schedule.on('value', function (snapshot){
 
 				var utc = moment.utc().valueOf();
 				//for testing, change earliestGameTime to anytime in '00:00' format.
-				var buyingEnds = moment("22:03", 'HH:mm A').utc().valueOf();
-				var buyingWindow = 60000 * 1;
+				var firstBuyingEnds = moment('21:00', 'HH:mm A').utc().valueOf();
+				var buyingWindow = 60000 * 30;
 
-				var hourEnds = moment(earliestGameTime, 'HH').format("HH");
-				var minuteEnds = moment(earliestGameTime, 'mm').format("HH");
-
+				//var hourEnds = moment(earliestGameTime, 'HH').format("HH");
+				//var minuteEnds = moment(earliestGameTime, 'mm').format("HH");
 
 				contestsRef.once("value", function(location) {
 
@@ -66,25 +70,12 @@ schedule.on('value', function (snapshot){
     								"entryAmnt": 0,
     								"accepting": 7,
     								"prize": 0,
-									"draftEnds":  buyingEnds - buyingWindow,
+									"draftEnds":  firstBuyingEnds - buyingWindow,
 									"contestStatus": "drafting",
 									"nbaGamesAmnt": gamesInDraft,
 									"buyingEnds": buyingWindow
 								});
 
-
-								contestsRef.child(scheduleDate).push({
-									"Entries": "",
-									"positionsPaid": 0,
-    								"entryAmnt": 0,
-    								"prize": 0,
-									"gameType": "* NBA Free Heads Up 1 on 1",
-    								"accepting": 2,
-									"draftEnds":  buyingEnds - buyingWindow,
-									"contestStatus": "drafting",
-									"nbaGamesAmnt": gamesInDraft,
-									"buyingEnds": buyingWindow
-								});
 
 						
 
@@ -95,7 +86,7 @@ schedule.on('value', function (snapshot){
     								"prize": 250,
 									"gameType": "* NBA $50 Round Royal 1 on 1",
     								"accepting": 5,
-									"draftEnds":  buyingEnds - buyingWindow,
+									"draftEnds":  firstBuyingEnds - buyingWindow,
 									"contestStatus": "drafting",
 									"nbaGamesAmnt": gamesInDraft,
 									"buyingEnds": buyingWindow
@@ -110,7 +101,7 @@ schedule.on('value', function (snapshot){
     								"prize": 100,
 									"gameType": "* NBA $20 Round Royal 1 on 1",
     								"accepting": 5,
-									"draftEnds":  buyingEnds - buyingWindow,
+									"draftEnds":  firstBuyingEnds - buyingWindow,
 									"contestStatus": "drafting",
 									"nbaGamesAmnt": gamesInDraft,
 									"buyingEnds": buyingWindow
@@ -123,7 +114,7 @@ schedule.on('value', function (snapshot){
     								"prize": 20,
 									"gameType": "* NBA $10 Round Royal 1 on 1",
     								"accepting": 2,
-									"draftEnds":  buyingEnds - buyingWindow,
+									"draftEnds":  firstBuyingEnds - buyingWindow,
 									"contestStatus": "drafting",
 									"nbaGamesAmnt": gamesInDraft,
 									"buyingEnds": buyingWindow
@@ -137,7 +128,20 @@ schedule.on('value', function (snapshot){
     								"prize": 200,
 									"gameType": "* NBA $100 Heads Up 1 on 1",
     								"accepting": 2,
-									"draftEnds":  buyingEnds - buyingWindow,
+									"draftEnds":  firstBuyingEnds - buyingWindow,
+									"contestStatus": "drafting",
+									"nbaGamesAmnt": gamesInDraft,
+									"buyingEnds": buyingWindow
+								});
+
+									contestsRef.child(scheduleDate).push({
+									"Entries": "",
+									"positionsPaid": 0,
+    								"entryAmnt": 0,
+    								"prize": 0,
+									"gameType": "* NBA Free Heads Up 1 on 1",
+    								"accepting": 3,
+									"draftEnds":  firstBuyingEnds - buyingWindow,
 									"contestStatus": "drafting",
 									"nbaGamesAmnt": gamesInDraft,
 									"buyingEnds": buyingWindow
@@ -175,7 +179,7 @@ schedule.on('value', function (snapshot){
 										contestsRef.child(scheduleDate).push({
 
 											"accepting": accepting,
-											"draftEnds":  buyingEnds - buyingWindow,
+											"draftEnds":  firstBuyingEnds - buyingWindow,
 											"contestStatus": "drafting",
 											"gameType": gameType,
 											"nbaGamesAmnt": gamesInDraft,
@@ -186,7 +190,7 @@ schedule.on('value', function (snapshot){
 
 										});
 
-										updateContestStatus(3 + 60000);
+										updateContestStatus(2 * 60000);
 									}
 
 
@@ -194,7 +198,7 @@ schedule.on('value', function (snapshot){
 
 
 
-						});
+							});
 
 
 						});
