@@ -21,7 +21,6 @@ var contestsRef = firebaseDb.ref("Contests");
 var fullContestsRef = firebaseDb.ref("FullContests");
 var userRef = firebaseDb.ref("Users");
 
-	console.log("inside initialize");
 
 
 //gets earliest game time for today, maybe code runs 8:00 every morning
@@ -60,153 +59,153 @@ schedule.on('value', function (snapshot){
 				var firstBuyingEnds = moment('21:00', 'HH:mm A').utc().valueOf();
 				var buyingWindow = 60000 * 30;
 
-				//var hourEnds = moment(earliestGameTime, 'HH').format("HH");
-				//var minuteEnds = moment(earliestGameTime, 'mm').format("HH");
+				var hourEnds = moment(earliestGameTime, 'HH').format("HH");
+				var minuteEnds = moment(earliestGameTime, 'mm').format("HH");
 
-				// contestsRef.once("value", function(location) {
+				contestsRef.once("value", function(location) {
 
-				// 	if(!location.child(scheduleDate).exists()){
-
-
-				// 			contestsRef.child(scheduleDate).push({
-				// 					"Entries": "",
-				// 					"gameType": "* NBA Free Round Royal 1 on 1",
-				// 					"positionsPaid": 0,
-    // 								"entryAmnt": 0,
-    // 								"accepting": 7,
-    // 								"prize": 0,
-				// 					"draftEnds":  firstBuyingEnds - buyingWindow,
-				// 					"contestStatus": "drafting",
-				// 					"nbaGamesAmnt": gamesInDraft,
-				// 					"buyingEnds": buyingWindow
-				// 				});
+					if(!location.child(scheduleDate).exists()){
 
 
-						
-
-				// 					contestsRef.child(scheduleDate).push({
-				// 					"Entries": "",
-				// 					"positionsPaid": 1,
-    // 								"entryAmnt": 50,
-    // 								"prize": 250,
-				// 					"gameType": "* NBA $50 Round Royal 1 on 1",
-    // 								"accepting": 5,
-				// 					"draftEnds":  firstBuyingEnds - buyingWindow,
-				// 					"contestStatus": "drafting",
-				// 					"nbaGamesAmnt": gamesInDraft,
-				// 					"buyingEnds": buyingWindow
-				// 				});
-
-
-
-				// 				contestsRef.child(scheduleDate).push({
-				// 					"Entries": "",
-				// 					"positionsPaid": 1,
-    // 								"entryAmnt": 20,
-    // 								"prize": 100,
-				// 					"gameType": "* NBA $20 Round Royal 1 on 1",
-    // 								"accepting": 5,
-				// 					"draftEnds":  firstBuyingEnds - buyingWindow,
-				// 					"contestStatus": "drafting",
-				// 					"nbaGamesAmnt": gamesInDraft,
-				// 					"buyingEnds": buyingWindow
-				// 				});
-
-				// 					contestsRef.child(scheduleDate).push({
-				// 					"Entries": "",
-				// 					"positionsPaid": 1,
-    // 								"entryAmnt": 10,
-    // 								"prize": 20,
-				// 					"gameType": "* NBA $10 Round Royal 1 on 1",
-    // 								"accepting": 2,
-				// 					"draftEnds":  firstBuyingEnds - buyingWindow,
-				// 					"contestStatus": "drafting",
-				// 					"nbaGamesAmnt": gamesInDraft,
-				// 					"buyingEnds": buyingWindow
-				// 				});
-
-
-				// 				contestsRef.child(scheduleDate).push({
-				// 					"Entries": "",
-				// 					"positionsPaid": 1,
-    // 								"entryAmnt": 100,
-    // 								"prize": 200,
-				// 					"gameType": "* NBA $100 Heads Up 1 on 1",
-    // 								"accepting": 2,
-				// 					"draftEnds":  firstBuyingEnds - buyingWindow,
-				// 					"contestStatus": "drafting",
-				// 					"nbaGamesAmnt": gamesInDraft,
-				// 					"buyingEnds": buyingWindow
-				// 				});
-
-				// 					contestsRef.child(scheduleDate).push({
-				// 					"Entries": "",
-				// 					"positionsPaid": 0,
-    // 								"entryAmnt": 0,
-    // 								"prize": 0,
-				// 					"gameType": "* NBA Free Heads Up 1 on 1",
-    // 								"accepting": 3,
-				// 					"draftEnds":  firstBuyingEnds - buyingWindow,
-				// 					"contestStatus": "drafting",
-				// 					"nbaGamesAmnt": gamesInDraft,
-				// 					"buyingEnds": buyingWindow
-				// 				});
-
-
-				// 			}
+							contestsRef.child(scheduleDate).push({
+									"Entries": "",
+									"gameType": "* NBA Free Round Royal 1 on 1",
+									"positionsPaid": 0,
+    								"entryAmnt": 0,
+    								"accepting": 7,
+    								"prize": 0,
+									"draftEnds":  firstBuyingEnds - buyingWindow,
+									"contestStatus": "drafting",
+									"nbaGamesAmnt": gamesInDraft,
+									"buyingEnds": buyingWindow
+								});
 
 
 						
-				// 		contestsRef.child(scheduleDate).on('child_added', function(contestSnapshot){
 
-				// 			var contest = contestSnapshot.val();
-
-				// 			var accepting = contest.accepting;
-				// 			var draftEnds = contest.draftEnds;
-				// 			var entryAmnt = contest.entryAmnt;
-				// 			var gameType = contest.gameType;
-				// 			var positionsPaid = contest.positionsPaid;
-				// 			var prize = contest.prize;
-				// 			var contestStatus = contest.contestStatus;
-
-				// 			var contestEntryRef = contestsRef.child(scheduleDate).child(contestSnapshot.key).child("Entries");
-
-				// 				var i = 0;
-
-				// 				contestEntryRef.on('child_added', function(entrySnapshot){
-
-				// 				var playersEntered = ++i;
-
-				// 					if(playersEntered === accepting){
-
-				// 						contestsRef.child(scheduleDate).child(contestSnapshot.key).child("contestStatus").set("buying");
-
-				// 						contestsRef.child(scheduleDate).push({
-
-				// 							"accepting": accepting,
-				// 							"draftEnds":  firstBuyingEnds - buyingWindow,
-				// 							"contestStatus": "drafting",
-				// 							"gameType": gameType,
-				// 							"nbaGamesAmnt": gamesInDraft,
-				// 							"buyingEnds": buyingWindow,
-				// 							"positionsPaid": positionsPaid,
-				// 							"entryAmnt": entryAmnt,
-				// 							"prize": prize
-
-				// 						});
-
-				// 						updateContestStatus(2 * 60000);
-				// 					}
-
-
-				// 				});
+									contestsRef.child(scheduleDate).push({
+									"Entries": "",
+									"positionsPaid": 1,
+    								"entryAmnt": 50,
+    								"prize": 250,
+									"gameType": "* NBA $50 Round Royal 1 on 1",
+    								"accepting": 5,
+									"draftEnds":  firstBuyingEnds - buyingWindow,
+									"contestStatus": "drafting",
+									"nbaGamesAmnt": gamesInDraft,
+									"buyingEnds": buyingWindow
+								});
 
 
 
-				// 			});
+								contestsRef.child(scheduleDate).push({
+									"Entries": "",
+									"positionsPaid": 1,
+    								"entryAmnt": 20,
+    								"prize": 100,
+									"gameType": "* NBA $20 Round Royal 1 on 1",
+    								"accepting": 5,
+									"draftEnds":  firstBuyingEnds - buyingWindow,
+									"contestStatus": "drafting",
+									"nbaGamesAmnt": gamesInDraft,
+									"buyingEnds": buyingWindow
+								});
+
+									contestsRef.child(scheduleDate).push({
+									"Entries": "",
+									"positionsPaid": 1,
+    								"entryAmnt": 10,
+    								"prize": 20,
+									"gameType": "* NBA $10 Round Royal 1 on 1",
+    								"accepting": 2,
+									"draftEnds":  firstBuyingEnds - buyingWindow,
+									"contestStatus": "drafting",
+									"nbaGamesAmnt": gamesInDraft,
+									"buyingEnds": buyingWindow
+								});
 
 
-				// 		});
+								contestsRef.child(scheduleDate).push({
+									"Entries": "",
+									"positionsPaid": 1,
+    								"entryAmnt": 100,
+    								"prize": 200,
+									"gameType": "* NBA $100 Heads Up 1 on 1",
+    								"accepting": 2,
+									"draftEnds":  firstBuyingEnds - buyingWindow,
+									"contestStatus": "drafting",
+									"nbaGamesAmnt": gamesInDraft,
+									"buyingEnds": buyingWindow
+								});
+
+									contestsRef.child(scheduleDate).push({
+									"Entries": "",
+									"positionsPaid": 0,
+    								"entryAmnt": 0,
+    								"prize": 0,
+									"gameType": "* NBA Free Heads Up 1 on 1",
+    								"accepting": 3,
+									"draftEnds":  firstBuyingEnds - buyingWindow,
+									"contestStatus": "drafting",
+									"nbaGamesAmnt": gamesInDraft,
+									"buyingEnds": buyingWindow
+								});
+
+
+							}
+
+
+						
+						contestsRef.child(scheduleDate).on('child_added', function(contestSnapshot){
+
+							var contest = contestSnapshot.val();
+
+							var accepting = contest.accepting;
+							var draftEnds = contest.draftEnds;
+							var entryAmnt = contest.entryAmnt;
+							var gameType = contest.gameType;
+							var positionsPaid = contest.positionsPaid;
+							var prize = contest.prize;
+							var contestStatus = contest.contestStatus;
+
+							var contestEntryRef = contestsRef.child(scheduleDate).child(contestSnapshot.key).child("Entries");
+
+								var i = 0;
+
+								contestEntryRef.on('child_added', function(entrySnapshot){
+
+								var playersEntered = ++i;
+
+									if(playersEntered === accepting){
+
+										contestsRef.child(scheduleDate).child(contestSnapshot.key).child("contestStatus").set("buying");
+
+										contestsRef.child(scheduleDate).push({
+
+											"accepting": accepting,
+											"draftEnds":  firstBuyingEnds - buyingWindow,
+											"contestStatus": "drafting",
+											"gameType": gameType,
+											"nbaGamesAmnt": gamesInDraft,
+											"buyingEnds": buyingWindow,
+											"positionsPaid": positionsPaid,
+											"entryAmnt": entryAmnt,
+											"prize": prize
+
+										});
+
+										updateContestStatus(2 * 60000);
+									}
+
+
+								});
+
+
+
+							});
+
+
+						});
 	
 
 });
