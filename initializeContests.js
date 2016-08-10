@@ -7,18 +7,20 @@
 
 function update(firebase, scheduleDate){
 
-	console.log("inside initialize");
 
 var moment = require('moment');
 var cron = require('cron');
+
+var scoreContests = require('./scoreContests');
+
 
 var firebaseDb = firebase.database();
 var schedule = firebaseDb.ref('2015NBASchedule');
 var contestsRef = firebaseDb.ref("Contests");
 var fullContestsRef = firebaseDb.ref("FullContests");
 var userRef = firebaseDb.ref("Users");
-var scoreContests = require('./scoreContests');
 
+	console.log("inside initialize");
 
 
 //gets earliest game time for today, maybe code runs 8:00 every morning
