@@ -29,6 +29,7 @@ var initializeContests = require('./initializeContests.js');
 //var scoreContests = require('./scoreContests');
 
  updatePrices.update(firebase);
+ 
  availablePlayers.update(firebase, scheduleDate);
  updateScores.update(firebase, apiDate, scheduleDate);
  initializeContests.update(firebase, scheduleDate);
