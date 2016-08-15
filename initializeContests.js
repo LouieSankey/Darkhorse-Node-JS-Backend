@@ -11,7 +11,6 @@ function update(firebase, scheduleDate){
 
 var moment = require('moment');
 var cron = require('node-cron');
-
 var scoreContests = require('./scoreContests');
 
 
@@ -27,8 +26,8 @@ var userRef = firebaseDb.ref("Users");
 schedule.on('value', function (snapshot){
 	
 	var earliestGameTime = moment('23:59', ["h:mm A"]).format("HH:mm");
-	var gamesInDraft = 0;
 
+	var gamesInDraft = 0;
 
 	for (var i = 0; i < snapshot.val().length; i++) {
 		
@@ -36,7 +35,6 @@ schedule.on('value', function (snapshot){
 		if(scheduledGame.Date === scheduleDate){
 
 			var gameTime = moment(scheduledGame['Start (ET)'], ["h:mm A"]).format("HH:mm");
-
 
 			++gamesInDraft;
 
@@ -55,7 +53,6 @@ schedule.on('value', function (snapshot){
 //for there to be a 15 min buying period before the first game
 
 				var utc = moment.utc().valueOf();
-				//for testing, change earliestGameTime to anytime in '00:00' format.
 				var firstBuyingEnds = moment('21:00', 'HH:mm A').utc().valueOf();
 				var buyingWindow = 60000 * 30;
 
@@ -82,7 +79,6 @@ schedule.on('value', function (snapshot){
 
 
 						
-
 									contestsRef.child(scheduleDate).push({
 									"Entries": "",
 									"positionsPaid": 1,
@@ -159,7 +155,6 @@ schedule.on('value', function (snapshot){
 						contestsRef.child(scheduleDate).on('child_added', function(contestSnapshot){
 
 							var contest = contestSnapshot.val();
-
 							var accepting = contest.accepting;
 							var draftEnds = contest.draftEnds;
 							var entryAmnt = contest.entryAmnt;

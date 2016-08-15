@@ -4,6 +4,7 @@ var firebaseDb = firebase.database();
 var rawPlayersRef = firebaseDb.ref("RawPlayerData");
 var nbaSchedule = firebaseDb.ref("2015NBASchedule");
 var availablePlayersRef = firebaseDb.ref("AvailablePlayers");
+var moment = require('moment');
 
 nbaSchedule.on('value', function (snapshot){
 	var allGames = snapshot.val();
@@ -86,25 +87,33 @@ nbaSchedule.on('value', function (snapshot){
 		for (var k = allGames.length - 1; k >= 0; k--) {
 			if(allGames[k].Date === date){
 
+
+						var gameTimeUtc = moment(allGames[k]['Start (ET)'], 'HH:mm A').utc().valueOf();
+
 						normalizedPlayer.game_time = allGames[k]['Start (ET)'];
 	  					normalizedPlayer.home = allGames[k].Home;
 	  					normalizedPlayer.visiting = allGames[k].Visitor;
+
+	  				
+
+
 
 				if(allGames[k].Home === normalizedPlayer.Team){
 
 				
 					availablePlayersRef.child(date).child(normalizedPlayer.Name).set(normalizedPlayer);
 	  		 		availablePlayersRef.child(date).child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
+	  		 	  	availablePlayersRef.child(date).child(normalizedPlayer.Name).child('gameTimeUtc').set(gameTimeUtc);
 
 
 				}
 				if(allGames[k].Visitor === normalizedPlayer.Team){
 
 					 availablePlayersRef.child(date).child(normalizedPlayer.Name).set(normalizedPlayer);
-	  		 		 availablePlayersRef.child(date).child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
-	  		 
-
+	  		 		availablePlayersRef.child(date).child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
+	  		 	  	availablePlayersRef.child(date).child(normalizedPlayer.Name).child('gameTimeUtc').set(gameTimeUtc);
 				}
+
 
 
 			}

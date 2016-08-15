@@ -21,20 +21,21 @@ var apiDate = lastSeasonsScheduleDate.format('MM/DD/YYYY');
 var firebaseDate = lastSeasonsScheduleDate.format('MM-DD-YYYY');
 
 
-var initializeEntries = require('./initializeEntries.js');
-var updatePrices = require('./updatePrices.js');
-var availablePlayers = require('./availablePlayers.js');
-var updateScores = require('./updateScores.js');
-var initializeContests = require('./initializeContests.js');
+ var initializeEntries = require('./initializeEntries.js');
+ var updatePrices = require('./updatePrices.js');
+ var availablePlayers = require('./availablePlayers.js');
+ var updateScores = require('./updateScores.js');
+ var initializeContests = require('./newContestInit.js');
 //var scoreContests = require('./scoreContests');
+//var groupScheduleDates = require('./groupScheduleDates');
 
- updatePrices.update(firebase);
- 
- availablePlayers.update(firebase, scheduleDate);
+  updatePrices.update(firebase);
+  availablePlayers.update(firebase, scheduleDate);
  updateScores.update(firebase, apiDate, scheduleDate);
- initializeContests.update(firebase, scheduleDate);
- initializeEntries.update(firebase, scheduleDate);
+  initializeContests.update(firebase, scheduleDate);
+  initializeEntries.update(firebase, scheduleDate);
 //scoreContests.update(firebase, scheduleDate);
+//groupScheduleDates.update(firebase, scheduleDate);
 
 
 
