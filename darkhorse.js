@@ -4,8 +4,6 @@
 var http = require('http');
 var moment =require('moment');
 var firebase = require("./node_modules/firebase");
-//cron for local node-cron for heroku
- var cron = require('node-cron').CronJob;
 
 
 
@@ -18,10 +16,6 @@ firebase.initializeApp({
   serviceAccount: "serviceAccountCredentials.json",
   databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
 });
-
-
-
-
 
 
 
@@ -42,18 +36,6 @@ var firebaseFormatDate = lastSeasonsScheduleDate.format('YYYY_MM_DD');
  //var groupScheduleDates = require('./groupScheduleDates');
 
 
-//every 10 minuts: "0 */10 * * * *"  -- every day at 8pm system time '00 00 20 * * 1-7'
-
-var cronJob = cron.job('00 00 01 * * 1-7', function(){
-
-availablePlayers.update(firebase, scheduleDate, firebaseFormatDate);
-updateScores.update(firebase, apiDate, firebaseFormatDate);
-initializeContests.update(firebase, scheduleDate);
-initializeEntries.update(firebase, firebaseFormatDate);
-
-}); 
-
-cronJob.start();
 
 
 availablePlayers.update(firebase, scheduleDate, firebaseFormatDate);
