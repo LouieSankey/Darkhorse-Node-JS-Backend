@@ -5,7 +5,7 @@ var http = require('http');
 var moment =require('moment');
 var firebase = require("./node_modules/firebase");
 //cron for local node-cron for heroku
- var cron = require('node-cron');
+ var cron = require('node-cron').CronJob;
 
 
 
