@@ -16,7 +16,7 @@ firebase.initializeApp({
   databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
 });
 
-var lastSeasonsScheduleDate = moment().subtract(281, 'days');
+var lastSeasonsScheduleDate = moment().utc().subtract(281, 'days').add(4, 'hours');
 var scheduleDate = lastSeasonsScheduleDate.format('ddd MMM D YYYY');
 var apiDate = lastSeasonsScheduleDate.format('MM/DD/YYYY');
 var firebaseFormatDate = lastSeasonsScheduleDate.format('YYYY_MM_DD');
