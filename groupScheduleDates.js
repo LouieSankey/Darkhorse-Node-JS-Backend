@@ -8,8 +8,8 @@ var moment = require('moment');
 var cron = require('node-cron');
 var scoreContests = require('./scoreContests');
 var firebaseDb = firebase.database();
-var schedule = firebaseDb.ref('2015NBASchedule');
-var datedSchedule = firebaseDb.ref('datedSchedule');
+var schedule = firebaseDb.ref('2015Schedule');
+var datedSchedule = firebaseDb.ref('DatedSchedule');
 
 
 schedule.on('value', function (snapshot){
@@ -18,7 +18,7 @@ schedule.on('value', function (snapshot){
 		
 		var scheduledGame = snapshot.val()[i];
 
-		var gameDate = moment(scheduledGame.Date, ['ddd MMM D YYYY']).format('YYYY MM DD');
+		var gameDate = moment(scheduledGame.Date, ['ddd MMM D YYYY']).format('YYYY_MM_DD');
 
 		var gameTime = moment(scheduledGame['Start (ET)'], ["h:mm A"]).format("HH:mm");
 

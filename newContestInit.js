@@ -12,12 +12,12 @@ var cron = require('node-cron');
 var scoreContests = require('./scoreContests');
 
 var firebaseDb = firebase.database();
-var schedule = firebaseDb.ref('datedSchedule');
+var schedule = firebaseDb.ref('DatedSchedule');
 var contestsRef = firebaseDb.ref("Contests");
 var fullContestsRef = firebaseDb.ref("FullContests");
 var userRef = firebaseDb.ref("Users");
 
-var formattedScheduleDate = moment(scheduleDate, ['ddd MMM D YYYY']).subtract(0, 'days').format('YYYY MM DD');
+var formattedScheduleDate = moment(scheduleDate, ['ddd MMM D YYYY']).subtract(0, 'days').format('YYYY_MM_DD');
 
 console.log(formattedScheduleDate);
 
@@ -46,7 +46,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 							gameTimes.reverse();
 							var setGameTime;
 
-							if(!location.child(scheduleDate).exists()){
+							if(!location.child(formattedScheduleDate).exists()){
 
 							for (var i = 0; i < gameTimes.length; i++) {
 
@@ -59,14 +59,13 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 								var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().valueOf();
 								
 
-
 										switch(true){
 
 											case (gamesAmnt >= 7):
 
 											console.log(gamesAmnt + "/ accepting 7");
 
-												contestsRef.child(scheduleDate).push({
+												contestsRef.child(formattedScheduleDate).push({
 
 													"Entries": "",
 													"gameType": "* NBA Free Round Royal 1 on 1",
@@ -85,7 +84,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 											console.log(gamesAmnt + "/ accepting 5");
 
 
-											contestsRef.child(scheduleDate).push({
+											contestsRef.child(formattedScheduleDate).push({
 
 													"Entries": "",
 													"gameType": "* NBA Free Round Royal 1 on 1",
@@ -107,7 +106,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 												console.log(gamesAmnt + "/ accepting 5");
 
 
-												contestsRef.child(scheduleDate).push({
+												contestsRef.child(formattedScheduleDate).push({
 
 													"Entries": "",
 													"gameType": "* NBA Free Round Royal 1 on 1",
@@ -125,10 +124,10 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 													console.log(gamesAmnt + "/ accepting 2");
 
-													contestsRef.child(scheduleDate).push({
+													contestsRef.child(formattedScheduleDate).push({
 
 													"Entries": "",
-													"gameType": "* NBA Free Round Royal 1 on 1",
+													"gameType": "* NBA Free Heads Up 1 on 1",
 													"positionsPaid": 0,
 				    								"entryAmnt": 0,
 				    								"accepting": 2,
@@ -145,7 +144,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 												console.log(gamesAmnt + "/ accepting 2");
 
-													contestsRef.child(scheduleDate).push({
+													contestsRef.child(formattedScheduleDate).push({
 
 													"Entries": "",
 													"gameType": "* NBA Free Heads Up 1 on 1",
@@ -173,7 +172,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 
 						
-						contestsRef.child(scheduleDate).on('child_added', function(contestSnapshot){
+						contestsRef.child(formattedScheduleDate).on('child_added', function(contestSnapshot){
 
 							var contest = contestSnapshot.val();
 							console.log(contest);
@@ -188,7 +187,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 							var contestStatus = contest.contestStatus;
 							var buyingWindow = contest.buyingEnds;
 
-							var contestEntryRef = contestsRef.child(scheduleDate).child(contestSnapshot.key).child("Entries");
+							var contestEntryRef = contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("Entries");
 
 								
 
@@ -205,9 +204,9 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 										console.log("buying set");
 
-										contestsRef.child(scheduleDate).child(contestSnapshot.key).child("contestStatus").set("buying");
+										contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("buying");
 
-										contestsRef.child(scheduleDate).push({
+										contestsRef.child(formattedScheduleDate).push({
 
 											"accepting": accepting,
 											"draftEnds":  draftEnds,
@@ -222,7 +221,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 										});
 
 										//should calculate scores after buying window closes
-										updateContestStatus(buyingWindow);
+										updateContestStatus(10000);
 									}
 
 
@@ -247,7 +246,7 @@ function updateContestStatus(time){
 
 		setTimeout(function() {
 
-		scoreContests.update(firebase, scheduleDate);
+		scoreContests.update(firebase, formattedScheduleDate);
 
 		}, time);
 

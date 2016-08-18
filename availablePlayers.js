@@ -1,11 +1,11 @@
 
 /*jslint node: true */
 'use strict';
-function update(firebase, date){
+function update(firebase, date, firebaseFormatDate){
 
 var firebaseDb = firebase.database();
 var rawPlayersRef = firebaseDb.ref("RawPlayerData");
-var nbaSchedule = firebaseDb.ref("2015NBASchedule");
+var nbaSchedule = firebaseDb.ref("2015Schedule");
 var availablePlayersRef = firebaseDb.ref("AvailablePlayers");
 var moment = require('moment');
 
@@ -23,7 +23,7 @@ nbaSchedule.on('value', function (snapshot){
 //loops through the raw player data to establish an organic upper bound
 	rawPlayersRef.on('value', function (snapshot) {
 
-		availablePlayersRef.remove();
+		//availablePlayersRef.remove();
 
 
 		var allPlayers = snapshot.val();
@@ -90,6 +90,8 @@ nbaSchedule.on('value', function (snapshot){
 		for (var k = allGames.length - 1; k >= 0; k--) {
 			if(allGames[k].Date === date){
 
+				
+
 
 						var gameTimeUtc = moment(allGames[k]['Start (ET)'], 'HH:mm A').utc().valueOf();
 
@@ -98,23 +100,23 @@ nbaSchedule.on('value', function (snapshot){
 	  					normalizedPlayer.visiting = allGames[k].Visitor;
 
 	  				
-
+				//date = moment(date, 'YYYY MM DD').format('YYYY_MM_DD');
 
 
 				if(allGames[k].Home === normalizedPlayer.Team){
 
 				
-					availablePlayersRef.child(date).child(normalizedPlayer.Name).set(normalizedPlayer);
-	  		 		availablePlayersRef.child(date).child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
-	  		 	  	availablePlayersRef.child(date).child(normalizedPlayer.Name).child('gameTimeUtc').set(gameTimeUtc);
+					availablePlayersRef.child(firebaseFormatDate).child(normalizedPlayer.Name).set(normalizedPlayer);
+	  		 		availablePlayersRef.child(firebaseFormatDate).child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
+	  		 	  	availablePlayersRef.child(firebaseFormatDate).child(normalizedPlayer.Name).child('gameTimeUtc').set(gameTimeUtc);
 
 
 				}
 				if(allGames[k].Visitor === normalizedPlayer.Team){
 
-					 availablePlayersRef.child(date).child(normalizedPlayer.Name).set(normalizedPlayer);
-	  		 		availablePlayersRef.child(date).child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
-	  		 	  	availablePlayersRef.child(date).child(normalizedPlayer.Name).child('gameTimeUtc').set(gameTimeUtc);
+					 availablePlayersRef.child(firebaseFormatDate).child(normalizedPlayer.Name).set(normalizedPlayer);
+	  		 		availablePlayersRef.child(firebaseFormatDate).child(normalizedPlayer.Name).update({"_3g": normalizedPlayer['3g']});
+	  		 	  	availablePlayersRef.child(firebaseFormatDate).child(normalizedPlayer.Name).child('gameTimeUtc').set(gameTimeUtc);
 				}
 
 
@@ -130,8 +132,7 @@ nbaSchedule.on('value', function (snapshot){
 
 		
 
-
-	});
+});
 
 
 	

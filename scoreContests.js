@@ -14,6 +14,7 @@ contestsRef.once('value', function(allContests){
 
     var entriesRef = contestsRef.child(singleContest.key).child('Entries');
 
+
     entriesRef.once('value', function(entries){
 
     	entries.forEach(function(singleEntry){
@@ -42,6 +43,7 @@ contestsRef.once('value', function(allContests){
 
 
     			var stat = stats.val();
+
     			pts = stat.pts;
     			reb = stat.oreb + stat.dreb;
     			ast = stat.ast;
@@ -50,9 +52,27 @@ contestsRef.once('value', function(allContests){
     			_3 = stat.fg3m;
     			to = stat.to;
 
+    	// 		if(stat === null){
+
+					// pts = 0;
+	    // 			reb = 0;
+	    // 			ast = 0;
+	    // 			stl = 0;
+	    // 			blk = 0;
+	    // 			_3 = 0;
+	    // 			to = 0;
+
+    	// 		}
+
+    			
+    		
+
     		var vsRef = entriesRef.child(singleEntry.key).child("VS");
+    		    			console.log(singleEntry.key + " key");
+
 
     		vsRef.once('value', function(entryVS){
+
 
     			var ptsScore = 0.0;
     			var rebScore = 0.0;
@@ -66,17 +86,33 @@ contestsRef.once('value', function(allContests){
 
     			entryVS.forEach(function(opponent){
 
+
 					playerStats.child(opponent.val()[0].playerId).once('value', function(oppStats){
 
-							var oppStat = oppStats.val();
+					var oppStat = oppStats.val();
 
-			    			oppPts = oppStat.pts;
+							oppPts = oppStat.pts;
 			    			oppReb = oppStat.oreb + oppStat.dreb;
 			    			oppAst = oppStat.ast;
 			    			oppStl = oppStat.stl;
 			    			oppBlk = oppStat.blk;
 			    			opp_3 = oppStat.fg3m;
 			    			oppTo = oppStat.to;
+
+					// if(oppStats === null){
+
+			  //   			oppPts = 0;
+			  //   			oppReb = 0;
+			  //   			oppAst = 0;
+			  //   			oppStl = 0;
+			  //   			oppBlk = 0;
+			  //   			opp_3 = 0;
+			  //   			oppTo = 0;
+    					
+    	// 			}
+
+			    		
+						
 
 	    				for (var i = 0; i < opponent.val().length; i++) {
 	    				
@@ -89,7 +125,10 @@ contestsRef.once('value', function(allContests){
 							    case 'Pts':
 
 							    	var ptsPlusAmount = scoreObject.plusAmount;
-									var ptsTotal = Number(pts) + Number(ptsPlusAmount);
+							    	var ptsTotal;
+
+									ptsTotal = Number(pts) + Number(ptsPlusAmount);
+								
 
 									scoreRef.child("boxScore").set(Number(pts));
 									scoreRef.child("totalScore").set(Number(ptsTotal));
@@ -98,6 +137,9 @@ contestsRef.once('value', function(allContests){
 
 									var oppPtsPlusAmount = scoreObject.opponentPlus;
 									var oppPtsTotal = Number(oppPts) + Number(oppPtsPlusAmount);
+
+									oppPtsTotal = Number(oppPts) + Number(oppPtsPlusAmount);
+								
 
 									scoreRef.child("oppTotalScore").set(Number(oppPtsTotal));
 							
