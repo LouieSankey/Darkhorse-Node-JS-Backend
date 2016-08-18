@@ -4,7 +4,7 @@
 var http = require('http');
 var moment =require('moment');
 var firebase = require("./node_modules/firebase");
- var cron = require('cron');
+ var cron = require('cron').CronJob;
 
 
 
