@@ -284,7 +284,7 @@ contestsRef.once('value', function(allContests){
 									}
 
 							        break;
-							    case '-TO':
+							    case 'Low TO':
 
 							     	var toPlusAmount = scoreObject.plusAmount;
 									var toTotal = Number(to) - Number(toPlusAmount);

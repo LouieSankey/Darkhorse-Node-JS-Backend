@@ -36,8 +36,6 @@ var firebaseFormatDate = lastSeasonsScheduleDate.format('YYYY_MM_DD');
  //var groupScheduleDates = require('./groupScheduleDates');
 
 
-
-
 availablePlayers.update(firebase, scheduleDate, firebaseFormatDate);
 updateScores.update(firebase, apiDate, firebaseFormatDate);
 initializeContests.update(firebase, scheduleDate);

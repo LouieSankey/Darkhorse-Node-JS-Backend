@@ -1,4 +1,5 @@
 
+
 /*jslint node: true */
 'use strict';
 function update(firebase, date, firebaseFormatDate){

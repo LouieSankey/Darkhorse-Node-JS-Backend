@@ -112,7 +112,7 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                                           "opponentName": playersInContest[i].name,
                                           "playerBuy": "0",
                                           "playerName": newEntry.val().name,
-                                          "statCategory": "-TO",
+                                          "statCategory": "Low TO",
                                           "plusAmount": 0,
                                           "opponentPlus": 0
                                     }
@@ -189,7 +189,7 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                                           "opponentName": newEntry.val().name,
                                           "playerBuy": "0",
                                           "playerName": playersInContest[i].name,
-                                          "statCategory": "-TO",
+                                          "statCategory": "Low TO",
                                            "plusAmount": 0,
                                           "opponentPlus": 0
                                     }

@@ -7,14 +7,7 @@ var PlayerStatsRef = firebaseDb.ref("PlayerStats");
 
 console.log("updateScores");
 
-//every game night query the the api and import all stats into firebase. 
 
-// var cron = require('cron');
-// var cronJob = cron.job("0 */10 * * * *", function(){
-//     // perform operation e.g. GET request http.get() etc.
-//     console.info('cron job completed');
-// }); 
-// cronJob.start();
 
 
 //first get game ids by date then for each game idea get player box scores and add them to firebase
