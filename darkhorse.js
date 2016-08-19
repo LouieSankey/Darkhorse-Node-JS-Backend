@@ -6,7 +6,6 @@ var moment =require('moment');
 var firebase = require("./node_modules/firebase");
 
 
-
 http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/plain'});
   res.end('Hello World\n');
@@ -27,23 +26,23 @@ var firebaseFormatDate = lastSeasonsScheduleDate.format('YYYY_MM_DD');
 
 
  var initializeEntries = require('./initializeEntries.js');
- var updatePrices = require('./updateStatPrices.js');
- var availablePlayers = require('./getAvailablePlayers.js');
- var initializeContests = require('./initializeContests.js');
- var getPlayerStats = require('./getPlayerStats.js');
+ //var updatePrices = require('./updateStatPrices.js');
+ //var availablePlayers = require('./getAvailablePlayers.js');
+ //var initializeContests = require('./initializeContests.js');
+ //var getPlayerStats = require('./getPlayerStats.js');
 
  //var scoreContests = require('./scoreContests');
 
  //var groupScheduleDates = require('./groupScheduleDates');
 
 
-availablePlayers.update(firebase, scheduleDate, firebaseFormatDate);
-getPlayerStats.update(firebase, apiDate, firebaseFormatDate);
-initializeContests.update(firebase, scheduleDate);
+//availablePlayers.update(scheduleDate, firebaseFormatDate);
+//getPlayerStats.update();
+//initializeContests.update(firebase, scheduleDate);
 initializeEntries.update(firebase, firebaseFormatDate);
-updatePrices.update(firebase);
+//updatePrices.update(firebase);
 
-//scoreContests.update(firebase, firebaseFormatDate);
+//scoreContests.update();
 
 //groupScheduleDates.update(firebase, scheduleDate);
 

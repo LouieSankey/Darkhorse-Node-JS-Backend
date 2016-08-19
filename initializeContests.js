@@ -5,21 +5,37 @@
 //contests should count down to 30 minutes before the first scheduled game
 //no more contests should be created less than 20 min before BUYING CLOSES to allow time
 
-function update(firebase, scheduleDate){
+function update(){
 
-var moment = require('moment');
-var cron = require('node-cron');
-var scoreContests = require('./scoreContests');
+var http = require('http');
+var moment =require('moment');
+var firebase = require("./node_modules/firebase");
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+}).listen(process.env.PORT, '0.0.0.0');
+
+firebase.initializeApp({
+  serviceAccount: "serviceAccountCredentials.json",
+  databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
+});
 
 var firebaseDb = firebase.database();
+
+console.log("this far");
+
+
+//var scoreContests = require('./scoreContests');
+
 var schedule = firebaseDb.ref('DatedSchedule');
 var contestsRef = firebaseDb.ref("Contests");
+
 var fullContestsRef = firebaseDb.ref("FullContests");
 var userRef = firebaseDb.ref("Users");
+var formattedScheduleDate = moment().utc().subtract(281, 'days').subtract(4, 'hours').format('YYYY_MM_DD');
+//var formattedScheduleDate = moment(scheduleDate, ['ddd MMM D YYYY']).subtract(0, 'days').format('YYYY_MM_DD');
 
-var formattedScheduleDate = moment(scheduleDate, ['ddd MMM D YYYY']).subtract(0, 'days').format('YYYY_MM_DD');
-
-console.log(formattedScheduleDate);
 
 schedule.child(formattedScheduleDate).on('value', function (snapshot){
 	
@@ -221,7 +237,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 										});
 
 										//should calculate scores after buying window closes
-										updateContestStatus(10000);
+										updateContestStatus(buyingWindow);
 									}
 
 
@@ -246,7 +262,7 @@ function updateContestStatus(time){
 
 		setTimeout(function() {
 
-		scoreContests.update(firebase, formattedScheduleDate);
+		//scoreContests.update(firebase, formattedScheduleDate);
 
 		}, time);
 
@@ -254,6 +270,8 @@ function updateContestStatus(time){
 
 
 }
+
+update();
 
 
 module.exports.update = update;

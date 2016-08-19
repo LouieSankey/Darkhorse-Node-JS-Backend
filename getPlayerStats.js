@@ -1,8 +1,27 @@
-function update(firebase, httpDate, firebaseFormatDate){
+function update(){
 
+var http = require('http');
+var moment =require('moment');
+var firebase = require("./node_modules/firebase");
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+}).listen(process.env.PORT, '0.0.0.0');
+
+firebase.initializeApp({
+  serviceAccount: "serviceAccountCredentials.json",
+  databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
+});
 
 
 var firebaseDb = firebase.database();
+
+
+var firebaseFormatDate = moment().utc().subtract(281, 'days').subtract(4, 'hours').format('YYYY_MM_DD');
+var httpDate = moment().utc().subtract(281, 'days').subtract(4, 'hours').format('MM/DD/YYYY');
+
+
 var PlayerStatsRef = firebaseDb.ref("PlayerStats");
 
 console.log("updateScores");
@@ -68,6 +87,8 @@ request.post(
 //then
 
 }
+
+update();
 
 
 

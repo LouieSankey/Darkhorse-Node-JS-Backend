@@ -1,14 +1,31 @@
-
-
 /*jslint node: true */
 'use strict';
-function update(firebase, date, firebaseFormatDate){
+function update(){
+
+var http = require('http');
+var moment =require('moment');
+var firebase = require("./node_modules/firebase");
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+}).listen(process.env.PORT, '0.0.0.0');
+
+firebase.initializeApp({
+  serviceAccount: "serviceAccountCredentials.json",
+  databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
+});
+
+
+var lastSeasonsScheduleDate = moment().utc().subtract(281, 'days').subtract(4, 'hours');
+var date = lastSeasonsScheduleDate.format('ddd MMM D YYYY');
+var firebaseFormatDate = lastSeasonsScheduleDate.format('YYYY_MM_DD');
 
 var firebaseDb = firebase.database();
 var rawPlayersRef = firebaseDb.ref("RawPlayerData");
 var nbaSchedule = firebaseDb.ref("2015Schedule");
 var availablePlayersRef = firebaseDb.ref("AvailablePlayers");
-var moment = require('moment');
+
 
 nbaSchedule.on('value', function (snapshot){
 	var allGames = snapshot.val();
@@ -140,5 +157,6 @@ nbaSchedule.on('value', function (snapshot){
 
 
 }
+update();
 
 module.exports.update = update;
