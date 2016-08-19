@@ -1,9 +1,20 @@
 /*jslint node: true */
 'use strict';
 
-function update(firebase, scheduleDate){
+function update(){
 
+
+
+var firebase = require("./node_modules/firebase");
 var firebaseDb = firebase.database();
+
+
+
+
+var moment =require('moment');
+var scheduleDate = moment().utc().subtract(281, 'days').subtract(4, 'hours').format('YYYY_MM_DD');
+
+
 
 var contestsRef = firebaseDb.ref('Contests').child(scheduleDate);
 var playerStats = firebaseDb.ref("PlayerStats").child(scheduleDate);
@@ -367,6 +378,8 @@ contestsRef.once('value', function(allContests){
 
 
 }
+
+update();
 
 
 module.exports.update = update;
