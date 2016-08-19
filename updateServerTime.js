@@ -18,7 +18,7 @@ firebase.initializeApp({
 var firebaseDb = firebase.database();
 var serverTime = firebaseDb.ref('serverTime');
 
-serverTime.set(Firebase.ServerValue.TIMESTAMP);
+serverTime.set(firebase.database.ServerValue.TIMESTAMP);
 
 }
 update();
