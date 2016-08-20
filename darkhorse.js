@@ -26,25 +26,9 @@ var firebaseFormatDate = lastSeasonsScheduleDate.format('YYYY_MM_DD');
 
 
  var initializeEntries = require('./initializeEntries.js');
- //var updatePrices = require('./updateStatPrices.js');
- //var availablePlayers = require('./getAvailablePlayers.js');
- //var initializeContests = require('./initializeContests.js');
- //var getPlayerStats = require('./getPlayerStats.js');
 
- //var scoreContests = require('./scoreContests');
-
- //var groupScheduleDates = require('./groupScheduleDates');
-
-
-//availablePlayers.update(scheduleDate, firebaseFormatDate);
-//getPlayerStats.update();
-//initializeContests.update(firebase, scheduleDate);
 initializeEntries.update(firebase, firebaseFormatDate);
-//updatePrices.update(firebase);
 
-//scoreContests.update();
-
-//groupScheduleDates.update(firebase, scheduleDate);
 
 
 

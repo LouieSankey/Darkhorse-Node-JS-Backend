@@ -1,4 +1,5 @@
-//no more contests should be created less than 20 min before BUYING CLOSES to allow time
+//depending on popularity 
+//no more contests should be created less than 5 min before DRAFT ENDS to allow time for full draft
 
 function update(){
 
@@ -17,8 +18,6 @@ firebase.initializeApp({
 });
 
 var firebaseDb = firebase.database();
-
-console.log("this far");
 
 
 //var scoreContests = require('./scoreContests');
@@ -90,29 +89,9 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 												});
 
-											console.log(gamesAmnt + "/ accepting 5");
-
-
-											contestsRef.child(formattedScheduleDate).push({
-
-													"Entries": "",
-													"gameType": "* NBA Free Round Royal 1 on 1",
-													"positionsPaid": 0,
-				    								"entryAmnt": 0,
-				    								"accepting": 5,
-				    								"prize": 0,
-													"draftEnds":  buyingPeriodEnds - buyingWindow,
-													"contestStatus": "drafting",
-													"nbaGamesAmnt": gamesAmnt,
-													"buyingEnds": buyingWindow,
-													"firstContestGame": buyingPeriodEnds
-												});
-
 												
 
 											case(gamesAmnt >= 3):
-
-												console.log(gamesAmnt + "/ accepting 5");
 
 
 												contestsRef.child(formattedScheduleDate).push({
@@ -131,7 +110,24 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 												});
 
-													console.log(gamesAmnt + "/ accepting 2");
+												contestsRef.child(formattedScheduleDate).push({
+
+													"Entries": "",
+													"gameType": "* NBA Free Round Royal 1 on 1",
+													"positionsPaid": 0,
+				    								"entryAmnt": 0,
+				    								"accepting": 5,
+				    								"prize": 0,
+													"draftEnds":  buyingPeriodEnds - buyingWindow,
+													"contestStatus": "drafting",
+													"nbaGamesAmnt": gamesAmnt,
+													"buyingEnds": buyingWindow,
+													"firstContestGame": buyingPeriodEnds
+												});
+
+
+												case(gamesAmnt >= 1):
+
 
 													contestsRef.child(formattedScheduleDate).push({
 
@@ -149,9 +145,6 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 												});
 
-												case(gamesAmnt >= 1):
-
-												console.log(gamesAmnt + "/ accepting 2");
 
 													contestsRef.child(formattedScheduleDate).push({
 
