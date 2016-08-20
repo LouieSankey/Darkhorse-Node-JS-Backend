@@ -33,9 +33,9 @@ var contestsRef = firebaseDb.ref("Contests");
 
 var fullContestsRef = firebaseDb.ref("FullContests");
 var userRef = firebaseDb.ref("Users");
-var formattedScheduleDate = moment().utc().subtract(281, 'days').subtract(4, 'hours').format('YYYY_MM_DD');
+var formattedScheduleDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
 //var formattedScheduleDate = moment(scheduleDate, ['ddd MMM D YYYY']).subtract(0, 'days').format('YYYY_MM_DD');
-
+console.log(formattedScheduleDate);
 
 schedule.child(formattedScheduleDate).on('value', function (snapshot){
 	

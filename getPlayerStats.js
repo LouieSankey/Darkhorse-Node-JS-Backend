@@ -18,7 +18,7 @@ firebase.initializeApp({
 var firebaseDb = firebase.database();
 
 
-var firebaseFormatDate = moment().utc().subtract(282, 'days').subtract(4, 'hours').format('YYYY_MM_DD');
+var firebaseFormatDate = moment().utc().subtract(282, 'days').format('YYYY_MM_DD');
 var httpDate = moment().utc().subtract(281, 'days').subtract(4, 'hours').format('MM/DD/YYYY');
 
 

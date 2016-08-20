@@ -17,9 +17,11 @@ firebase.initializeApp({
 });
 
 
-var lastSeasonsScheduleDate = moment().utc().subtract(281, 'days').subtract(4, 'hours');
+var lastSeasonsScheduleDate = moment().utc().subtract(281, 'days');
+
 var date = lastSeasonsScheduleDate.format('ddd MMM D YYYY');
 var firebaseFormatDate = lastSeasonsScheduleDate.format('YYYY_MM_DD');
+console.log(firebaseFormatDate);
 
 var firebaseDb = firebase.database();
 var rawPlayersRef = firebaseDb.ref("RawPlayerData");
