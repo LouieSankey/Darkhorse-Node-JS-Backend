@@ -1,8 +1,3 @@
-//there should always be 7 or 8 contests going
-//finished contests should move to a different reference, or single in a node
-//finished contests should be replaced by another of the same game type
-//contests should be organized by date ** (eventually)
-//contests should count down to 30 minutes before the first scheduled game
 //no more contests should be created less than 20 min before BUYING CLOSES to allow time
 
 function update(){
@@ -39,10 +34,8 @@ console.log(formattedScheduleDate);
 
 schedule.child(formattedScheduleDate).on('value', function (snapshot){
 	
-
 				contestsRef.once("value", function(location) {
 
-				
 						var utc = moment.utc().valueOf();
 						var buyingWindow = 60000 * 30;
 
@@ -237,7 +230,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 										});
 
 										//should calculate scores after buying window closes
-										updateContestStatus(buyingWindow);
+										//updateContestStatus(buyingWindow);
 									}
 
 
