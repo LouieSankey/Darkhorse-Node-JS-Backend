@@ -60,6 +60,22 @@ contestsRef.once('value', function(allContests){
 
     			var stat = stats.val();
 
+
+				if(!stats.exists()){
+
+    				console.log("player is equal to null");
+
+					pts = 0;
+	    			reb = 0;
+	    			ast = 0;
+	    			stl = 0;
+	    			blk = 0;
+	    			_3 = 0;
+	    			to = 0;
+
+    			}else{
+
+
     			pts = stat.pts;
     			reb = stat.oreb + stat.dreb;
     			ast = stat.ast;
@@ -68,17 +84,7 @@ contestsRef.once('value', function(allContests){
     			_3 = stat.fg3m;
     			to = stat.to;
 
-    	// 		if(stat === null){
-
-					// pts = 0;
-	    // 			reb = 0;
-	    // 			ast = 0;
-	    // 			stl = 0;
-	    // 			blk = 0;
-	    // 			_3 = 0;
-	    // 			to = 0;
-
-    	// 		}
+    		}
 
     			
     		
@@ -107,6 +113,22 @@ contestsRef.once('value', function(allContests){
 
 					var oppStat = oppStats.val();
 
+
+					if(!oppStats.exists()){
+
+						   console.log("player is equal to null");
+
+
+			    			oppPts = 0;
+			    			oppReb = 0;
+			    			oppAst = 0;
+			    			oppStl = 0;
+			    			oppBlk = 0;
+			    			opp_3 = 0;
+			    			oppTo = 0;
+    					
+    				}else{
+
 							oppPts = oppStat.pts;
 			    			oppReb = oppStat.oreb + oppStat.dreb;
 			    			oppAst = oppStat.ast;
@@ -114,18 +136,7 @@ contestsRef.once('value', function(allContests){
 			    			oppBlk = oppStat.blk;
 			    			opp_3 = oppStat.fg3m;
 			    			oppTo = oppStat.to;
-
-					// if(oppStats === null){
-
-			  //   			oppPts = 0;
-			  //   			oppReb = 0;
-			  //   			oppAst = 0;
-			  //   			oppStl = 0;
-			  //   			oppBlk = 0;
-			  //   			opp_3 = 0;
-			  //   			oppTo = 0;
-    					
-    	// 			}
+    				}
 
 			    		
 						
