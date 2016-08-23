@@ -18,8 +18,8 @@ firebase.initializeApp({
 var firebaseDb = firebase.database();
 
 
-var firebaseFormatDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
-var httpDate = moment().utc().subtract(281, 'days').format('MM/DD/YYYY');
+var firebaseFormatDate = moment().utc().subtract(280, 'days').format('YYYY_MM_DD');
+var httpDate = moment().utc().subtract(280, 'days').format('MM/DD/YYYY');
 
 
 var PlayerStatsRef = firebaseDb.ref("PlayerStats");
@@ -29,8 +29,6 @@ var PlayerStatsRef = firebaseDb.ref("PlayerStats");
 console.log("get stats at " + httpDate);
 
 console.log("put stasts as " + firebaseFormatDate);
-
-
 
 
 // //first get game ids by date then for each game idea get player box scores and add them to firebase

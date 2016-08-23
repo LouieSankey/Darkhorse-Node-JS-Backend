@@ -19,7 +19,7 @@ firebase.initializeApp({
 
 
 var firebaseDb = firebase.database();
-var scheduleDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
+var scheduleDate = moment().utc().subtract(280, 'days').format('YYYY_MM_DD');
 
 var contestsRef = firebaseDb.ref('Contests').child(scheduleDate);
 var playerStats = firebaseDb.ref("PlayerStats").child(scheduleDate);
@@ -87,7 +87,6 @@ contestsRef.once('value', function(allContests){
     		}
 
     			
-    		
 
     		var vsRef = entriesRef.child(singleEntry.key).child("VS");
     		    			console.log(singleEntry.key + " key");
@@ -138,8 +137,6 @@ contestsRef.once('value', function(allContests){
 			    			oppTo = oppStat.to;
     				}
 
-			    		
-						
 
 	    				for (var i = 0; i < opponent.val().length; i++) {
 	    				
