@@ -19,7 +19,7 @@ firebase.initializeApp({
 
 
 var firebaseDb = firebase.database();
-var scheduleDate = moment().utc().subtract(280, 'days').format('YYYY_MM_DD');
+var scheduleDate = moment().utc().subtract(282, 'days').format('YYYY_MM_DD');
 
 var contestsRef = firebaseDb.ref('Contests').child(scheduleDate);
 var playerStats = firebaseDb.ref("PlayerStats").child(scheduleDate);
