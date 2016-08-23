@@ -3,6 +3,7 @@
 
 function update(){
 
+
 var http = require('http');
 var moment =require('moment');
 var firebase = require("./node_modules/firebase");
@@ -89,7 +90,8 @@ contestsRef.once('value', function(allContests){
     			
 
     		var vsRef = entriesRef.child(singleEntry.key).child("VS");
-    		    			console.log(singleEntry.key + " key");
+
+    		   console.log(singleEntry.val().name + " key");
 
 
     		vsRef.once('value', function(entryVS){
@@ -106,6 +108,10 @@ contestsRef.once('value', function(allContests){
 
 
     			entryVS.forEach(function(opponent){
+
+    				console.log(opponent.val()[0].playerId + " " + opponent.val()[0].playerName);
+
+
 
 
 					playerStats.child(opponent.val()[0].playerId).once('value', function(oppStats){
@@ -359,7 +365,7 @@ contestsRef.once('value', function(allContests){
 	
 
 
-	    			}); // end for each opponent
+ 	    			}); // end for each opponent
 
 
 

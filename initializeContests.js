@@ -73,104 +73,104 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().valueOf();
 									
 
-											// switch(true){
+											switch(true){
 
-											// 	case (gamesAmnt >= 7):
+												case (gamesAmnt >= 7):
 
-											// 	console.log(gamesAmnt + "/ accepting 7");
+												console.log(gamesAmnt + "/ accepting 7");
 
-											// 		contestsRef.child(formattedScheduleDate).push({
+													contestsRef.child(formattedScheduleDate).push({
 
-											// 			"Entries": "",
-											// 			"gameType": "* NBA Free Round Royal 1 on 1",
-											// 			"positionsPaid": 0,
-					    		// 						"entryAmnt": 0,
-					    		// 						"accepting": 7,
-					    		// 						"prize": 0,
-											// 			"draftEnds":  buyingPeriodEnds - buyingWindow,
-											// 			"contestStatus": "drafting",
-											// 			"nbaGamesAmnt": gamesAmnt,
-											// 			"buyingEnds": buyingWindow,
-											// 			"firstContestGame": buyingPeriodEnds
+														"Entries": "",
+														"gameType": "* NBA Free Round Royal 1 on 1",
+														"positionsPaid": 0,
+					    								"entryAmnt": 0,
+					    								"accepting": 7,
+					    								"prize": 0,
+														"draftEnds":  buyingPeriodEnds - buyingWindow,
+														"contestStatus": "drafting",
+														"nbaGamesAmnt": gamesAmnt,
+														"buyingEnds": buyingWindow,
+														"firstContestGame": buyingPeriodEnds
 
-											// 		});
+													});
 
 													
 
-											// 	case(gamesAmnt >= 3):
+												case(gamesAmnt >= 3):
 
 
-											// 		contestsRef.child(formattedScheduleDate).push({
+													contestsRef.child(formattedScheduleDate).push({
 
-											// 			"Entries": "",
-											// 			"gameType": "* NBA Free Round Royal 1 on 1",
-											// 			"positionsPaid": 0,
-					    		// 						"entryAmnt": 0,
-					    		// 						"accepting": 5,
-					    		// 						"prize": 0,
-											// 			"draftEnds":  buyingPeriodEnds - buyingWindow,
-											// 			"contestStatus": "drafting",
-											// 			"nbaGamesAmnt": gamesAmnt,
-											// 			"buyingEnds": buyingWindow,
-											// 			"buyingEndsUtc": buyingPeriodEnds,
-											// 			"firstContestGame": buyingPeriodEnds
+														"Entries": "",
+														"gameType": "* NBA Free Round Royal 1 on 1",
+														"positionsPaid": 0,
+					    								"entryAmnt": 0,
+					    								"accepting": 5,
+					    								"prize": 0,
+														"draftEnds":  buyingPeriodEnds - buyingWindow,
+														"contestStatus": "drafting",
+														"nbaGamesAmnt": gamesAmnt,
+														"buyingEnds": buyingWindow,
+														"buyingEndsUtc": buyingPeriodEnds,
+														"firstContestGame": buyingPeriodEnds
 
-											// 		});
+													});
 
-											// 		contestsRef.child(formattedScheduleDate).push({
+													contestsRef.child(formattedScheduleDate).push({
 
-											// 			"Entries": "",
-											// 			"gameType": "* NBA Free Round Royal 1 on 1",
-											// 			"positionsPaid": 0,
-					    		// 						"entryAmnt": 0,
-					    		// 						"accepting": 5,
-					    		// 						"prize": 0,
-											// 			"draftEnds":  buyingPeriodEnds - buyingWindow,
-											// 			"contestStatus": "drafting",
-											// 			"nbaGamesAmnt": gamesAmnt,
-											// 			"buyingEnds": buyingWindow,
-											// 			"firstContestGame": buyingPeriodEnds
-											// 		});
-
-
-											// 		case(gamesAmnt >= 1):
+														"Entries": "",
+														"gameType": "* NBA Free Round Royal 1 on 1",
+														"positionsPaid": 0,
+					    								"entryAmnt": 0,
+					    								"accepting": 5,
+					    								"prize": 0,
+														"draftEnds":  buyingPeriodEnds - buyingWindow,
+														"contestStatus": "drafting",
+														"nbaGamesAmnt": gamesAmnt,
+														"buyingEnds": buyingWindow,
+														"firstContestGame": buyingPeriodEnds
+													});
 
 
-											// 			contestsRef.child(formattedScheduleDate).push({
-
-											// 			"Entries": "",
-											// 			"gameType": "* NBA Free Heads Up 1 on 1",
-											// 			"positionsPaid": 0,
-					    		// 						"entryAmnt": 0,
-					    		// 						"accepting": 2,
-					    		// 						"prize": 0,
-											// 			"draftEnds":  buyingPeriodEnds - buyingWindow,
-											// 			"contestStatus": "drafting",
-											// 			"nbaGamesAmnt": gamesAmnt,
-											// 			"buyingEnds": buyingWindow,
-											// 			"firstContestGame": buyingPeriodEnds
-
-											// 		});
+													case(gamesAmnt >= 1):
 
 
-											// 			contestsRef.child(formattedScheduleDate).push({
+														contestsRef.child(formattedScheduleDate).push({
 
-											// 			"Entries": "",
-											// 			"gameType": "* NBA Free Heads Up 1 on 1",
-											// 			"positionsPaid": 0,
-					    		// 						"entryAmnt": 0,
-					    		// 						"accepting": 2,
-					    		// 						"prize": 0,
-											// 			"draftEnds":  buyingPeriodEnds - buyingWindow,
-											// 			"contestStatus": "drafting",
-											// 			"nbaGamesAmnt": gamesAmnt,
-											// 			"buyingEnds": buyingWindow,
-											// 			"firstContestGame": buyingPeriodEnds
+														"Entries": "",
+														"gameType": "* NBA Free Heads Up 1 on 1",
+														"positionsPaid": 0,
+					    								"entryAmnt": 0,
+					    								"accepting": 2,
+					    								"prize": 0,
+														"draftEnds":  buyingPeriodEnds - buyingWindow,
+														"contestStatus": "drafting",
+														"nbaGamesAmnt": gamesAmnt,
+														"buyingEnds": buyingWindow,
+														"firstContestGame": buyingPeriodEnds
 
-											// 		});
+													});
+
+
+														contestsRef.child(formattedScheduleDate).push({
+
+														"Entries": "",
+														"gameType": "* NBA Free Heads Up 1 on 1",
+														"positionsPaid": 0,
+					    								"entryAmnt": 0,
+					    								"accepting": 2,
+					    								"prize": 0,
+														"draftEnds":  buyingPeriodEnds - buyingWindow,
+														"contestStatus": "drafting",
+														"nbaGamesAmnt": gamesAmnt,
+														"buyingEnds": buyingWindow,
+														"firstContestGame": buyingPeriodEnds
+
+													});
 
 												
-											// }
+											}
 										}
 
 
@@ -182,64 +182,64 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 
 						
-						// contestsRef.child(formattedScheduleDate).on('child_added', function(contestSnapshot){
+						contestsRef.child(formattedScheduleDate).on('child_added', function(contestSnapshot){
 
-						// 	var contest = contestSnapshot.val();
-						// 	console.log(contest);
+							var contest = contestSnapshot.val();
+							console.log(contest);
 
-						// 	var accepting = contest.accepting;
-						// 	var draftEnds = contest.draftEnds;
-						// 	var entryAmnt = contest.entryAmnt;
-						// 	var gameType = contest.gameType;
-						// 	var NBAGames = contest.nbaGamesAmnt; 
-						// 	var positionsPaid = contest.positionsPaid;
-						// 	var prize = contest.prize;
-						// 	var contestStatus = contest.contestStatus;
-						// 	var buyingWindow = contest.buyingEnds;
+							var accepting = contest.accepting;
+							var draftEnds = contest.draftEnds;
+							var entryAmnt = contest.entryAmnt;
+							var gameType = contest.gameType;
+							var NBAGames = contest.nbaGamesAmnt; 
+							var positionsPaid = contest.positionsPaid;
+							var prize = contest.prize;
+							var contestStatus = contest.contestStatus;
+							var buyingWindow = contest.buyingEnds;
 
-						// 	var contestEntryRef = contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("Entries");
+							var contestEntryRef = contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("Entries");
 
 								
 
-						// 		contestEntryRef.on('child_added', function(entrySnapshot){
+								contestEntryRef.on('child_added', function(entrySnapshot){
 
-						// 			var playersEntered;
-						// 			contestEntryRef.once("value", function(children) {
-						// 				playersEntered = children.numChildren();
-						// 			});
+									var playersEntered;
+									contestEntryRef.once("value", function(children) {
+										playersEntered = children.numChildren();
+									});
 
 
 							
-						// 			if(playersEntered === accepting){
+									if(playersEntered === accepting){
 
-						// 				console.log("buying set");
+										console.log("buying set");
 
-						// 				contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("buying");
+										contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("buying");
 
-						// 				contestsRef.child(formattedScheduleDate).push({
+										contestsRef.child(formattedScheduleDate).push({
 
-						// 					"accepting": accepting,
-						// 					"draftEnds":  draftEnds,
-						// 					"contestStatus": "drafting",
-						// 					"gameType": gameType,
-						// 					"nbaGamesAmnt": NBAGames,
-						// 					"buyingEnds": buyingWindow,
-						// 					"positionsPaid": positionsPaid,
-						// 					"entryAmnt": entryAmnt,
-						// 					"prize": prize
+											"accepting": accepting,
+											"draftEnds":  draftEnds,
+											"contestStatus": "drafting",
+											"gameType": gameType,
+											"nbaGamesAmnt": NBAGames,
+											"buyingEnds": buyingWindow,
+											"positionsPaid": positionsPaid,
+											"entryAmnt": entryAmnt,
+											"prize": prize
 
-						// 				});
+										});
 
-						// 				//should calculate scores after buying window closes
-						// 				//updateContestStatus(buyingWindow);
-						// 			}
-
-
-						// 		});
+										//should calculate scores after buying window closes
+										//updateContestStatus(buyingWindow);
+									}
 
 
+								});
 
-						// 	});
+
+
+							});
 
 
 
