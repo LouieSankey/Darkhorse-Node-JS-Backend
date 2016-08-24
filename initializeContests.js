@@ -63,7 +63,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 										console.log("not okay" + gameTimes[i]);
 
 
-									//if((i === 0 || i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
+									if((i === 0 || i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
 
 										console.log("okay" + gameTimes[i]);
 
@@ -171,7 +171,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 												
 											}
-										//}
+										}
 
 
 								}
