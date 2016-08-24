@@ -97,7 +97,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 													
 
-												case(gamesAmnt >= 3):
+												case(gamesAmnt >= 2):
 
 
 													contestsRef.child(formattedScheduleDate).push({
@@ -132,6 +132,21 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"firstContestGame": buyingPeriodEnds
 													});
 
+													contestsRef.child(formattedScheduleDate).push({
+
+														"Entries": "",
+														"gameType": "* NBA Free Round Royal 1 on 1",
+														"positionsPaid": 0,
+					    								"entryAmnt": 0,
+					    								"accepting": 2,
+					    								"prize": 0,
+														"draftEnds":  buyingPeriodEnds - buyingWindow,
+														"contestStatus": "drafting",
+														"nbaGamesAmnt": gamesAmnt,
+														"buyingEnds": buyingWindow,
+														"firstContestGame": buyingPeriodEnds
+													});
+
 
 													case(gamesAmnt >= 1):
 
@@ -142,7 +157,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"gameType": "* NBA Free Heads Up 1 on 1",
 														"positionsPaid": 0,
 					    								"entryAmnt": 0,
-					    								"accepting": 5,
+					    								"accepting": 2,
 					    								"prize": 0,
 														"draftEnds":  buyingPeriodEnds - buyingWindow,
 														"contestStatus": "drafting",
