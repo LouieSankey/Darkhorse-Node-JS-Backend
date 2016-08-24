@@ -142,7 +142,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"gameType": "* NBA Free Heads Up 1 on 1",
 														"positionsPaid": 0,
 					    								"entryAmnt": 0,
-					    								"accepting": 2,
+					    								"accepting": 5,
 					    								"prize": 0,
 														"draftEnds":  buyingPeriodEnds - buyingWindow,
 														"contestStatus": "drafting",
