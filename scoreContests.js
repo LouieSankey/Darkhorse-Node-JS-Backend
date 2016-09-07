@@ -19,6 +19,10 @@ firebase.initializeApp({
 });
 
 
+
+//in heroku scheduler will be after utc day changes so +1 day more than running during the day i.e. 282 for heroku 281 local
+//leave set to heroku time
+
 var firebaseDb = firebase.database();
 var scheduleDate = moment().utc().subtract(282, 'days').format('YYYY_MM_DD');
 
@@ -29,8 +33,8 @@ contestsRef.once('value', function(allContests){
 
 	allContests.forEach(function(singleContest) {
 
-    var entriesRef = contestsRef.child(singleContest.key).child('Entries');
 
+    var entriesRef = contestsRef.child(singleContest.key).child('Entries');
 
     entriesRef.once('value', function(entries){
 
@@ -56,6 +60,17 @@ contestsRef.once('value', function(allContests){
     			var opp_3 = 0.0;
     			var oppTo = 0.0;
 
+
+    			var ptsScore = 0.0;
+    			var rebScore = 0.0;
+    			var astScore = 0.0;
+    			var stlScore = 0.0;
+    			var blkScore = 0.0;
+    			var _3Score = 0.0;
+    			var toScore = 0.0;
+    			var totalContestScore = 0.0;
+
+
     		playerStats.child(playerId).once('value', function(stats){
 
 
@@ -64,7 +79,6 @@ contestsRef.once('value', function(allContests){
 
 				if(!stats.exists()){
 
-    				console.log("player is equal to null");
 
 					pts = 0;
 	    			reb = 0;
@@ -88,31 +102,13 @@ contestsRef.once('value', function(allContests){
     		}
 
     			
-
     		var vsRef = entriesRef.child(singleEntry.key).child("VS");
-
-    		   console.log(singleEntry.val().name + " key");
 
 
     		vsRef.once('value', function(entryVS){
 
 
-    			var ptsScore = 0.0;
-    			var rebScore = 0.0;
-    			var astScore = 0.0;
-    			var stlScore = 0.0;
-    			var blkScore = 0.0;
-    			var _3Score = 0.0;
-    			var toScore = 0.0;
-    			var totalContestScore = 0.0;
-
-
     			entryVS.forEach(function(opponent){
-
-    				console.log(opponent.val()[0].playerId + " " + opponent.val()[0].playerName);
-
-
-
 
 					playerStats.child(opponent.val()[0].playerId).once('value', function(oppStats){
 
@@ -359,13 +355,14 @@ contestsRef.once('value', function(allContests){
     					singleEntryRef.child("score_Total").set(totalContestScore);
     					contestsRef.child(singleContest.key).child("contestStatus").set("results");
 
+
 	    				});
 
-						
-	
 
+						
 
  	    			}); // end for each opponent
+
 
 
 
@@ -374,25 +371,25 @@ contestsRef.once('value', function(allContests){
 
 
     		});
-					
-				//console.log("bottom " + singleEntry.key);
-						
+
+
 					
 						
     	});  // end for each single entry
+
+
 						
 
 		});
 
-   
 
 
-  });
+
+
+  }); //ends single contest
 
 
 });
-
-
 
 
 

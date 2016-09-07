@@ -214,15 +214,13 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 							var contestEntryRef = contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("Entries");
 
-								
-
+	
 								contestEntryRef.on('child_added', function(entrySnapshot){
 
 									var playersEntered;
 									contestEntryRef.once("value", function(children) {
 										playersEntered = children.numChildren();
 									});
-
 
 							
 									if(playersEntered === accepting){

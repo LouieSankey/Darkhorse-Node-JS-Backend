@@ -1,12 +1,26 @@
 //gets values for every player and uses them to compute a price for each state based on standard deviation
 
-function update(firebase){
+function update(){
+
+var firebase = require("./node_modules/firebase");
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+}).listen(process.env.PORT, '0.0.0.0');
+
+firebase.initializeApp({
+  serviceAccount: "serviceAccountCredentials.json",
+  databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
+});
+
+
 
 var math = require('mathjs');
 
 var firebaseDb = firebase.database();
 
-var playersRef = firebaseDb.ref("RawPlayerData");
+var playersRef = firebaseDb.ref("AvailablePlayers");
 
 	playersRef.on("value", function(snapshot){
 
@@ -65,5 +79,7 @@ var playersRef = firebaseDb.ref("RawPlayerData");
 	});
 
 }
+
+update();
 
 module.exports.update = update;
