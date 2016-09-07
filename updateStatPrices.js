@@ -4,6 +4,7 @@ function update(){
 
 var firebase = require("./node_modules/firebase");
 var http = require('http');
+var moment = require('moment');
 
 http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -15,17 +16,21 @@ firebase.initializeApp({
   databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
 });
 
+var lastSeasonsScheduleDate = moment().utc().subtract(293, 'days');
+var firebaseFormatDate = lastSeasonsScheduleDate.format('YYYY_MM_DD');
+console.log(firebaseFormatDate);
 
 
 var math = require('mathjs');
 
 var firebaseDb = firebase.database();
 
-var playersRef = firebaseDb.ref("AvailablePlayers");
+var playersRef = firebaseDb.ref("AvailablePlayers").child(firebaseFormatDate);
 
 	playersRef.on("value", function(snapshot){
 
 	var players = snapshot.val();
+	console.log(snapshot.val());
 
 	var pts = [];
 	var reb = [];
@@ -35,8 +40,10 @@ var playersRef = firebaseDb.ref("AvailablePlayers");
 	var _3pt = [];
 	var to = [];
 
-		 for (var i = 0; i < players.length; i++) {
-		 	var player = players[i];
+
+		 for (var key in players) {
+
+		 	var player = players[key];
 
 		 		pts.push(player.pg);
 		 		reb.push(player.rg);
@@ -66,7 +73,7 @@ var playersRef = firebaseDb.ref("AvailablePlayers");
 		 var s3pt = priceAdjust - math.std(_3pt) * 100;
 		 var sTo = priceAdjust - math.std(to) * 100;
 
-		 var pricesRef = firebaseDb.ref("Prices");
+		 var pricesRef = firebaseDb.ref("Prices").child(firebaseFormatDate);
 
 		 pricesRef.child("pts").set(Math.ceil(sPts/5)*5);
 		 pricesRef.child("reb").set(Math.ceil(sReb/5)*5);
