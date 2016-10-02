@@ -2,9 +2,11 @@
 function update(firebase, scheduleDate){
 
 var firebaseDb = firebase.database();
+var request = require('request');
 
 
 var contestRef = firebaseDb.ref("Contests").child(scheduleDate);
+
 
 
 //sets up to listen for new contests
@@ -125,6 +127,37 @@ contestRef.on('child_added', function (contest, prevChildKey) {
 
 
 //for entries already in the contest, adds a "scores" object for the new entry. 
+//also need to notify entries already in the contest of the new entry
+
+                              console.log("notification " + playersInContest[i].playerKey);
+
+                                // request({
+                                //   url: 'https://fcm.googleapis.com/fcm/send',
+                                //   method: 'POST',
+                                //   headers: {
+                                //     'Content-Type' :' application/json',
+                                //     'Authorization': 'key=AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s'
+                                //   },
+                                //   body: JSON.stringify({
+                                //     data: {
+                                //       message: "A player has drafted into your contest."
+                                //     },
+                                //     to : '/topics/user_'+ playersInContest[i].playerKey
+                                //   })
+                                // });
+
+
+                                console.log('/topics/user_'+ playersInContest[i].playerKey);
+
+                                sendMessageToUser(
+                                  '/topics/user_'+ playersInContest[i].playerKey,
+                                  { message: "A player has drafted into your contest."}
+                                );
+
+
+
+                              //sendNotificationToUser(playersInContest[i].playerKey, "a player has drafted into your contest");
+
 
                                oppVsRef.child(newEntry.key).update({
 
@@ -208,6 +241,34 @@ contestRef.on('child_added', function (contest, prevChildKey) {
 }, function (error) {
 
 });
+
+                            function sendMessageToUser(topic, message) {
+                                request({
+                                  url: 'https://fcm.googleapis.com/fcm/send',
+                                  method: 'POST',
+                                  headers: {
+                                    'Content-Type' :' application/json',
+                                    'Authorization': 'key=AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s'
+                                  },
+                                  body: JSON.stringify(
+                                    { "data": {
+                                      "message": message
+                                    },
+                                      "to" : topic
+                                    }
+                                  )
+                                }, function(error, response, body) {
+                                  if (error) { 
+                                    console.error(error, response, body); 
+                                  }
+                                  else if (response.statusCode >= 400) { 
+                                    console.error('HTTP Error: '+response.statusCode+' - '+response.statusMessage+'\n'+body); 
+                                  }
+                                  else {
+                                    console.log('Done!');
+                                  }
+                                });
+                              }
 
 }
 

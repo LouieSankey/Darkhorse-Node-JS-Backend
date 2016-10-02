@@ -41,7 +41,10 @@ var playersRef = firebaseDb.ref("AvailablePlayers").child(firebaseFormatDate);
 	var to = [];
 
 
+
 		 for (var key in players) {
+	
+
 
 		 	var player = players[key];
 
@@ -56,12 +59,6 @@ var playersRef = firebaseDb.ref("AvailablePlayers").child(firebaseFormatDate);
 		 }
 
 		 var priceAdjust = 600;
-
-		 console.log("pts", math.std(pts));
-		 console.log("rebs", math.std(reb));
-		 console.log("ast", math.std(ast));
-		 console.log("stl", math.std(stl));
-		 console.log("blk", math.std(blk));
 
 
 
@@ -83,8 +80,29 @@ var playersRef = firebaseDb.ref("AvailablePlayers").child(firebaseFormatDate);
 		 pricesRef.child("_3pt").set(Math.ceil(s3pt/5)*5);
 		 pricesRef.child("to").set(Math.ceil(sTo/5)*5);
 
+		 var leagueAverageRef = firebaseDb.ref("LeagueAverages").child(firebaseFormatDate);
+
+
+		 leagueAverageRef.child("pts").set(average(pts));
+		 leagueAverageRef.child("reb").set(average(reb));
+		 leagueAverageRef.child("ast").set(average(ast));
+		 leagueAverageRef.child("stl").set(average(stl));
+		 leagueAverageRef.child("blk").set(average(blk));
+		 leagueAverageRef.child("_3pt").set(average(_3pt));
+		 leagueAverageRef.child("to").set(average(to));
+
+
 
 	});
+
+}
+
+function average(category){
+	var sum = 0;
+	for(var i = 0; i < category.length; i++){
+		sum += category[i];
+	}
+	return sum/category.length;
 
 }
 
