@@ -82,7 +82,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameType": "NBA 10 Token Battle Royal (h2h x h)",
+														"gameType": " NBA 10 Token Battle Royal (h2h x h)",
 														"positionsPaid": 3,
 					    								"entryAmnt": 10,
 					    								"accepting": 7,
@@ -103,7 +103,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameType": "NBA 10 Token Battle Royal (h2h x h)",
+														"gameType": " NBA 10 Token Battle Royal (h2h x h)",
 														"positionsPaid": 1,
 					    								"entryAmnt": 10,
 					    								"accepting": 5,
@@ -120,7 +120,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameType": "NBA 20 Token Battle Royal (h2h x h)",
+														"gameType": " NBA 20 Token Battle Royal (h2h x h)",
 														"positionsPaid": 1,
 					    								"entryAmnt": 20,
 					    								"accepting": 5,
@@ -135,7 +135,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameType": "NBA 50 Token Battle Royal (h2h x h)",
+														"gameType": " NBA 50 Token Battle Royal (h2h x h)",
 														"positionsPaid": 1,
 					    								"entryAmnt": 50,
 					    								"accepting": 5,
@@ -154,7 +154,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameType": "NBA 20 Token Battle Royal (h2h x h)",
+														"gameType": " NBA 20 Token Battle Royal (h2h x h)",
 														"positionsPaid": 1,
 					    								"entryAmnt": 20,
 					    								"accepting": 2,
@@ -171,7 +171,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameType": "NBA 50 Token Battle Royal (h2h x h)",
+														"gameType": " NBA 50 Token Battle Royal (h2h x h)",
 														"positionsPaid": 1,
 					    								"entryAmnt": 20,
 					    								"accepting": 2,
