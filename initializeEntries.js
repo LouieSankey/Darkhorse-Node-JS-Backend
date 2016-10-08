@@ -147,12 +147,12 @@ contestRef.on('child_added', function (contest, prevChildKey) {
                                 // });
 
 
-                                console.log('/topics/user_'+ playersInContest[i].playerKey);
+                                // console.log('/topics/user_'+ playersInContest[i].playerKey);
 
-                                sendMessageToUser(
-                                  '/topics/user_'+ playersInContest[i].playerKey,
-                                  { message: "A player has drafted into your contest."}
-                                );
+                                // sendMessageToUser(
+                                //   '/topics/user_'+ playersInContest[i].playerKey,
+                                //   { message: "A player has drafted into your contest."}
+                                // );
 
 
 
@@ -242,33 +242,33 @@ contestRef.on('child_added', function (contest, prevChildKey) {
 
 });
 
-                            function sendMessageToUser(topic, message) {
-                                request({
-                                  url: 'https://fcm.googleapis.com/fcm/send',
-                                  method: 'POST',
-                                  headers: {
-                                    'Content-Type' :' application/json',
-                                    'Authorization': 'key=AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s'
-                                  },
-                                  body: JSON.stringify(
-                                    { "data": {
-                                      "message": message
-                                    },
-                                      "to" : topic
-                                    }
-                                  )
-                                }, function(error, response, body) {
-                                  if (error) { 
-                                    console.error(error, response, body); 
-                                  }
-                                  else if (response.statusCode >= 400) { 
-                                    console.error('HTTP Error: '+response.statusCode+' - '+response.statusMessage+'\n'+body); 
-                                  }
-                                  else {
-                                    console.log('Done!');
-                                  }
-                                });
-                              }
+                            // function sendMessageToUser(topic, message) {
+                            //     request({
+                            //       url: 'https://fcm.googleapis.com/fcm/send',
+                            //       method: 'POST',
+                            //       headers: {
+                            //         'Content-Type' :' application/json',
+                            //         'Authorization': 'key=AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s'
+                            //       },
+                            //       body: JSON.stringify(
+                            //         { "data": {
+                            //           "message": message
+                            //         },
+                            //           "to" : topic
+                            //         }
+                            //       )
+                            //     }, function(error, response, body) {
+                            //       if (error) { 
+                            //         console.error(error, response, body); 
+                            //       }
+                            //       else if (response.statusCode >= 400) { 
+                            //         console.error('HTTP Error: '+response.statusCode+' - '+response.statusMessage+'\n'+body); 
+                            //       }
+                            //       else {
+                            //         console.log('Done!');
+                            //       }
+                            //     });
+                            //   }
 
 }
 

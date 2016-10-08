@@ -20,19 +20,22 @@ firebase.initializeApp({
 
 
 
+
 //in heroku scheduler will be after utc day changes so +1 day more than running during the day i.e. 282 for heroku 281 local
 //leave set to heroku time
 
 var firebaseDb = firebase.database();
 var scheduleDate = moment().utc().subtract(282, 'days').format('YYYY_MM_DD');
 
+console.log(scheduleDate);
+
 var contestsRef = firebaseDb.ref('Contests').child(scheduleDate);
 var playerStats = firebaseDb.ref("PlayerStats").child(scheduleDate);
 
 contestsRef.once('value', function(allContests){
 
-	allContests.forEach(function(singleContest) {
 
+	allContests.forEach(function(singleContest) {
 
     var entriesRef = contestsRef.child(singleContest.key).child('Entries');
 
@@ -109,6 +112,8 @@ contestsRef.once('value', function(allContests){
 
 
     			entryVS.forEach(function(opponent){
+    				
+    				console.log(opponent.val()[0].playerId);
 
 					playerStats.child(opponent.val()[0].playerId).once('value', function(oppStats){
 
