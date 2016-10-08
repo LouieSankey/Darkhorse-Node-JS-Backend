@@ -17,7 +17,7 @@ firebase.initializeApp({
 });
 
 
-var lastSeasonsScheduleDate = moment().utc().subtract(281, 'days');
+var lastSeasonsScheduleDate = moment().utc().subtract(282, 'days');
 
 var date = lastSeasonsScheduleDate.format('ddd MMM D YYYY');
 var firebaseFormatDate = lastSeasonsScheduleDate.format('YYYY_MM_DD');
