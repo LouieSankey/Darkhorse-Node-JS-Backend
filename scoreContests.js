@@ -19,8 +19,6 @@ firebase.initializeApp({
 });
 
 
-
-
 //in heroku scheduler will be after utc day changes so +1 day more than running during the day i.e. 282 for heroku 281 local
 //leave set to heroku time
 

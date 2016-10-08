@@ -20,7 +20,7 @@ var firebaseDb = firebase.database();
 //in heroku scheduler will be after utc day changes so +1 day more than running during the day i.e. 282 for heroku 281 local
 //leave set to heroku time
 
-var firebaseFormatDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
+var firebaseFormatDate = moment().utc().subtract(282, 'days').format('YYYY_MM_DD');
 var httpDate = moment().utc().subtract(281, 'days').format('MM/DD/YYYY');
 
 

@@ -20,7 +20,7 @@ firebase.initializeApp({
 
 
 //gets the current eastern standard time which is two hours ahead of Denver, and 4 hours ahead of cali
-var lastSeasonsScheduleDate = moment().utc().subtract(282, 'days');
+var lastSeasonsScheduleDate = moment().utc().subtract(281, 'days');
 var scheduleDate = lastSeasonsScheduleDate.format('ddd MMM D YYYY');
 var apiDate = lastSeasonsScheduleDate.format('MM/DD/YYYY');
 var firebaseFormatDate = lastSeasonsScheduleDate.format('YYYY_MM_DD');
