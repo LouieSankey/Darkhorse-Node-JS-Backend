@@ -21,7 +21,7 @@ var firebaseDb = firebase.database();
 //leave set to heroku time
 
 var firebaseFormatDate = moment().utc().subtract(282, 'days').format('YYYY_MM_DD');
-var httpDate = moment().utc().subtract(281, 'days').format('MM/DD/YYYY');
+var httpDate = moment().utc().subtract(282, 'days').format('MM/DD/YYYY');
 
 
 var PlayerStatsRef = firebaseDb.ref("PlayerStats");

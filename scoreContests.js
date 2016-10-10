@@ -110,8 +110,12 @@ contestsRef.once('value', function(allContests){
 
 
     			entryVS.forEach(function(opponent){
+
+
     				
     				console.log(opponent.val()[0].playerId);
+
+    				if(opponent.val()[0].playerId != null){
 
 					playerStats.child(opponent.val()[0].playerId).once('value', function(oppStats){
 
@@ -360,16 +364,20 @@ contestsRef.once('value', function(allContests){
 
 
 	    				});
+}
 
 
 						
 
  	    			}); // end for each opponent
 
+					
+
 
 
 
 	    		}); //
+
 						
 
 
