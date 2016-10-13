@@ -360,7 +360,7 @@ contestsRef.once('value', function(allContests){
     					singleEntryRef.child("score_3pt").set(_3Score);
     					singleEntryRef.child("score_To").set(toScore);
     					singleEntryRef.child("score_Total").set(totalContestScore);
-    					contestsRef.child(singleContest.key).child("contestStatus").set("results");
+    					contestsRef.child(singleContest.key).child("contestStatus").set("Results");
 
 
 	    				});

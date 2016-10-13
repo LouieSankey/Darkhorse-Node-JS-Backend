@@ -60,7 +60,6 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 //possibly add "&& i < 3 to shrink number of contests"
 								if(gameTimes[i] !== gameTimes[i + Number(1)]){
-										console.log("not okay" + gameTimes[i]);
 
 
 									if((i === 0 || i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
@@ -88,7 +87,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 					    								"accepting": 7,
 					    								"prize": 63,
 														"draftEnds":  buyingPeriodEnds - buyingWindow,
-														"contestStatus": "drafting",
+														"contestStatus": "Accepting...",
 														"nbaGamesAmnt": gamesAmnt,
 														"buyingEnds": buyingWindow,
 														"firstContestGame": buyingPeriodEnds
@@ -109,7 +108,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 					    								"accepting": 5,
 					    								"prize": 45,
 														"draftEnds":  buyingPeriodEnds - buyingWindow,
-														"contestStatus": "drafting",
+														"contestStatus": "Accepting...",
 														"nbaGamesAmnt": gamesAmnt,
 														"buyingEnds": buyingWindow,
 														"buyingEndsUtc": buyingPeriodEnds,
@@ -126,7 +125,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 					    								"accepting": 5,
 					    								"prize": 90,
 														"draftEnds":  buyingPeriodEnds - buyingWindow,
-														"contestStatus": "drafting",
+														"contestStatus": "Accepting...",
 														"nbaGamesAmnt": gamesAmnt,
 														"buyingEnds": buyingWindow,
 														"firstContestGame": buyingPeriodEnds
@@ -142,7 +141,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 					    								"accepting": 2,
 					    								"prize": 36,
 														"draftEnds":  buyingPeriodEnds - buyingWindow,
-														"contestStatus": "drafting",
+														"contestStatus": "Accepting...",
 														"nbaGamesAmnt": gamesAmnt,
 														"buyingEnds": buyingWindow,
 														"firstContestGame": buyingPeriodEnds
@@ -158,7 +157,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 					    								"accepting": 2,
 					    								"prize": 54,
 														"draftEnds":  buyingPeriodEnds - buyingWindow,
-														"contestStatus": "drafting",
+														"contestStatus": "Accepting...",
 														"nbaGamesAmnt": gamesAmnt,
 														"buyingEnds": buyingWindow,
 														"firstContestGame": buyingPeriodEnds
@@ -177,7 +176,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 					    				// 				"accepting": 2,
 					    				// 				"prize": 36,
 													// 	"draftEnds":  buyingPeriodEnds - buyingWindow,
-													// 	"contestStatus": "drafting",
+													// 	"contestStatus": "Accepting...",
 													// 	"nbaGamesAmnt": gamesAmnt,
 													// 	"buyingEnds": buyingWindow,
 													// 	"firstContestGame": buyingPeriodEnds
@@ -225,15 +224,14 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 							
 									if(playersEntered === accepting){
 
-										console.log("buying set");
 
-										contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("buying");
+										contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
 
 										contestsRef.child(formattedScheduleDate).push({
 
 											"accepting": accepting,
 											"draftEnds":  draftEnds,
-											"contestStatus": "drafting",
+											"contestStatus": "Accepting...",
 											"gameType": gameType,
 											"nbaGamesAmnt": NBAGames,
 											"buyingEnds": buyingWindow,
