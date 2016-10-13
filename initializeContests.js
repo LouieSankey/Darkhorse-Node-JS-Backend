@@ -104,7 +104,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 														"Entries": "",
 														"gameType": " NBA 10 Token Battle Royal",
-														"positionsPaid": 1,
+														"positionsPaid": 2,
 					    								"entryAmnt": 10,
 					    								"accepting": 5,
 					    								"prize": 45,
@@ -121,7 +121,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 														"Entries": "",
 														"gameType": " NBA 20 Token Battle Royal",
-														"positionsPaid": 1,
+														"positionsPaid": 2,
 					    								"entryAmnt": 20,
 					    								"accepting": 5,
 					    								"prize": 90,
@@ -132,29 +132,11 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"firstContestGame": buyingPeriodEnds
 													});
 
-													contestsRef.child(formattedScheduleDate).push({
-
-														"Entries": "",
-														"gameType": " NBA 50 Token Battle Royal",
-														"positionsPaid": 1,
-					    								"entryAmnt": 50,
-					    								"accepting": 5,
-					    								"prize": 225,
-														"draftEnds":  buyingPeriodEnds - buyingWindow,
-														"contestStatus": "drafting",
-														"nbaGamesAmnt": gamesAmnt,
-														"buyingEnds": buyingWindow,
-														"firstContestGame": buyingPeriodEnds
-													});
-
-
-													case(gamesAmnt >= 1):
-
 
 														contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameType": " NBA 20 Token Battle Royal",
+														"gameType": " NBA 20 Token 1 on 1",
 														"positionsPaid": 1,
 					    								"entryAmnt": 20,
 					    								"accepting": 2,
@@ -167,22 +149,40 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 													});
 
-
 														contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameType": " NBA 20 Token Battle Royal",
+														"gameType": " NBA 30 Token 1 on 1",
 														"positionsPaid": 1,
-					    								"entryAmnt": 20,
+					    								"entryAmnt": 30,
 					    								"accepting": 2,
-					    								"prize": 36,
+					    								"prize": 54,
 														"draftEnds":  buyingPeriodEnds - buyingWindow,
 														"contestStatus": "drafting",
 														"nbaGamesAmnt": gamesAmnt,
 														"buyingEnds": buyingWindow,
 														"firstContestGame": buyingPeriodEnds
-
 													});
+
+														
+
+													// case(gamesAmnt >= 1):
+
+													// 	contestsRef.child(formattedScheduleDate).push({
+
+													// 	"Entries": "",
+													// 	"gameType": " NBA 20 Token Battle Royal",
+													// 	"positionsPaid": 1,
+					    				// 				"entryAmnt": 20,
+					    				// 				"accepting": 2,
+					    				// 				"prize": 36,
+													// 	"draftEnds":  buyingPeriodEnds - buyingWindow,
+													// 	"contestStatus": "drafting",
+													// 	"nbaGamesAmnt": gamesAmnt,
+													// 	"buyingEnds": buyingWindow,
+													// 	"firstContestGame": buyingPeriodEnds
+
+													// });
 
 												
 											}
