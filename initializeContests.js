@@ -56,7 +56,15 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 							if(!location.child(formattedScheduleDate).exists()){
 
-							for (var i = 0; i < gameTimes.length; i++) {
+							var loopsNeeded;
+							if(gameTimes.length > 1){
+								loopsNeeded = 2
+							}else{
+								loopsNeeded = 1
+							}
+
+
+							for (var i = 0; loopsNeeded < 2; i++) {
 
 //possibly add "&& i < 3 to shrink number of contests"
 								if(gameTimes[i] !== gameTimes[i + Number(1)]){
@@ -76,16 +84,17 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 												case (gamesAmnt >= 7):
 
-												console.log(gamesAmnt + "/ accepting 7");
 
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
+														"gameTypeShort": "Battle Royal",
 														"gameType": " NBA 10 Token Battle Royal",
-														"positionsPaid": 3,
+														"scoring": "[6x Multiplier]"
+														"positionsPaid": 1,
 					    								"entryAmnt": 10,
-					    								"accepting": 7,
-					    								"prize": 63,
+					    								"accepting": 6,
+					    								"prize": 54,
 														"draftEnds":  buyingPeriodEnds - buyingWindow,
 														"contestStatus": "Accepting...",
 														"nbaGamesAmnt": gamesAmnt,
@@ -102,11 +111,13 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameType": " NBA 10 Token Battle Royal",
-														"positionsPaid": 2,
-					    								"entryAmnt": 10,
-					    								"accepting": 5,
-					    								"prize": 45,
+														"gameTypeShort": "Battle Royal",
+														"gameType": " NBA 20 Token Battle Royal"
+														"scoring": "[Double-Up]"
+														"positionsPaid": 3,
+					    								"entryAmnt": 20,
+					    								"accepting": 6,
+					    								"prize": 36,
 														"draftEnds":  buyingPeriodEnds - buyingWindow,
 														"contestStatus": "Accepting...",
 														"nbaGamesAmnt": gamesAmnt,
@@ -119,11 +130,13 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
+														"gameTypeShort": "Battle Royal",
 														"gameType": " NBA 20 Token Battle Royal",
-														"positionsPaid": 2,
+														"scoring": "[Triple-Up]"
+														"positionsPaid": 1,
 					    								"entryAmnt": 20,
-					    								"accepting": 5,
-					    								"prize": 90,
+					    								"accepting": 3,
+					    								"prize": 54,
 														"draftEnds":  buyingPeriodEnds - buyingWindow,
 														"contestStatus": "Accepting...",
 														"nbaGamesAmnt": gamesAmnt,
@@ -135,7 +148,9 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
+														"gameTypeShort": "1 on 1",
 														"gameType": " NBA 20 Token 1 on 1",
+														"scoring": "[H2H]"
 														"positionsPaid": 1,
 					    								"entryAmnt": 20,
 					    								"accepting": 2,
@@ -151,7 +166,9 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
+														"gameTypeShort": "1 on 1",
 														"gameType": " NBA 30 Token 1 on 1",
+														"scoring": "[H2H]"
 														"positionsPaid": 1,
 					    								"entryAmnt": 30,
 					    								"accepting": 2,
@@ -205,6 +222,8 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 							var draftEnds = contest.draftEnds;
 							var entryAmnt = contest.entryAmnt;
 							var gameType = contest.gameType;
+							var gameTypeShort = contest.gameTypeShort;
+							var scoring = contest.scoring;
 							var NBAGames = contest.nbaGamesAmnt; 
 							var positionsPaid = contest.positionsPaid;
 							var prize = contest.prize;
@@ -224,7 +243,6 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 							
 									if(playersEntered === accepting){
 
-
 										contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
 
 										contestsRef.child(formattedScheduleDate).push({
@@ -232,6 +250,8 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 											"accepting": accepting,
 											"draftEnds":  draftEnds,
 											"contestStatus": "Accepting...",
+											"gameTypeShort": gametypeShort,
+											"scoring": scoring,
 											"gameType": gameType,
 											"nbaGamesAmnt": NBAGames,
 											"buyingEnds": buyingWindow,
