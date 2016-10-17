@@ -90,7 +90,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"Entries": "",
 														"gameTypeShort": "Battle Royal",
 														"gameType": " NBA 10 Token Battle Royal",
-														"scoring": "[6x Multiplier]"
+														"scoring": "[6x Multiplier]",
 														"positionsPaid": 1,
 					    								"entryAmnt": 10,
 					    								"accepting": 6,
@@ -112,8 +112,8 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 														"Entries": "",
 														"gameTypeShort": "Battle Royal",
-														"gameType": " NBA 20 Token Battle Royal"
-														"scoring": "[Double-Up]"
+														"gameType": " NBA 20 Token Battle Royal",
+														"scoring": "[Double-Up]",
 														"positionsPaid": 3,
 					    								"entryAmnt": 20,
 					    								"accepting": 6,
@@ -132,7 +132,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"Entries": "",
 														"gameTypeShort": "Battle Royal",
 														"gameType": " NBA 20 Token Battle Royal",
-														"scoring": "[Triple-Up]"
+														"scoring": "[Triple-Up]",
 														"positionsPaid": 1,
 					    								"entryAmnt": 20,
 					    								"accepting": 3,
@@ -150,7 +150,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"Entries": "",
 														"gameTypeShort": "1 on 1",
 														"gameType": " NBA 20 Token 1 on 1",
-														"scoring": "[H2H]"
+														"scoring": "[H2H]",
 														"positionsPaid": 1,
 					    								"entryAmnt": 20,
 					    								"accepting": 2,
@@ -168,7 +168,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"Entries": "",
 														"gameTypeShort": "1 on 1",
 														"gameType": " NBA 30 Token 1 on 1",
-														"scoring": "[H2H]"
+														"scoring": "[H2H]",
 														"positionsPaid": 1,
 					    								"entryAmnt": 30,
 					    								"accepting": 2,
