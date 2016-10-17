@@ -56,15 +56,12 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 							if(!location.child(formattedScheduleDate).exists()){
 
-							var loopsNeeded;
-							if(gameTimes.length > 1){
-								loopsNeeded = 2
-							}else{
-								loopsNeeded = 1
-							}
+				
+							var totalContests = 0;
+
+							for (var i = 0; i < gameTimes.length; i++) {
 
 
-							for (var i = 0; loopsNeeded < 2; i++) {
 
 //possibly add "&& i < 3 to shrink number of contests"
 								if(gameTimes[i] !== gameTimes[i + Number(1)]){
@@ -72,13 +69,17 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 									if((i === 0 || i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
 
-										console.log("okay" + gameTimes[i]);
+
+									
 
 									var gamesAmnt = i + Number(1);
+
+									console.log("games amount" + gamesAmnt);
 
 									//these two variables are the same but formatted differently
 									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().valueOf();
 									
+									if(totalContests <=7){
 
 											switch(true){
 
@@ -102,6 +103,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"firstContestGame": buyingPeriodEnds
 
 													});
+													totalContests++;
 
 													
 
@@ -126,6 +128,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"firstContestGame": buyingPeriodEnds
 
 													});
+													totalContests++;
 
 													contestsRef.child(formattedScheduleDate).push({
 
@@ -143,6 +146,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"buyingEnds": buyingWindow,
 														"firstContestGame": buyingPeriodEnds
 													});
+													totalContests++;
 
 
 														contestsRef.child(formattedScheduleDate).push({
@@ -162,6 +166,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"firstContestGame": buyingPeriodEnds
 
 													});
+														totalContests++;
 
 														contestsRef.child(formattedScheduleDate).push({
 
@@ -179,6 +184,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"buyingEnds": buyingWindow,
 														"firstContestGame": buyingPeriodEnds
 													});
+														totalContests++;
 
 														
 
@@ -202,6 +208,8 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 												
 											}
+										}
+
 										}
 
 
