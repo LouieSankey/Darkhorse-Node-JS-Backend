@@ -59,7 +59,9 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 				
 							var totalContests = 0;
 
-							for (var i = 0; i < gameTimes.length; i++) {
+
+
+							for (var i = 0; i < 2; i++) {
 
 
 
@@ -67,10 +69,9 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 								if(gameTimes[i] !== gameTimes[i + Number(1)]){
 
 
-									if((i === 0 || i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
+									if((i <== 1 || i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
 
 
-									
 
 									var gamesAmnt = i + Number(1);
 
