@@ -57,7 +57,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 							if(!location.child(formattedScheduleDate).exists()){
 
 				
-							var totalContests = 0;
+							
 
 
 
@@ -66,12 +66,12 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 
 //possibly add "&& i < 3 to shrink number of contests"
-								if(gameTimes[i] !== gameTimes[i + Number(1)]){
+								if(gameTimes[i] !== gameTimes[i + Number(1)] || i < 2){
+
+									console.log("second loop");
 
 
-									if((i <== 1 || i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
-
-
+									if((i < 2 || i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
 
 									var gamesAmnt = i + Number(1);
 
@@ -80,7 +80,6 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 									//these two variables are the same but formatted differently
 									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().valueOf();
 									
-									if(totalContests <=7){
 
 											switch(true){
 
@@ -104,7 +103,6 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"firstContestGame": buyingPeriodEnds
 
 													});
-													totalContests++;
 
 													
 
@@ -129,7 +127,6 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"firstContestGame": buyingPeriodEnds
 
 													});
-													totalContests++;
 
 													contestsRef.child(formattedScheduleDate).push({
 
@@ -147,7 +144,6 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"buyingEnds": buyingWindow,
 														"firstContestGame": buyingPeriodEnds
 													});
-													totalContests++;
 
 
 														contestsRef.child(formattedScheduleDate).push({
@@ -167,7 +163,6 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"firstContestGame": buyingPeriodEnds
 
 													});
-														totalContests++;
 
 														contestsRef.child(formattedScheduleDate).push({
 
@@ -185,7 +180,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"buyingEnds": buyingWindow,
 														"firstContestGame": buyingPeriodEnds
 													});
-														totalContests++;
+														
 
 														
 
@@ -209,7 +204,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 												
 											}
-										}
+										
 
 										}
 
