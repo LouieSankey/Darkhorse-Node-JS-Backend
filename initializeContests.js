@@ -248,7 +248,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
                         });
 
 
-                  var vsRef = entries.child(newEntry.key).child("VS");
+                  var vsRef = contestEntryRef.child(newEntry.key).child("VS");
 
 //for new entries, adds a default "scores" object with a path to each entry already in the contest
 
@@ -331,7 +331,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
                               });
 
 
-                              var oppVsRef = entries.child(playersInContest[i].playerKey).child("VS");
+                              var oppVsRef = contestEntryRef.child(playersInContest[i].playerKey).child("VS");
 
 
 //for entries already in the contest, adds a "scores" object for the new entry. 
