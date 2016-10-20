@@ -255,7 +255,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 											"accepting": accepting,
 											"draftEnds":  draftEnds,
 											"contestStatus": "Accepting...",
-											"gameTypeShort": gametypeShort,
+											"gameTypeShort": gameTypeShort,
 											"scoring": scoring,
 											"gameType": gameType,
 											"nbaGamesAmnt": NBAGames,
