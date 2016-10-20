@@ -235,13 +235,23 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 							var contestEntryRef = contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("Entries");
 
-									var playersEntered;
-									
-									contestEntryRef.once("value", function(children) {
-										playersEntered = children.numChildren();
-									console.log(playersEntered + "player entered");
+	
+								//new code block for initializing players
+								var playersInContest = [];
+								contestEntryRef.on('child_added', function(newEntry){
+
+
+
+                        playersInContest.push({
+                               "playerKey": newEntry.key,
+                               "name": newEntry.val().name,
+                               "playerId": newEntry.val().playerId
+
+                        });
+
+
 							
-									if(playersEntered === accepting){
+									if(playersInContest.length === accepting){
 
 										console.log(accepting + "accepting");
 
@@ -268,22 +278,9 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 										}
 
 
-									});
+									
 
 
-
-
-	
-								//new code block for initializing players
-								var playersInContest = [];
-								contestEntryRef.on('child_added', function(newEntry){
-
-                        playersInContest.push({
-                               "playerKey": newEntry.key,
-                               "name": newEntry.val().name,
-                               "playerId": newEntry.val().playerId
-
-                        });
 
 
                   var vsRef = contestEntryRef.child(newEntry.key).child("VS");
