@@ -64,24 +64,20 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 							for (var i = 0; i < gameTimes.length; i++) {
 
 
-
 //possibly add "&& i < 3 to shrink number of contests"
-								if(gameTimes[i] !== gameTimes[i + Number(1)]){
-
-									console.log("second loop");
-
+								if(gameTimes[i] !== gameTimes[i + Number(1)] || i === 0){
 
 									if((i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
 
 									var gamesAmnt = i + Number(1);
 
-									console.log("games amount" + gamesAmnt);
 
 									//these two variables are the same but formatted differently
 									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().valueOf();
-									
+
 
 											if(loopsCompleted < 2){
+												console.log(gameTimes[i]);
 
 												loopsCompleted++;
 
@@ -225,7 +221,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 						contestsRef.child(formattedScheduleDate).on('child_added', function(contestSnapshot){
 
 							var contest = contestSnapshot.val();
-							console.log(contest);
+							console.log("listening to contst: " + contest);
 
 							var accepting = contest.accepting;
 							var draftEnds = contest.draftEnds;
