@@ -235,6 +235,44 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 							var contestEntryRef = contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("Entries");
 
+									var playersEntered;
+									
+									contestEntryRef.once("value", function(children) {
+										playersEntered = children.numChildren();
+									console.log(playersEntered + "player entered");
+							
+									if(playersEntered === accepting){
+
+										console.log(accepting + "accepting");
+
+										contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
+
+										contestsRef.child(formattedScheduleDate).push({
+
+											"accepting": accepting,
+											"draftEnds":  draftEnds,
+											"contestStatus": "Accepting...",
+											"gameTypeShort": gameTypeShort,
+											"scoring": scoring,
+											"gameType": gameType,
+											"nbaGamesAmnt": NBAGames,
+											"buyingEnds": buyingWindow,
+											"positionsPaid": positionsPaid,
+											"entryAmnt": entryAmnt,
+											"prize": prize
+
+										});
+
+										//should calculate scores after buying window closes
+										//updateContestStatus(buyingWindow);
+										}
+
+
+									});
+
+
+
+
 	
 								//new code block for initializing players
 								var playersInContest = [];
@@ -249,6 +287,8 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 
                   var vsRef = contestEntryRef.child(newEntry.key).child("VS");
+
+
 
 //for new entries, adds a default "scores" object with a path to each entry already in the contest
 
@@ -452,39 +492,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 
 
-									var playersEntered;
-									contestEntryRef.once("value", function(children) {
-										playersEntered = children.numChildren();
-									console.log(playersEntered + "player entered");
-							
-									if(playersEntered === accepting){
 
-										console.log(accepting + "accepting");
-
-										contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
-
-										contestsRef.child(formattedScheduleDate).push({
-
-											"accepting": accepting,
-											"draftEnds":  draftEnds,
-											"contestStatus": "Accepting...",
-											"gameTypeShort": gameTypeShort,
-											"scoring": scoring,
-											"gameType": gameType,
-											"nbaGamesAmnt": NBAGames,
-											"buyingEnds": buyingWindow,
-											"positionsPaid": positionsPaid,
-											"entryAmnt": entryAmnt,
-											"prize": prize
-
-										});
-
-										//should calculate scores after buying window closes
-										//updateContestStatus(buyingWindow);
-										}
-
-
-									});
 
 
 								});
