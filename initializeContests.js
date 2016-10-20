@@ -57,21 +57,21 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 							if(!location.child(formattedScheduleDate).exists()){
 
 				
-							
+							var loopsCompleted = 0;
 
 
 
-							for (var i = 0; i < 2; i++) {
+							for (var i = 0; i < gameTimes.length; i++) {
 
 
 
 //possibly add "&& i < 3 to shrink number of contests"
-								if(gameTimes[i] !== gameTimes[i + Number(1)] || i < 2){
+								if(gameTimes[i] !== gameTimes[i + Number(1)]){
 
 									console.log("second loop");
 
 
-									if((i < 2 || i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
+									if((i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
 
 									var gamesAmnt = i + Number(1);
 
@@ -80,6 +80,10 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 									//these two variables are the same but formatted differently
 									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().valueOf();
 									
+
+											if(loopsCompleted < 2){
+
+												loopsCompleted++;
 
 											switch(true){
 
@@ -204,6 +208,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 												
 											}
+										}
 										
 
 										}
