@@ -455,10 +455,11 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 									var playersEntered;
 									contestEntryRef.once("value", function(children) {
 										playersEntered = children.numChildren();
-									});
-
+									console.log(playersEntered + "player entered");
 							
 									if(playersEntered === accepting){
+
+										console.log(accepting + "accepting");
 
 										contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
 
@@ -480,7 +481,10 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 										//should calculate scores after buying window closes
 										//updateContestStatus(buyingWindow);
-									}
+										}
+
+
+									});
 
 
 								});
