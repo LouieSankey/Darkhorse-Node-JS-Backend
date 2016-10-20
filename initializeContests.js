@@ -17,19 +17,19 @@ firebase.initializeApp({
   databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
 });
 
+
+
 var firebaseDb = firebase.database();
-
-
-//var scoreContests = require('./scoreContests');
-
 var schedule = firebaseDb.ref('DatedSchedule');
 var contestsRef = firebaseDb.ref("Contests");
-
 var fullContestsRef = firebaseDb.ref("FullContests");
 var userRef = firebaseDb.ref("Users");
 var formattedScheduleDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
 //var formattedScheduleDate = moment(scheduleDate, ['ddd MMM D YYYY']).subtract(0, 'days').format('YYYY_MM_DD');
-console.log(formattedScheduleDate);
+
+var serverTimeRef = firebaseDb.ref("serverTime");
+
+serverTimeRef.on('value', function(){
 
 schedule.child(formattedScheduleDate).on('value', function (snapshot){
 	
@@ -478,13 +478,11 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
                                   }
 
 
-                  }
+                  				}
 
-    }, function (error) {
+    				}, function (error) {
 
-    });
-
-
+   				 });
 
 
 
@@ -492,11 +490,13 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 
 
-								});
+
+
+			});
 
 
 
-							});
+		});
 
 
 
@@ -504,20 +504,22 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 	
 
-// });
 
 
 
-function updateContestStatus(time){
-	console.log("set with " + time + "to scoring");
 
-		setTimeout(function() {
+	function updateContestStatus(time){
+		console.log("set with " + time + "to scoring");
 
-		//scoreContests.update(firebase, formattedScheduleDate);
+			setTimeout(function() {
 
-		}, time);
+			//scoreContests.update(firebase, formattedScheduleDate);
 
-}
+			}, time);
+
+		}
+
+	});
 
 
 }

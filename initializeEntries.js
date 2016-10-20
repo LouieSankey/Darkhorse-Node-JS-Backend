@@ -5,8 +5,9 @@ var firebaseDb = firebase.database();
 var request = require('request');
 
 
-var contestRef = firebaseDb.ref("Contests").child(scheduleDate);
 
+//schedule date === formattedScheduleDate
+var contestRef = firebaseDb.ref("Contests").child(scheduleDate);
 
 
 //sets up to listen for new contests
@@ -29,7 +30,6 @@ contestRef.on('child_added', function (contest, prevChildKey) {
 //for each contest, sets up to listen for added players
     entries.on('child_added', function (newEntry) {
 
-            console.log(newEntry.val());
 
 
                         playersInContest.push({
