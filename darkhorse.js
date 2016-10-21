@@ -240,6 +240,8 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 								var playersInContest = [];
 								contestEntryRef.on('child_added', function(newEntry){
 
+									console.log(playersInContest.length);
+
 
 
                         playersInContest.push({
