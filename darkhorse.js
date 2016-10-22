@@ -1,5 +1,7 @@
 function update(){
 
+  console.log("listening to new contest ");
+
 var http = require('http');
 var moment =require('moment');
 var firebase = require("./node_modules/firebase");
@@ -14,6 +16,7 @@ firebase.initializeApp({
   databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
 });
 
+      
 
 var scheduleDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
 var firebaseDb = firebase.database();
@@ -43,7 +46,6 @@ contestRef.on('child_added', function (contest, prevChildKey) {
 
 //for each contest, sets up to listen for added players
     entries.on('child_added', function (newEntry) {
-
 
 
                         playersInContest.push({
@@ -287,6 +289,8 @@ contestRef.on('child_added', function (contest, prevChildKey) {
 }
 
 module.exports.update = update;
+
+update();
 
 
 
