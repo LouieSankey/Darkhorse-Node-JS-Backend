@@ -25,15 +25,11 @@ var contestsRef = firebaseDb.ref("Contests");
 var fullContestsRef = firebaseDb.ref("FullContests");
 var userRef = firebaseDb.ref("Users");
 var formattedScheduleDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
-//var formattedScheduleDate = moment(scheduleDate, ['ddd MMM D YYYY']).subtract(0, 'days').format('YYYY_MM_DD');
 
-var serverTimeRef = firebaseDb.ref("serverTime");
 
-serverTimeRef.on('value', function(){
-
-schedule.child(formattedScheduleDate).on('value', function (snapshot){
+schedule.child(formattedScheduleDate).once('value', function (snapshot){
 	
-				contestsRef.once("value", function(location) {
+				contestsRef.on("value", function(location) {
 
 						var utc = moment.utc().valueOf();
 						var buyingWindow = 60000 * 30;
@@ -180,27 +176,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 														"buyingEnds": buyingWindow,
 														"firstContestGame": buyingPeriodEnds
 													});
-														
-
-														
-
-													// case(gamesAmnt >= 1):
-
-													// 	contestsRef.child(formattedScheduleDate).push({
-
-													// 	"Entries": "",
-													// 	"gameType": " NBA 20 Token Battle Royal",
-													// 	"positionsPaid": 1,
-					    				// 				"entryAmnt": 20,
-					    				// 				"accepting": 2,
-					    				// 				"prize": 36,
-													// 	"draftEnds":  buyingPeriodEnds - buyingWindow,
-													// 	"contestStatus": "Accepting...",
-													// 	"nbaGamesAmnt": gamesAmnt,
-													// 	"buyingEnds": buyingWindow,
-													// 	"firstContestGame": buyingPeriodEnds
-
-													// });
+									
 
 												
 											}
@@ -220,6 +196,9 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 						
 						contestsRef.child(formattedScheduleDate).on('child_added', function(contestSnapshot){
 
+							console.log("called for : " + contestSnapshot.key);
+
+
 							var contest = contestSnapshot.val();
 							var accepting = contest.accepting;
 							var draftEnds = contest.draftEnds;
@@ -233,27 +212,19 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 							var contestStatus = contest.contestStatus;
 							var buyingWindow = contest.buyingEnds;
 
+
 							var contestEntryRef = contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("Entries");
-
-	
-								//new code block for initializing players
-								var playersInContest = [];
-								contestEntryRef.on('child_added', function(newEntry){
+						
 
 
-
-                        playersInContest.push({
-                               "playerKey": newEntry.key,
-                               "name": newEntry.val().name,
-                               "playerId": newEntry.val().playerId
-
-                        });
+						
+									contestEntryRef.on('value', function(entriesSnapshot){
 
 
-							
-									if(playersInContest.length === accepting){
 
-										console.log(accepting + "accepting");
+									var totalEntries = entriesSnapshot.numChildren();
+
+									if(totalEntries === accepting){
 
 										contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
 
@@ -276,218 +247,8 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 										//should calculate scores after buying window closes
 										//updateContestStatus(buyingWindow);
 										}
-
-
-									
-
-
-
-
-                  var vsRef = contestEntryRef.child(newEntry.key).child("VS");
-
-
-
-//for new entries, adds a default "scores" object with a path to each entry already in the contest
-
-
-                  for (var i = 0; i < playersInContest.length; i++) {
-
-
-                         if(playersInContest[i].playerKey != newEntry.key){
-
-
-                              vsRef.child(playersInContest[i].playerKey).update({
-
-                                    
-                                    "0": {
-                                          "matchSet": false,
-                                          "opponentName": playersInContest[i].name,
-                                          "playerBuy": "0",
-                                          "playerName": newEntry.val().name,
-                                          "statCategory": "Pts",
-                                          "playerId": playersInContest[i].playerId,
-                                          "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    },
-                                    "1": {
-                                          "matchSet": false,
-                                          "opponentName": playersInContest[i].name,
-                                          "playerBuy": "0",
-                                          "playerName": newEntry.val().name,
-                                          "statCategory": "Reb",
-                                          "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    },
-                                    "2": {
-                                          "matchSet": false,
-                                          "opponentName": playersInContest[i].name,
-                                          "playerBuy": "0",
-                                          "playerName": newEntry.val().name,
-                                          "statCategory": "Ast",
-                                          "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    },
-                                    "3": {
-                                          "matchSet": false,
-                                          "opponentName": playersInContest[i].name,
-                                          "playerBuy": "0",
-                                          "playerName": newEntry.val().name,
-                                          "statCategory": "Stl",
-                                          "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    },
-                                    "4": {
-                                          "matchSet": false,
-                                          "opponentName": playersInContest[i].name,
-                                          "playerBuy": "0",
-                                          "playerName": newEntry.val().name,
-                                          "statCategory": "Blk",
-                                          "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    },
-                                    "5": {
-                                          "matchSet": false,
-                                          "opponentName": playersInContest[i].name,
-                                          "playerBuy": "0",
-                                          "playerName": newEntry.val().name,
-                                          "statCategory": "3Pt",
-                                          "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    },
-                                    "6": {
-                                          "matchSet": false,
-                                          "opponentName": playersInContest[i].name,
-                                          "playerBuy": "0",
-                                          "playerName": newEntry.val().name,
-                                          "statCategory": "Low TO",
-                                          "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    }
-                                    
-                                    
-                              });
-
-
-                              var oppVsRef = contestEntryRef.child(playersInContest[i].playerKey).child("VS");
-
-
-//for entries already in the contest, adds a "scores" object for the new entry. 
-//also need to notify entries already in the contest of the new entry
-
-                              console.log("notification " + playersInContest[i].playerKey);
-
-                                // request({
-                                //   url: 'https://fcm.googleapis.com/fcm/send',
-                                //   method: 'POST',
-                                //   headers: {
-                                //     'Content-Type' :' application/json',
-                                //     'Authorization': 'key=AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s'
-                                //   },
-                                //   body: JSON.stringify({
-                                //     data: {
-                                //       message: "A player has drafted into your contest."
-                                //     },
-                                //     to : '/topics/user_'+ playersInContest[i].playerKey
-                                //   })
-                                // });
-
-
-                                // console.log('/topics/user_'+ playersInContest[i].playerKey);
-
-                                // sendMessageToUser(
-                                //   '/topics/user_'+ playersInContest[i].playerKey,
-                                //   { message: "A player has drafted into your contest."}
-                                // );
-
-
-
-                              //sendNotificationToUser(playersInContest[i].playerKey, "a player has drafted into your contest");
-
-
-                               oppVsRef.child(newEntry.key).update({
-
-                                    "0": {
-
-                                          "matchSet": false,
-                                          "opponentName": newEntry.val().name,
-                                          "playerBuy": "0",
-                                          "playerName": playersInContest[i].name,
-                                          "statCategory": "Pts",
-                                          "playerId": newEntry.val().playerId,
-                                           "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    },
-                                    "1": {
-                                          "matchSet": false,
-                                          "opponentName": newEntry.val().name,
-                                          "playerBuy": "0",
-                                          "playerName": playersInContest[i].name,
-                                          "statCategory": "Reb",
-                                           "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    },
-                                    "2": {
-                                          "matchSet": false,
-                                          "opponentName": newEntry.val().name,
-                                          "playerBuy": "0",
-                                          "playerName": playersInContest[i].name,
-                                          "statCategory": "Ast",
-                                           "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    },
-                                    "3": {
-                                          "matchSet": false,
-                                          "opponentName": newEntry.val().name,
-                                          "playerBuy": "0",
-                                          "playerName": playersInContest[i].name,
-                                          "statCategory": "Stl",
-                                           "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    },
-                                    "4": {
-                                          "matchSet": false,
-                                          "opponentName": newEntry.val().name,
-                                          "playerBuy": "0",
-                                          "playerName": playersInContest[i].name,
-                                          "statCategory": "Blk",
-                                           "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    },
-                                    "5": {
-                                          "matchSet": false,
-                                          "opponentName": newEntry.val().name,
-                                          "playerBuy": "0",
-                                          "playerName": playersInContest[i].name,
-                                          "statCategory": "3Pt",
-                                           "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    },
-                                    "6": {
-                                          "matchSet": false,
-                                          "opponentName": newEntry.val().name,
-                                          "playerBuy": "0",
-                                          "playerName": playersInContest[i].name,
-                                          "statCategory": "Low TO",
-                                           "plusAmount": 0,
-                                          "opponentPlus": 0
-                                    }
-                                    
-                                    });
-
-
-                                  }
-
-
-                  				}
-
-    				}, function (error) {
-
-   				 });
-
-
-
-
-
+								
+									});
 
 
 
@@ -497,14 +258,6 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 
 		});
-
-
-
-					
-
-	
-
-
 
 
 
@@ -519,7 +272,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
 
 		}
 
-	});
+	//});
 
 
 }

@@ -1,6 +1,3 @@
-//depending on popularity 
-//no more contests should be created less than 5 min before DRAFT ENDS to allow time for full draft
-
 function update(){
 
 var http = require('http');
@@ -18,229 +15,34 @@ firebase.initializeApp({
 });
 
 
-
+var scheduleDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
 var firebaseDb = firebase.database();
-var schedule = firebaseDb.ref('DatedSchedule');
-var contestsRef = firebaseDb.ref("Contests");
-var fullContestsRef = firebaseDb.ref("FullContests");
-var userRef = firebaseDb.ref("Users");
-var formattedScheduleDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
-//var formattedScheduleDate = moment(scheduleDate, ['ddd MMM D YYYY']).subtract(0, 'days').format('YYYY_MM_DD');
-
-var serverTimeRef = firebaseDb.ref("serverTime");
-
-serverTimeRef.on('value', function(){
-
-schedule.child(formattedScheduleDate).on('value', function (snapshot){
-	
-				contestsRef.once("value", function(location) {
-
-						var utc = moment.utc().valueOf();
-						var buyingWindow = 60000 * 30;
-
-							var gameTimes = [];
-							var gamesInDraft = 0;
-
-							for (var timeKey in snapshot.val()) {
-								var index = 0;
-					
-									  for(var game in snapshot.val()[timeKey]){
-									  		gameTimes.push(timeKey);
-									  		++gamesInDraft;
-									  }
-							}
+var request = require('request');
 
 
-							gameTimes.reverse();
-							var setGameTime;
-
-							if(!location.child(formattedScheduleDate).exists()){
-
-				
-							var loopsCompleted = 0;
+//schedule date === formattedScheduleDate
+var contestRef = firebaseDb.ref("Contests").child(scheduleDate);
 
 
+//sets up to listen for new contests
+contestRef.on('child_added', function (contest, prevChildKey) {
 
-							for (var i = 0; i < gameTimes.length; i++) {
+      console.log("listening to new contest ");
 
-
-//possibly add "&& i < 3 to shrink number of contests"
-								if(gameTimes[i] !== gameTimes[i + Number(1)] || i === 0){
-
-									if((i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
-
-									var gamesAmnt = i + Number(1);
+    var entries = contestRef.child(contest.key).child("Entries");
+    var playersInContest = [];
 
 
-									//these two variables are the same but formatted differently
-									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().valueOf();
+//for testing, removes players if entries are deleted from database
+    entries.on('child_removed', function(){
+      
+      playersInContest = [];
+            
+    });
 
 
-											if(loopsCompleted < 2){
-												console.log(gameTimes[i]);
-
-												loopsCompleted++;
-
-											switch(true){
-
-												case (gamesAmnt >= 7):
-
-
-													contestsRef.child(formattedScheduleDate).push({
-
-														"Entries": "",
-														"gameTypeShort": "Battle Royal",
-														"gameType": " NBA 10 Token Battle Royal",
-														"scoring": "[6x Multiplier]",
-														"positionsPaid": 1,
-					    								"entryAmnt": 10,
-					    								"accepting": 6,
-					    								"prize": 54,
-														"draftEnds":  buyingPeriodEnds - buyingWindow,
-														"contestStatus": "Accepting...",
-														"nbaGamesAmnt": gamesAmnt,
-														"buyingEnds": buyingWindow,
-														"firstContestGame": buyingPeriodEnds
-
-													});
-
-													
-
-												case(gamesAmnt >= 2):
-
-
-													contestsRef.child(formattedScheduleDate).push({
-
-														"Entries": "",
-														"gameTypeShort": "Battle Royal",
-														"gameType": " NBA 20 Token Battle Royal",
-														"scoring": "[Double-Up]",
-														"positionsPaid": 3,
-					    								"entryAmnt": 20,
-					    								"accepting": 6,
-					    								"prize": 36,
-														"draftEnds":  buyingPeriodEnds - buyingWindow,
-														"contestStatus": "Accepting...",
-														"nbaGamesAmnt": gamesAmnt,
-														"buyingEnds": buyingWindow,
-														"buyingEndsUtc": buyingPeriodEnds,
-														"firstContestGame": buyingPeriodEnds
-
-													});
-
-													contestsRef.child(formattedScheduleDate).push({
-
-														"Entries": "",
-														"gameTypeShort": "Battle Royal",
-														"gameType": " NBA 20 Token Battle Royal",
-														"scoring": "[Triple-Up]",
-														"positionsPaid": 1,
-					    								"entryAmnt": 20,
-					    								"accepting": 3,
-					    								"prize": 54,
-														"draftEnds":  buyingPeriodEnds - buyingWindow,
-														"contestStatus": "Accepting...",
-														"nbaGamesAmnt": gamesAmnt,
-														"buyingEnds": buyingWindow,
-														"firstContestGame": buyingPeriodEnds
-													});
-
-
-														contestsRef.child(formattedScheduleDate).push({
-
-														"Entries": "",
-														"gameTypeShort": "1 on 1",
-														"gameType": " NBA 20 Token 1 on 1",
-														"scoring": "[H2H]",
-														"positionsPaid": 1,
-					    								"entryAmnt": 20,
-					    								"accepting": 2,
-					    								"prize": 36,
-														"draftEnds":  buyingPeriodEnds - buyingWindow,
-														"contestStatus": "Accepting...",
-														"nbaGamesAmnt": gamesAmnt,
-														"buyingEnds": buyingWindow,
-														"firstContestGame": buyingPeriodEnds
-
-													});
-
-														contestsRef.child(formattedScheduleDate).push({
-
-														"Entries": "",
-														"gameTypeShort": "1 on 1",
-														"gameType": " NBA 30 Token 1 on 1",
-														"scoring": "[H2H]",
-														"positionsPaid": 1,
-					    								"entryAmnt": 30,
-					    								"accepting": 2,
-					    								"prize": 54,
-														"draftEnds":  buyingPeriodEnds - buyingWindow,
-														"contestStatus": "Accepting...",
-														"nbaGamesAmnt": gamesAmnt,
-														"buyingEnds": buyingWindow,
-														"firstContestGame": buyingPeriodEnds
-													});
-														
-
-														
-
-													// case(gamesAmnt >= 1):
-
-													// 	contestsRef.child(formattedScheduleDate).push({
-
-													// 	"Entries": "",
-													// 	"gameType": " NBA 20 Token Battle Royal",
-													// 	"positionsPaid": 1,
-					    				// 				"entryAmnt": 20,
-					    				// 				"accepting": 2,
-					    				// 				"prize": 36,
-													// 	"draftEnds":  buyingPeriodEnds - buyingWindow,
-													// 	"contestStatus": "Accepting...",
-													// 	"nbaGamesAmnt": gamesAmnt,
-													// 	"buyingEnds": buyingWindow,
-													// 	"firstContestGame": buyingPeriodEnds
-
-													// });
-
-												
-											}
-										}
-										
-
-										}
-
-
-								}
-
-							}
-						}
-					});
-
-
-						
-						contestsRef.child(formattedScheduleDate).on('child_added', function(contestSnapshot){
-
-							var contest = contestSnapshot.val();
-							var accepting = contest.accepting;
-							var draftEnds = contest.draftEnds;
-							var entryAmnt = contest.entryAmnt;
-							var gameType = contest.gameType;
-							var gameTypeShort = contest.gameTypeShort;
-							var scoring = contest.scoring;
-							var NBAGames = contest.nbaGamesAmnt; 
-							var positionsPaid = contest.positionsPaid;
-							var prize = contest.prize;
-							var contestStatus = contest.contestStatus;
-							var buyingWindow = contest.buyingEnds;
-
-							var contestEntryRef = contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("Entries");
-
-	
-								//new code block for initializing players
-								var playersInContest = [];
-								contestEntryRef.on('child_added', function(newEntry){
-
-									console.log(playersInContest.length);
+//for each contest, sets up to listen for added players
+    entries.on('child_added', function (newEntry) {
 
 
 
@@ -252,42 +54,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
                         });
 
 
-							
-									if(playersInContest.length === accepting){
-
-										console.log(accepting + "accepting");
-
-										contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
-
-										contestsRef.child(formattedScheduleDate).push({
-
-											"accepting": accepting,
-											"draftEnds":  draftEnds,
-											"contestStatus": "Accepting...",
-											"gameTypeShort": gameTypeShort,
-											"scoring": scoring,
-											"gameType": gameType,
-											"nbaGamesAmnt": NBAGames,
-											"buyingEnds": buyingWindow,
-											"positionsPaid": positionsPaid,
-											"entryAmnt": entryAmnt,
-											"prize": prize
-
-										});
-
-										//should calculate scores after buying window closes
-										//updateContestStatus(buyingWindow);
-										}
-
-
-									
-
-
-
-
-                  var vsRef = contestEntryRef.child(newEntry.key).child("VS");
-
-
+                  var vsRef = entries.child(newEntry.key).child("VS");
 
 //for new entries, adds a default "scores" object with a path to each entry already in the contest
 
@@ -370,7 +137,7 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
                               });
 
 
-                              var oppVsRef = contestEntryRef.child(playersInContest[i].playerKey).child("VS");
+                              var oppVsRef = entries.child(playersInContest[i].playerKey).child("VS");
 
 
 //for entries already in the contest, adds a "scores" object for the new entry. 
@@ -480,57 +247,46 @@ schedule.child(formattedScheduleDate).on('value', function (snapshot){
                                   }
 
 
-                  				}
+                  }
 
-    				}, function (error) {
+    }, function (error) {
 
-   				 });
+    });
+}, function (error) {
 
+});
 
-
-
-
-
-
-
-
-			});
-
-
-
-		});
-
-
-
-					
-
-	
-
-
-
-
-
-	function updateContestStatus(time){
-		console.log("set with " + time + "to scoring");
-
-			setTimeout(function() {
-
-			//scoreContests.update(firebase, formattedScheduleDate);
-
-			}, time);
-
-		}
-
-	});
-
+                            // function sendMessageToUser(topic, message) {
+                            //     request({
+                            //       url: 'https://fcm.googleapis.com/fcm/send',
+                            //       method: 'POST',
+                            //       headers: {
+                            //         'Content-Type' :' application/json',
+                            //         'Authorization': 'key=AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s'
+                            //       },
+                            //       body: JSON.stringify(
+                            //         { "data": {
+                            //           "message": message
+                            //         },
+                            //           "to" : topic
+                            //         }
+                            //       )
+                            //     }, function(error, response, body) {
+                            //       if (error) { 
+                            //         console.error(error, response, body); 
+                            //       }
+                            //       else if (response.statusCode >= 400) { 
+                            //         console.error('HTTP Error: '+response.statusCode+' - '+response.statusMessage+'\n'+body); 
+                            //       }
+                            //       else {
+                            //         console.log('Done!');
+                            //       }
+                            //     });
+                            //   }
 
 }
 
-update();
-
-
 module.exports.update = update;
-
 
 
 
