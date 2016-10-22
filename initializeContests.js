@@ -219,6 +219,8 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 						
 									contestEntryRef.on('child_changed', function(entriesSnapshot){
 
+										console.log("child_changed");
+
 
 									var totalEntries = entriesSnapshot.numChildren();
 
