@@ -214,8 +214,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 
 							var contestEntryRef = contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("Entries");
-						
-
+					
 
 						
 									contestEntryRef.on('child_changed', function(entriesSnapshot){
