@@ -216,15 +216,16 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 							var contestEntryRef = contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("Entries");
 					
 
+									var counter = 0;
 						
 									contestEntryRef.on('child_changed', function(entriesSnapshot){
 
-										console.log("child_changed");
+										++counter;
 
+										console.log("child_changed: " + counter);
+									
 
-									var totalEntries = entriesSnapshot.numChildren();
-
-									if(totalEntries === accepting){
+									if(counter === accepting){
 
 										contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
 
