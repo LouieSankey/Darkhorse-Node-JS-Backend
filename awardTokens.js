@@ -18,7 +18,7 @@ firebase.initializeApp({
 });
 
 var firebaseDb = firebase.database();
-var scheduleDate = moment().utc().subtract(282, 'days').format('YYYY_MM_DD');
+var scheduleDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
 
 console.log(scheduleDate);
 
@@ -50,7 +50,8 @@ contestsRef.once('value', function(allContests){
 						if(count <= positionsPaid){
 							//award prize amount to user
 							var winningUser = singleEntry.key;
-							console.log(winningUser + " is a winner of " + prize);
+							console.log(winningUser + " is a winner of " + prize + " in " + singleContest.key);
+
 
 						}
 
@@ -68,7 +69,8 @@ contestsRef.once('value', function(allContests){
 					entries.forEach(function(singleEntry){
 						var refundedUser = singleEntry.key;
 
-						console.log(refundedUser + " is refunded " + entryAmount);
+						console.log(refundedUser + " is refunded " + entryAmount + " in " + singleContest.key);
+						console.log("darkhorse gets 0");
 
 
 					});

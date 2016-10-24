@@ -28,7 +28,7 @@ var contestRef = firebaseDb.ref("Contests").child(scheduleDate);
 
 
 //sets up to listen for new contests
-contestRef.on('child_added', function (contest, prevChildKey) {
+contestRef.on('child_added', function (contest) {
 
       console.log("listening to new contest ");
 
@@ -42,6 +42,67 @@ contestRef.on('child_added', function (contest, prevChildKey) {
       playersInContest = [];
             
     });
+
+
+
+  console.log("called for : " + contestSnapshot.key);
+
+
+              var contest = contestSnapshot.val();
+              var accepting = contest.accepting;
+              var draftEnds = contest.draftEnds;
+              var entryAmnt = contest.entryAmnt;
+              var gameType = contest.gameType;
+              var gameTypeShort = contest.gameTypeShort;
+              var scoring = contest.scoring;
+              var NBAGames = contest.nbaGamesAmnt; 
+              var positionsPaid = contest.positionsPaid;
+              var prize = contest.prize;
+              var contestStatus = contest.contestStatus;
+              var buyingWindow = contest.buyingEnds;
+
+
+              //var contestEntryRef = contestRef.child(contestSnapshot.key).child("Entries");
+          
+                  var counter = 0;
+                  var entryListener = entries.on('child_changed', function(entriesSnapshot){
+
+                    ++counter;
+
+                    console.log("child_changed: " + counter);
+                  
+
+                  if(counter === accepting){
+
+                    contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
+
+                    contestsRef.child(formattedScheduleDate).push({
+
+                      "accepting": accepting,
+                      "draftEnds":  draftEnds,
+                      "contestStatus": "Accepting...",
+                      "gameTypeShort": gameTypeShort,
+                      "scoring": scoring,
+                      "gameType": gameType,
+                      "nbaGamesAmnt": NBAGames,
+                      "buyingEnds": buyingWindow,
+                      "positionsPaid": positionsPaid,
+                      "entryAmnt": entryAmnt,
+                      "prize": prize
+
+                    });
+
+
+                    //unregister listener
+                    entries.off("child_changed", entryListener);
+
+                    //should calculate scores after buying window closes
+                    //updateContestStatus(buyingWindow);
+                    }
+                
+                  });
+
+
 
 
 //for each contest, sets up to listen for added players
