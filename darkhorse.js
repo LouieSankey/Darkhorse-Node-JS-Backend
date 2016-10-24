@@ -45,10 +45,10 @@ contestRef.on('child_added', function (contest) {
 
 
 
-  console.log("called for : " + contestSnapshot.key);
+  //console.log("called for : " + contestSnapshot.key);
 
 
-              var contest = contestSnapshot.val();
+              var contest = contest.val();
               var accepting = contest.accepting;
               var draftEnds = contest.draftEnds;
               var entryAmnt = contest.entryAmnt;
@@ -74,9 +74,9 @@ contestRef.on('child_added', function (contest) {
 
                   if(counter === accepting){
 
-                    contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
+                    contestRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
 
-                    contestsRef.child(formattedScheduleDate).push({
+                    contestRef.child(formattedScheduleDate).push({
 
                       "accepting": accepting,
                       "draftEnds":  draftEnds,
