@@ -218,7 +218,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 									var counter = 0;
 						
-									contestEntryRef.on('child_changed', function(entriesSnapshot){
+									var entryListener = contestEntryRef.on('child_changed', function(entriesSnapshot){
 
 										++counter;
 
@@ -247,7 +247,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 
 										//unregister listener
-										contestEntryRef.remove(this);
+										contestEntryRef.off("child_changed", entryListener);
 
 										//should calculate scores after buying window closes
 										//updateContestStatus(buyingWindow);
