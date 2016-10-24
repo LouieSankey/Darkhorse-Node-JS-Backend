@@ -26,6 +26,8 @@ var fullContestsRef = firebaseDb.ref("FullContests");
 var userRef = firebaseDb.ref("Users");
 var formattedScheduleDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
 
+console.log(formattedScheduleDate);
+
 
 schedule.child(formattedScheduleDate).once('value', function (snapshot){
 	
@@ -191,74 +193,6 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 							}
 						}
 					});
-
-
-						
-			// 			contestsRef.child(formattedScheduleDate).on('child_added', function(contestSnapshot){
-
-			// 				console.log("called for : " + contestSnapshot.key);
-
-
-			// 				var contest = contestSnapshot.val();
-			// 				var accepting = contest.accepting;
-			// 				var draftEnds = contest.draftEnds;
-			// 				var entryAmnt = contest.entryAmnt;
-			// 				var gameType = contest.gameType;
-			// 				var gameTypeShort = contest.gameTypeShort;
-			// 				var scoring = contest.scoring;
-			// 				var NBAGames = contest.nbaGamesAmnt; 
-			// 				var positionsPaid = contest.positionsPaid;
-			// 				var prize = contest.prize;
-			// 				var contestStatus = contest.contestStatus;
-			// 				var buyingWindow = contest.buyingEnds;
-
-
-			// 				var contestEntryRef = contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("Entries");
-					
-
-			// 						var counter = 0;
-						
-			// 						var entryListener = contestEntryRef.on('child_changed', function(entriesSnapshot){
-
-			// 							++counter;
-
-			// 							console.log("child_changed: " + counter);
-									
-
-			// 						if(counter === accepting){
-
-			// 							contestsRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
-
-			// 							contestsRef.child(formattedScheduleDate).push({
-
-			// 								"accepting": accepting,
-			// 								"draftEnds":  draftEnds,
-			// 								"contestStatus": "Accepting...",
-			// 								"gameTypeShort": gameTypeShort,
-			// 								"scoring": scoring,
-			// 								"gameType": gameType,
-			// 								"nbaGamesAmnt": NBAGames,
-			// 								"buyingEnds": buyingWindow,
-			// 								"positionsPaid": positionsPaid,
-			// 								"entryAmnt": entryAmnt,
-			// 								"prize": prize
-
-			// 							});
-
-
-			// 							//unregister listener
-			// 							contestEntryRef.off("child_changed", entryListener);
-
-			// 							//should calculate scores after buying window closes
-			// 							//updateContestStatus(buyingWindow);
-			// 							}
-								
-			// 						});
-
-
-
-
-			// });
 
 
 

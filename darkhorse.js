@@ -22,17 +22,19 @@ var scheduleDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
 var firebaseDb = firebase.database();
 var request = require('request');
 
+console.log(scheduleDate);
+
 
 //schedule date === formattedScheduleDate
 var contestRef = firebaseDb.ref("Contests").child(scheduleDate);
 
 
 //sets up to listen for new contests
-contestRef.on('child_added', function (contest) {
+contestRef.on('child_added', function (contestSnapshot) {
 
       console.log("listening to new contest ");
 
-    var entries = contestRef.child(contest.key).child("Entries");
+    var entries = contestRef.child(contestSnapshot.key).child("Entries");
     var playersInContest = [];
 
 
@@ -45,10 +47,8 @@ contestRef.on('child_added', function (contest) {
 
 
 
-  //console.log("called for : " + contestSnapshot.key);
 
-
-              var contest = contest.val();
+              var contest = contestSnapshot.val();
               var accepting = contest.accepting;
               var draftEnds = contest.draftEnds;
               var entryAmnt = contest.entryAmnt;
@@ -60,9 +60,6 @@ contestRef.on('child_added', function (contest) {
               var prize = contest.prize;
               var contestStatus = contest.contestStatus;
               var buyingWindow = contest.buyingEnds;
-
-
-              //var contestEntryRef = contestRef.child(contestSnapshot.key).child("Entries");
           
                   var counter = 0;
                   var entryListener = entries.on('child_changed', function(entriesSnapshot){
@@ -74,9 +71,9 @@ contestRef.on('child_added', function (contest) {
 
                   if(counter === accepting){
 
-                    contestRef.child(formattedScheduleDate).child(contestSnapshot.key).child("contestStatus").set("Buying...");
+                    contestRef.child(contestSnapshot.key).child("contestStatus").set("Buying...");
 
-                    contestRef.child(formattedScheduleDate).push({
+                    contestRef.push({
 
                       "accepting": accepting,
                       "draftEnds":  draftEnds,
