@@ -245,6 +245,10 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 										});
 
+
+										//unregister listener
+										contestEntryRef.remove(this);
+
 										//should calculate scores after buying window closes
 										//updateContestStatus(buyingWindow);
 										}
