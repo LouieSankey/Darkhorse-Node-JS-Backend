@@ -2,14 +2,25 @@
 // a script for organizing the raw schedule data by dates instead of arbitrary numbers
 
 
-function update(firebase){
+function update(){
+
+var http = require('http');
+var firebase = require("./node_modules/firebase");
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/plain'});
+  res.end('Hello World\n');
+}).listen(process.env.PORT, '0.0.0.0');
+
+firebase.initializeApp({
+  serviceAccount: "serviceAccountCredentials.json",
+  databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
+});
 
 var moment = require('moment');
-var cron = require('node-cron');
-var scoreContests = require('./scoreContests');
 var firebaseDb = firebase.database();
-var schedule = firebaseDb.ref('2015Schedule');
-var datedSchedule = firebaseDb.ref('DatedSchedule');
+var schedule = firebaseDb.ref('2016Schedule');
+var datedSchedule = firebaseDb.ref('2016DatedSchedule');
 
 
 schedule.on('value', function (snapshot){
@@ -18,7 +29,7 @@ schedule.on('value', function (snapshot){
 		
 		var scheduledGame = snapshot.val()[i];
 
-		var gameDate = moment(scheduledGame.Date, ['ddd MMM D YYYY']).format('YYYY_MM_DD');
+		var gameDate = moment(scheduledGame.Date, ['MMMM D, YYYY']).format('YYYY_MM_DD');
 
 		var gameTime = moment(scheduledGame['Start (ET)'], ["h:mm A"]).format("HH:mm");
 
@@ -32,4 +43,4 @@ schedule.on('value', function (snapshot){
 
 }
 
-module.exports.update = update;
+update();

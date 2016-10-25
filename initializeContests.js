@@ -20,11 +20,10 @@ firebase.initializeApp({
 
 
 var firebaseDb = firebase.database();
-var schedule = firebaseDb.ref('DatedSchedule');
+var schedule = firebaseDb.ref('2016DatedSchedule');
 var contestsRef = firebaseDb.ref("Contests");
-var fullContestsRef = firebaseDb.ref("FullContests");
 var userRef = firebaseDb.ref("Users");
-var formattedScheduleDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
+var formattedScheduleDate = moment().utc().format('YYYY_MM_DD');
 
 console.log(formattedScheduleDate);
 
@@ -64,6 +63,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 //possibly add "&& i < 3 to shrink number of contests"
 								if(gameTimes[i] !== gameTimes[i + Number(1)] || i === 0){
+									console.log(gameTimes[i]);
 
 									if((i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
 
@@ -71,11 +71,11 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 
 									//these two variables are the same but formatted differently
-									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().valueOf();
+									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().subtract('hours', 4).valueOf();
 
 
 											if(loopsCompleted < 2){
-												console.log(gameTimes[i]);
+												
 
 												loopsCompleted++;
 

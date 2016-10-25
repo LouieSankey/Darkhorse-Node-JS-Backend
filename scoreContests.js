@@ -23,12 +23,17 @@ firebase.initializeApp({
 //leave set to heroku time
 
 var firebaseDb = firebase.database();
-var scheduleDate = moment().utc().subtract(282, 'days').format('YYYY_MM_DD');
+var scheduleDate = moment().utc().format('YYYY_MM_DD');
 
 console.log(scheduleDate);
 
 var contestsRef = firebaseDb.ref('Contests').child(scheduleDate);
 var playerStats = firebaseDb.ref("PlayerStats").child(scheduleDate);
+
+firebaseDb.ref("2016Schedule").set(scheduleDate);
+firebaseDb.ref("2016DatedSchedule").set(scheduleDate);
+
+
 
 contestsRef.once('value', function(allContests){
 
@@ -110,7 +115,6 @@ contestsRef.once('value', function(allContests){
 
 
     			entryVS.forEach(function(opponent){
-
 
     				
     				console.log(opponent.val()[0].playerId);
@@ -401,6 +405,7 @@ contestsRef.once('value', function(allContests){
 
 
 });
+firebaseDb.ref("UpdateResults").set(scheduleDate);
 
 
 

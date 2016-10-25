@@ -18,7 +18,7 @@ firebase.initializeApp({
 
       
 
-var scheduleDate = moment().utc().subtract(281, 'days').format('YYYY_MM_DD');
+var scheduleDate = moment().utc().format('YYYY_MM_DD');
 var firebaseDb = firebase.database();
 var request = require('request');
 
