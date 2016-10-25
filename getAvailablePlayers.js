@@ -113,7 +113,7 @@ nbaSchedule.on('value', function (snapshot){
 				
 
 
-						var gameTimeUtc = moment(allGames[k]['Start (ET)'], 'HH:mm A').subtract(6, 'hours').utc().valueOf();
+						var gameTimeUtc = moment(allGames[k]['Start (ET)'], 'HH:mm A').utc().valueOf();
 
 						normalizedPlayer.game_time = allGames[k]['Start (ET)'];
 	  					normalizedPlayer.home = allGames[k].Home;
