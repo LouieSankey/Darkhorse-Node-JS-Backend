@@ -17,7 +17,6 @@ firebase.initializeApp({
 });
 
       
-
 var scheduleDate = moment().utc().format('YYYY_MM_DD');
 var firebaseDb = firebase.database();
 var request = require('request');
@@ -44,8 +43,6 @@ contestRef.on('child_added', function (contestSnapshot) {
       playersInContest = [];
             
     });
-
-
 
 
               var contest = contestSnapshot.val();

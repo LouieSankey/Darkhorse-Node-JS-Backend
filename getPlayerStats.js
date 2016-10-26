@@ -20,8 +20,9 @@ var firebaseDb = firebase.database();
 //in heroku SCHEDULER will be after utc day changes so +1 day more than running DURING THE DAY i.e. 282 for scheduler 281 for local/day time
 //leave set to scheduler time
 
-var firebaseFormatDate = moment().utc().format('YYYY_MM_DD');
-var httpDate = moment().utc().format('MM/DD/YYYY');
+var firebaseFormatDate = moment().subtract(1, 'days').utc().format('YYYY_MM_DD');
+var httpDate = moment().utc().subtract(1, 'days').format('MM/DD/YYYY');
+
 
 
 var PlayerStatsRef = firebaseDb.ref("PlayerStats");
@@ -30,7 +31,7 @@ var PlayerStatsRef = firebaseDb.ref("PlayerStats");
 
 console.log("get stats at " + httpDate);
 
-console.log("put stasts as " + firebaseFormatDate);
+console.log("put stats as " + firebaseFormatDate);
 
 
 // //first get game ids by date then for each game idea get player box scores and add them to firebase
@@ -47,10 +48,9 @@ request.post(
      } },
     function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            //console.log(body);
-
+            
             var jsonData = JSON.parse(body);
-
+console.log(jsonData);
             for (var i = 0; i < jsonData.length; i++) {
                 var game_id = jsonData[i].id;
                 game_ids.push(game_id);
@@ -66,6 +66,7 @@ request.post(
                  } },
 
                 function (error, response, body) {
+                    
                     if (!error && response.statusCode == 200) {
                         var jsonArray = JSON.parse(body);
 

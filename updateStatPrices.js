@@ -61,7 +61,6 @@ var playersRef = firebaseDb.ref("AvailablePlayers").child(firebaseFormatDate);
 		 var priceAdjust = 600;
 
 
-
 		 var sPts = priceAdjust - math.std(pts) * 100;
 		 var sReb = priceAdjust - math.std(reb) * 100;
 		 var sAst = priceAdjust - math.std(ast) * 100;
@@ -83,13 +82,21 @@ var playersRef = firebaseDb.ref("AvailablePlayers").child(firebaseFormatDate);
 		 var leagueAverageRef = firebaseDb.ref("LeagueAverages").child(firebaseFormatDate);
 
 
-		 leagueAverageRef.child("pts").set(average(pts));
-		 leagueAverageRef.child("reb").set(average(reb));
-		 leagueAverageRef.child("ast").set(average(ast));
-		 leagueAverageRef.child("stl").set(average(stl));
-		 leagueAverageRef.child("blk").set(average(blk));
-		 leagueAverageRef.child("_3pt").set(average(_3pt));
-		 leagueAverageRef.child("to").set(average(to));
+		 // leagueAverageRef.child("pts").set(average(pts));
+		 // leagueAverageRef.child("reb").set(average(reb));
+		 // leagueAverageRef.child("ast").set(average(ast));
+		 // leagueAverageRef.child("stl").set(average(stl));
+		 // leagueAverageRef.child("blk").set(average(blk));
+		 // leagueAverageRef.child("_3pt").set(average(_3pt));
+		 // leagueAverageRef.child("to").set(average(to));
+
+		 leagueAverageRef.child("pts").set(100;
+		 leagueAverageRef.child("reb").set(325);
+		 leagueAverageRef.child("ast").set(350);
+		 leagueAverageRef.child("stl").set(550);
+		 leagueAverageRef.child("blk").set(500);
+		 leagueAverageRef.child("_3pt").set(500);
+		 leagueAverageRef.child("to").set(525);
 
 
 
