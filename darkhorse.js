@@ -17,16 +17,13 @@ firebase.initializeApp({
 });
 
       
-
+var ScheduleDate = moment().utc().format('YYYY_MM_DD');
 var firebaseDb = firebase.database();
 var request = require('request');
 var allContestsRef = firebaseDb.ref("Contests");
-var contestRef;
+var contestRef = allContestsRef.child(ScheduleDate);
 
 
-allContestsRef.on("child_added", function (contestAdded){
-
-  contestRef = allContestsRef.child(contestAdded.key);
 
 //sets up to listen for new contests
 contestRef.on('child_added', function (contestSnapshot) {
@@ -313,7 +310,7 @@ contestRef.on('child_added', function (contestSnapshot) {
 
 });
 
-});
+
 
                             // function sendMessageToUser(topic, message) {
                             //     request({
