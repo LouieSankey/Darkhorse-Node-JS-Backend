@@ -42,7 +42,12 @@ contestsRef.once('value', function(allContests){
 
     	entries.forEach(function(singleEntry){
 
+
     		var singleEntryRef = entriesRef.child(singleEntry.key);
+
+    		if(entries.numChildren() === 1){
+    			contestsRef.child(singleContest.key).child("contestStatus").set("Results");
+    		}
 
     		var playerId = singleEntry.val().playerId;
 
