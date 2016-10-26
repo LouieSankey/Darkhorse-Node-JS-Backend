@@ -17,16 +17,16 @@ firebase.initializeApp({
 });
 
       
-var scheduleDate = moment().utc().format('YYYY_MM_DD');
+
 var firebaseDb = firebase.database();
 var request = require('request');
+var allContestsRef = firebaseDb.ref("Contests");
+var contestRef;
 
-console.log(scheduleDate);
 
+allContestsRef.on("child_added", function (contestAdded){
 
-//schedule date === formattedScheduleDate
-var contestRef = firebaseDb.ref("Contests").child(scheduleDate);
-
+  contestRef = allContestsRef.child(contestAdded.key);
 
 //sets up to listen for new contests
 contestRef.on('child_added', function (contestSnapshot) {
@@ -310,6 +310,8 @@ contestRef.on('child_added', function (contestSnapshot) {
 
     });
 }, function (error) {
+
+});
 
 });
 

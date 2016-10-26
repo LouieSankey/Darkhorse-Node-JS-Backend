@@ -14,11 +14,15 @@ firebase.initializeApp({
   databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
 });
 
+var scheduleDate = moment().utc().format('YYYY_MM_DD');
 
 var firebaseDb = firebase.database();
 var serverTime = firebaseDb.ref('serverTime');
+var updateResults = firebase.ref('UpdateResults');
 
 serverTime.set(firebase.database.ServerValue.TIMESTAMP);
+updateResults.set(scheduleDate);
+
 
 }
 update();
