@@ -90,7 +90,7 @@ var playersRef = firebaseDb.ref("AvailablePlayers").child(firebaseFormatDate);
 		 // leagueAverageRef.child("_3pt").set(average(_3pt));
 		 // leagueAverageRef.child("to").set(average(to));
 
-		 leagueAverageRef.child("pts").set(100;
+		 leagueAverageRef.child("pts").set(100);
 		 leagueAverageRef.child("reb").set(325);
 		 leagueAverageRef.child("ast").set(350);
 		 leagueAverageRef.child("stl").set(550);
