@@ -66,12 +66,16 @@ console.log(jsonData);
                  } },
 
                 function (error, response, body) {
+
+                    //console.log(JSON.parse(body));
                     
                     if (!error && response.statusCode == 200) {
                         var jsonArray = JSON.parse(body);
 
                         for (var i = 0; i < jsonArray.length; i++) {
                             var object = jsonArray[i];
+
+
 
                             PlayerStatsRef.child(firebaseFormatDate).child(object.player_id).set(object);
 
