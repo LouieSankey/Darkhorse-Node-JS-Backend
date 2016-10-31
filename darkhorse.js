@@ -207,7 +207,7 @@ contestRef.on('child_added', function (contestSnapshot) {
                                   data: {
                                       title:'Draft Alert! ' + gameType,
                                       message: "Buy stats against " + newEntry.val().name,
-                                      contestId, contestKey
+                                      "contestId", contestKey
                                       //dateKey, ScheduleDate
 
                                   }
