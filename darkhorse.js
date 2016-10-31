@@ -196,6 +196,8 @@ contestRef.on('child_added', function (contestSnapshot) {
 
                               //notifies entries already in the contest of the new entry
 
+                              if(counter > 1){
+
                               var FCM = require('fcm-node');
                               var serverKey = 'AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s';  
                               var fcm = new FCM(serverKey);
@@ -223,6 +225,8 @@ contestRef.on('child_added', function (contestSnapshot) {
                               });
 
                               console.log("notification " + playersInContest[i].playerKey);
+
+                            }
 
             
 
