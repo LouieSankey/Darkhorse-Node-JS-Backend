@@ -42,7 +42,9 @@ contestRef.on('child_added', function (contestSnapshot) {
     });
 
 
+
               var contest = contestSnapshot.val();
+              var contestKey = contest.key;
               var accepting = contest.accepting;
               var draftEnds = contest.draftEnds;
               var entryAmnt = contest.entryAmnt;
@@ -205,7 +207,7 @@ contestRef.on('child_added', function (contestSnapshot) {
                                   data: {
                                       title:'Draft Alert! ' + gameType,
                                       message: "Buy stats against " + newEntry.val().name,
-                                      contestKey, contest.key,
+                                      contestKey, contestKey,
                                       dateKey, ScheduleDate
 
                                   }
