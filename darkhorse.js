@@ -44,7 +44,6 @@ contestRef.on('child_added', function (contestSnapshot) {
 
 
               var contest = contestSnapshot.val();
-              var contestKey = contest.key;
               var accepting = contest.accepting;
               var draftEnds = contest.draftEnds;
               var entryAmnt = contest.entryAmnt;
@@ -200,14 +199,15 @@ contestRef.on('child_added', function (contestSnapshot) {
                               var FCM = require('fcm-node');
                               var serverKey = 'AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s';  
                               var fcm = new FCM(serverKey);
-                              //var contestTopic = contestSnapshot.val().key;
+                              console.log(contestSnapshot.key);
 
                               var message = { 
                                   to: '/topics/' + playersInContest[i].playerKey, 
                                   data: {
                                       title:'Draft Alert! ' + gameType,
                                       message: "Buy stats against " + newEntry.val().name,
-                                      contestId: contestKey
+                                      contestId: contestSnapshot.key
+
                                       //dateKey, ScheduleDate
 
                                   }
