@@ -62,10 +62,14 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 
 //possibly add "&& i < 3 to shrink number of contests"
-								if(gameTimes[i] !== gameTimes[i + Number(1)] || i === 0){
-									console.log(gameTimes[i]);
+								if(gameTimes[i] !== gameTimes[i + Number(1)] || i <= 2){
 
-									if((i === gameTimes.length) || (gameTimes[i].charAt(3) === "0")){
+									console.log(gameTimes[i] + " times");
+									console.log(i + " i");
+
+									if((i === gameTimes.length) || (gameTimes[i].charAt(3) === "0") || i <= 2){
+
+										console.log(gameTimes[i] + " inside");
 
 									var gamesAmnt = i + Number(1);
 
@@ -75,6 +79,8 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 
 											if(loopsCompleted < 2){
+
+												console.log(loopsCompleted + "completed");
 												
 
 												loopsCompleted++;
@@ -104,7 +110,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 													
 
-												case(gamesAmnt >= 2):
+												case(gamesAmnt >= 1):
 
 
 													contestsRef.child(formattedScheduleDate).push({

@@ -193,39 +193,33 @@ contestRef.on('child_added', function (contestSnapshot) {
 
                               var oppVsRef = entries.child(playersInContest[i].playerKey).child("VS");
 
+                              //notifies entries already in the contest of the new entry
 
-//for entries already in the contest, adds a "scores" object for the new entry. 
-//also need to notify entries already in the contest of the new entry
+                              var FCM = require('fcm-node');
+                              var serverKey = 'AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s';  
+                              var fcm = new FCM(serverKey);
+                              //var contestTopic = contestSnapshot.val().key;
+
+                              var message = { 
+                                  to: '/topics/' + playersInContest[i].playerKey, 
+                                  data: {
+                                      title: newEntry.val().name + 'A new Player has entered your contest.',
+                                      message: 'Buy stats against him now.'
+                                  }
+                              };
+
+                              fcm.send(message, function(err, response){
+                                  if (err) {
+                                      console.log("Something has gone wrong!");
+                                      console.log(err);
+                                  } else {
+                                      console.log("Successfully sent with response: ", response);
+                                  }
+                              });
 
                               console.log("notification " + playersInContest[i].playerKey);
 
-                                // request({
-                                //   url: 'https://fcm.googleapis.com/fcm/send',
-                                //   method: 'POST',
-                                //   headers: {
-                                //     'Content-Type' :' application/json',
-                                //     'Authorization': 'key=AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s'
-                                //   },
-                                //   body: JSON.stringify({
-                                //     data: {
-                                //       message: "A player has drafted into your contest."
-                                //     },
-                                //     to : '/topics/user_'+ playersInContest[i].playerKey
-                                //   })
-                                // });
-
-
-                                // console.log('/topics/user_'+ playersInContest[i].playerKey);
-
-                                // sendMessageToUser(
-                                //   '/topics/user_'+ playersInContest[i].playerKey,
-                                //   { message: "A player has drafted into your contest."}
-                                // );
-
-
-
-                              //sendNotificationToUser(playersInContest[i].playerKey, "a player has drafted into your contest");
-
+            
 
                                oppVsRef.child(newEntry.key).update({
 
@@ -310,35 +304,6 @@ contestRef.on('child_added', function (contestSnapshot) {
 
 });
 
-
-
-                            // function sendMessageToUser(topic, message) {
-                            //     request({
-                            //       url: 'https://fcm.googleapis.com/fcm/send',
-                            //       method: 'POST',
-                            //       headers: {
-                            //         'Content-Type' :' application/json',
-                            //         'Authorization': 'key=AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s'
-                            //       },
-                            //       body: JSON.stringify(
-                            //         { "data": {
-                            //           "message": message
-                            //         },
-                            //           "to" : topic
-                            //         }
-                            //       )
-                            //     }, function(error, response, body) {
-                            //       if (error) { 
-                            //         console.error(error, response, body); 
-                            //       }
-                            //       else if (response.statusCode >= 400) { 
-                            //         console.error('HTTP Error: '+response.statusCode+' - '+response.statusMessage+'\n'+body); 
-                            //       }
-                            //       else {
-                            //         console.log('Done!');
-                            //       }
-                            //     });
-                            //   }
 
 }
 
