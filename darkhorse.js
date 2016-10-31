@@ -204,7 +204,10 @@ contestRef.on('child_added', function (contestSnapshot) {
                                   to: '/topics/' + playersInContest[i].playerKey, 
                                   data: {
                                       title:'Draft Alert! ' + gameType,
-                                      message: "Buy stats against " + newEntry.val().name
+                                      message: "Buy stats against " + newEntry.val().name,
+                                      contestKey, contest.key,
+                                      dateKey, ScheduleDate
+
                                   }
                               };
 
