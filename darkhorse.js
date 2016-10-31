@@ -203,8 +203,8 @@ contestRef.on('child_added', function (contestSnapshot) {
                               var message = { 
                                   to: '/topics/' + playersInContest[i].playerKey, 
                                   data: {
-                                      title:'Draft Alert!',
-                                      message: newEntry.val().name + " has joined " + gameType + '.  Buy stats against him now.'
+                                      title:'Draft Alert! ' + gameType,
+                                      message: "Buy stats against " + newEntry.val().name
                                   }
                               };
 
