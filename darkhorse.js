@@ -203,7 +203,7 @@ contestRef.on('child_added', function (contestSnapshot) {
                               console.log(contestSnapshot.key);
 
                               var message = { 
-                                  to: '/topics/' + contestSnapshot.key, 
+                                  to: '/topics/' + playersInContest[i].playerKey + "/" + contestSnapshot.key, 
                                   data: {
                                       title:'Draft Alert! ' + gameType,
                                       message: "Buy stats against " + newEntry.val().name,
@@ -223,7 +223,6 @@ contestRef.on('child_added', function (contestSnapshot) {
                                   }
                               });
 
-                              console.log("notification " + playersInContest[i].playerKey);
 
 
                                oppVsRef.child(newEntry.key).update({
