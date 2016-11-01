@@ -123,16 +123,20 @@ contestRef.on('child_added', function (contestSnapshot) {
 
                          if(playersInContest[i].playerKey != newEntry.key){
 
+                          // console.log("notify " + playersInContest[i].playerKey);
+
  
 
-                          console.log(playersInContest[i].playerKey + " player key");
-                          console.log(newEntry.key + " new entry key");
-                           console.log(contestSnapshot.key + " contest key");
-                           console.log(counter + " counter");
+                          // console.log(playersInContest[i].playerKey + " player key");
+                          // console.log(newEntry.key + " new entry key");
+                          //  console.log(contestSnapshot.key + " contest key");
+                          //  console.log(counter + " counter");
 
                        
+                          
+
                               var message = { 
-                                  to: '/topics/' + contestSnapshot.key, 
+                                  to: '/topics/' + contestSnapshot.key + playersInContest[i].playerKey, 
                                   data: {
                                       title:'Draft Alert! ' + gameType,
                                       message: "Buy stats against " + newEntry.val().name,
@@ -148,7 +152,7 @@ contestRef.on('child_added', function (contestSnapshot) {
                                       console.log("Something has gone wrong!");
                                       console.log(err);
                                   } else {
-                                      console.log("Successfully sent with response: ", response);
+                                      console.log("Successfully sent to " +  playersInContest[i].playerKey ":", response);
                                   }
                               });
 
