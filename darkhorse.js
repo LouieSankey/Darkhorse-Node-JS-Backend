@@ -120,8 +120,9 @@ contestRef.on('child_added', function (contestSnapshot) {
 
                           console.log(playersInContest[i].playerKey + " player key");
                           console.log(newEntry.key + " new entry key");
-                           console.log('/topics/' + playersInContest[i].playerKey + " / " contestSnapshot.key);
+                           console.log(contestSnapshot.key + " contest key");
                            console.log(counter + " counter");
+
 
 
                               var FCM = require('fcm-node');
