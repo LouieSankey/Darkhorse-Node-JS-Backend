@@ -203,7 +203,7 @@ contestRef.on('child_added', function (contestSnapshot) {
                               console.log(contestSnapshot.key);
 
                               var message = { 
-                                  to: '/topics/' + playersInContest[i].playerKey + "/" + contestSnapshot.key, 
+                                  to: '/topics/' + playersInContest[i].playerKey + contestSnapshot.key, 
                                   data: {
                                       title:'Draft Alert! ' + gameType,
                                       message: "Buy stats against " + newEntry.val().name,
