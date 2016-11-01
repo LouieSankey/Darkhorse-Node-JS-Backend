@@ -118,44 +118,6 @@ contestRef.on('child_added', function (contestSnapshot) {
 
                          if(playersInContest[i].playerKey != newEntry.key){
 
-                          console.log(playersInContest[i].playerKey + " player key");
-                          console.log(newEntry.key + " new entry key");
-                           console.log(contestSnapshot.key + " contest key");
-                           console.log(counter + " counter");
-
-
-
-                              var FCM = require('fcm-node');
-                              var serverKey = 'AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s';  
-                              var fcm = new FCM(serverKey);
-                              console.log(contestSnapshot.key);
-
-                              var message = { 
-                                  to: '/topics/' + playersInContest[i].playerKey + contestSnapshot.key, 
-                                  data: {
-                                      title:'Draft Alert! ' + gameType,
-                                      message: "Buy stats against " + newEntry.val().name,
-                                      contestId: contestSnapshot.key
-
-                                      //dateKey, ScheduleDate
-
-                                  }
-                              };
-
-                              fcm.send(message, function(err, response){
-                                  if (err) {
-                                      console.log("Something has gone wrong!");
-                                      console.log(err);
-                                  } else {
-                                      console.log("Successfully sent with response: ", response);
-                                  }
-                              });
-
-                             
-
-
-
-
 
                               vsRef.child(playersInContest[i].playerKey).update({
 
@@ -232,6 +194,38 @@ contestRef.on('child_added', function (contestSnapshot) {
                               var oppVsRef = entries.child(playersInContest[i].playerKey).child("VS");
 
                               //notifies entries already in the contest of the new entry
+                          console.log(playersInContest[i].playerKey + " player key");
+                          console.log(newEntry.key + " new entry key");
+                           console.log(contestSnapshot.key + " contest key");
+                           console.log(counter + " counter");
+
+
+
+                              var FCM = require('fcm-node');
+                              var serverKey = 'AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s';  
+                              var fcm = new FCM(serverKey);
+                             
+
+                              var message = { 
+                                  to: '/topics/' + newEntry + contestSnapshot.key, 
+                                  data: {
+                                      title:'Draft Alert! ' + gameType,
+                                      message: "Buy stats against " + playersInContest[i].name,
+                                      contestId: contestSnapshot.key
+
+                                      //dateKey, ScheduleDate
+
+                                  }
+                              };
+
+                              fcm.send(message, function(err, response){
+                                  if (err) {
+                                      console.log("Something has gone wrong!");
+                                      console.log(err);
+                                  } else {
+                                      console.log("Successfully sent with response: ", response);
+                                  }
+                              });
 
 
 
