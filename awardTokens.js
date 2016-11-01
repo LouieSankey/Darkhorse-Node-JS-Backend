@@ -41,18 +41,26 @@ contestsRef.once('value', function(allContests){
 
 					// separate winners from loosers and award winners
 
+
 					var prize = singleContest.val().prize;
 					var positionsPaid = singleContest.val().positionsPaid;
 					var count = 0;
+
+
 
 					entries.forEach(function(singleEntry){
 						++count;
 						if(count <= positionsPaid){
 							//award prize amount to user
 							var winningUser = singleEntry.key;
+
 							console.log(winningUser + " is a winner of " + prize + " in " + singleContest.key);
+						}else{
 
 
+							//query the last player in the money for his score
+
+							//if any user is tied with last player in the money, award them the prize as well
 						}
 
 					});
@@ -65,6 +73,7 @@ contestsRef.once('value', function(allContests){
 				}else{
 					
 					var entryAmount = singleContest.val().entryAmnt;
+
 					//refund all users their buy in
 					entries.forEach(function(singleEntry){
 						var refundedUser = singleEntry.key;
