@@ -96,7 +96,6 @@ contestRef.on('child_added', function (contestSnapshot) {
 
 
 
-
 //for each contest, sets up to listen for added players
     entries.on('child_added', function (newEntry) {
 
@@ -204,7 +203,7 @@ contestRef.on('child_added', function (contestSnapshot) {
                               console.log(contestSnapshot.key);
 
                               var message = { 
-                                  to: '/topics/' + playersInContest[i].playerKey, 
+                                  to: '/topics/' + contestSnapshot.key, 
                                   data: {
                                       title:'Draft Alert! ' + gameType,
                                       message: "Buy stats against " + newEntry.val().name,
@@ -226,9 +225,6 @@ contestRef.on('child_added', function (contestSnapshot) {
 
                               console.log("notification " + playersInContest[i].playerKey);
 
-                            
-
-            
 
                                oppVsRef.child(newEntry.key).update({
 
