@@ -18,11 +18,12 @@ firebase.initializeApp({
 });
 
 var firebaseDb = firebase.database();
-var scheduleDate = moment().subtract(1, 'days').utc().format('YYYY_MM_DD');
+var scheduleDate = moment().subtract(2, 'days').utc().format('YYYY_MM_DD');
 
 console.log(scheduleDate);
 
 var contestsRef = firebaseDb.ref('Contests').child(scheduleDate);
+var usersRef = firebaseDb.ref("Users");
 
 contestsRef.once('value', function(allContests){
 
@@ -41,33 +42,63 @@ contestsRef.once('value', function(allContests){
 
 					// separate winners from loosers and award winners
 
-
-					var prize = singleContest.val().prize;
+					var prize = Number(singleContest.val().prize);
 					var positionsPaid = singleContest.val().positionsPaid;
 					var count = 0;
 
-
+					var lastWinningPositionValue;
 
 					entries.forEach(function(singleEntry){
+						var winningUser = singleEntry.key;
 						++count;
 						if(count <= positionsPaid){
 							//award prize amount to user
-							var winningUser = singleEntry.key;
+							
 
-							console.log(winningUser + " is a winner of " + prize + " in " + singleContest.key);
+							var balanceRef = usersRef.child(winningUser).child("accountBalance");
+
+							balanceRef.once('value', function(balance){
+
+								var newBalance = balance.val() + prize;
+								balanceRef.set(newBalance);
+								console.log(newBalance + ":" + winningUser + " is a winner of " + prize + " in " + singleContest.key);
+
+							});
+
+							lastWinningPositionValue = singleEntry.val().score_Total;
+
+
 						}else{
 
+							if(lastWinningPositionValue === singleEntry.val().score_Total){
 
-							//query the last player in the money for his score
+							  var balanceRef = usersRef.child(winningUser).child("accountBalance");
 
-							//if any user is tied with last player in the money, award them the prize as well
+							 balanceRef.once('value', function(balance){
+								 var newBalance = balance.val() + prize;
+								 balanceRef.set(newBalance);
+								console.log(newBalance + ":" + winningUser + " is a tied winner of " + prize + " in " + singleContest.key);
+							});
+
+
 						}
+
+
+						}
+
+						
 
 					});
 
 				// here add the rake to a darkhorse account
 
-				console.log("darkhorse gets " + (singleContest.val().accepting * singleContest.val().entryAmnt) * 0.1)
+				firebaseDb.ref("DarkhorseBalance").once('value', function(darkhorseBalance){
+					var newDarkhorseBalance = darkhorseBalance.val() + ((singleContest.val().accepting * singleContest.val().entryAmnt) * 0.1);
+					firebaseDb.ref("DarkhorseBalance").set(newDarkhorseBalance);
+				});
+
+				console.log("darkhorse gets " + (singleContest.val().accepting * singleContest.val().entryAmnt) * 0.1);
+
 
 
 				}else{
