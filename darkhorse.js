@@ -63,7 +63,7 @@ contestRef.on('child_added', function (contestSnapshot) {
               var buyingWindow = contest.buyingEnds;
           
                   var counter = 0;
-                  var entryListener = entries.on('child_changed', function(entriesSnapshot){
+                  var entryListener = entries.on('child_added', function(entriesSnapshot){
 
                     ++counter;
 

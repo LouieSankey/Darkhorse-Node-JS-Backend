@@ -364,6 +364,7 @@ contestsRef.once('value', function(allContests){
     					singleEntryRef.child("score_Stl").set(stlScore);
     					singleEntryRef.child("score_3pt").set(_3Score);
     					singleEntryRef.child("score_To").set(toScore);
+    					singleEntryRef.child("reverse_Score").set(-1 * totalContestScore);
     					singleEntryRef.child("score_Total").set(totalContestScore);
     					contestsRef.child(singleContest.key).child("contestStatus").set("Results");
 
