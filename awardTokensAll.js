@@ -18,7 +18,7 @@ firebase.initializeApp({
 });
 
 var firebaseDb = firebase.database();
-var scheduleDate = moment().utc().subtract(2, "days").format('YYYY_MM_DD');
+var scheduleDate = moment().utc().subtract(1, "days").format('YYYY_MM_DD');
 
 firebaseDb.ref("InjuredPlayers").child("Player Name").set("");
 
@@ -118,8 +118,8 @@ contestsRef.once('value', function(allContests){
 						var contestNotificationRef = usersRef.child(singleEntry.key).child("Notifications").child(scheduleDate).child(singleContest.key).child("StatusNotification");
 						var contestPlayerNotificationRef = entriesRef.child(singleEntry.key).child("StatusNotification");
 
-						contestNotificationRef.set("Lost");
-						contestPlayerNotificationRef.set("Lost");
+						// contestNotificationRef.set("Lost");
+						// contestPlayerNotificationRef.set("Lost");
 							
 
 							if(!tiedWinningUsers.contains(singleEntry.key)){

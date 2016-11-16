@@ -94,7 +94,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameTypeShort": "1 on 1 Tournement",
+														"gameTypeShort": "1 on 1 Tourney",
 														"gameType": " NBA 10 Token 1 on 1 Tournement",
 														"scoring": "[Double-Up]",
 														"positionsPaid": 4,
@@ -118,7 +118,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameTypeShort": "1 on 1 Tournement",
+														"gameTypeShort": "1 on 1 Tourney",
 														"gameType": " NBA 20 Token 1 on 1 Tournement",
 														"scoring": "[Double-Up]",
 														"positionsPaid": 3,
@@ -138,7 +138,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameTypeShort": "1 on 1 Tournement",
+														"gameTypeShort": "1 on 1 Tourney",
 														"gameType": " NBA 20 Token 1 on 1 Tournement",
 														"scoring": "[Double-Up]",
 														"positionsPaid": 2,

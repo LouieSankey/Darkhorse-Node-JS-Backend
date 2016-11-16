@@ -61,6 +61,7 @@ contestRef.on('child_added', function (contestSnapshot) {
               var prize = contest.prize;
               var contestStatus = contest.contestStatus;
               var buyingWindow = contest.buyingEnds;
+              var contestOrder = contest.contestOrder;
           
                   var counter = 0;
                   var entryListener = entries.on('child_added', function(entriesSnapshot){
@@ -86,7 +87,8 @@ contestRef.on('child_added', function (contestSnapshot) {
                       "buyingEnds": buyingWindow,
                       "positionsPaid": positionsPaid,
                       "entryAmnt": entryAmnt,
-                      "prize": prize
+                      "prize": prize,
+                      "contestOrder": contestOrder
 
                     });
 
