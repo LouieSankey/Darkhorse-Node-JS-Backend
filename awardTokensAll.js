@@ -18,7 +18,9 @@ firebase.initializeApp({
 });
 
 var firebaseDb = firebase.database();
-var scheduleDate = moment().utc().subtract(1, "days").format('YYYY_MM_DD');
+var scheduleDate = moment().utc().subtract(2, "days").format('YYYY_MM_DD');
+
+firebaseDb.ref("InjuredPlayers").child("Player Name").set("");
 
 
 console.log(scheduleDate);
@@ -101,15 +103,23 @@ contestsRef.once('value', function(allContests){
 
 
 
+
 					var count = 0;
-					var tiedPlayersAwardedCount = 0;
 					var prizePoolsAwarded = 0;
 
+					var awardedTiedUsers = false;
+
 					entries.forEach(function(singleEntry){
+
 						++count;
 						
-
 						if(count <= positionsPaid){
+
+						var contestNotificationRef = usersRef.child(singleEntry.key).child("Notifications").child(scheduleDate).child(singleContest.key).child("StatusNotification");
+						var contestPlayerNotificationRef = entriesRef.child(singleEntry.key).child("StatusNotification");
+
+						contestNotificationRef.set("Lost");
+						contestPlayerNotificationRef.set("Lost");
 							
 
 							if(!tiedWinningUsers.contains(singleEntry.key)){
@@ -117,7 +127,6 @@ contestsRef.once('value', function(allContests){
 								prizePoolsAwarded++;
 
 							var balanceRef = usersRef.child(singleEntry.key).child("accountBalance");
-							var contestNotificationRef = usersRef.child(singleEntry.key).child("Notifications").child(scheduleDate).child(singleContest.key).child("StatusNotification");
 							balanceRef.once('value', function(balance){
 
 								var newBalance = balance.val() + prize;
@@ -127,29 +136,35 @@ contestsRef.once('value', function(allContests){
 
 							});
 
+
+							contestPlayerNotificationRef.set("Won: " + prize);
 							contestNotificationRef.set("Won: " + prize);
 
-							}else if(tiedPlayersAwardedCount < 1){
-								tiedPlayersAwardedCount++;
+							}else if(!awardedTiedUsers){
+								awardedTiedUsers = true;
 
 								var prizePoolsSplit = positionsPaid - prizePoolsAwarded;
 								var totalPrizePoolAmount = prizePoolsSplit * prize;
 								var prizeForEach = totalPrizePoolAmount / tiedWinningUsers.length;
 
-								for (var i = 0; i < tiedWinningUsers.length; i++) {
+								
 
-								var balanceRef = usersRef.child(singleEntry.key).child("accountBalance");
-								var contestNotificationRef = usersRef.child(singleEntry.key).child("Notifications").child(scheduleDate).child(singleContest.key).child("StatusNotification");
+								for (var i = 0; i < tiedWinningUsers.length; i++) {
+					
+								var balanceRef = usersRef.child(tiedWinningUsers[i]).child("accountBalance");
 								balanceRef.once('value', function(balance){
 
 								var newBalance = balance.val() + prize;
 								balanceRef.set(newBalance);
+
+
 								
 							});
 
-								contestNotificationRef.set("Tied: " + prizeForEach);
-
-
+						var notificationTiedRef = usersRef.child(tiedWinningUsers[i]).child("Notifications").child(scheduleDate).child(singleContest.key).child("StatusNotification");
+						var playerTiedRef = entriesRef.child(tiedWinningUsers[i]).child("StatusNotification");
+						notificationTiedRef.set("Won: " + prizeForEach + " (Tied)");
+						playerTiedRef.set("Won: " + prizeForEach + " (Tied)");
 
 									console.log(tiedWinningUsers[i] + " is tied for " + prizeForEach + " in " + singleContest.key);
 								};
@@ -158,7 +173,11 @@ contestsRef.once('value', function(allContests){
 
 							}
 
+
 						}
+
+
+					
 
 					});
 
@@ -180,7 +199,7 @@ contestsRef.once('value', function(allContests){
 					entries.forEach(function(singleEntry){
 						var refundedUser = singleEntry.key;
 
-						var contestNotificationRef = usersRef.child(singleEntry.key).child("Notifications").child(scheduleDate).child(singleContest.key).child("StatusNotification");
+						contestPlayerNotificationRef.set("Refunded: " + entryAmount);
 						contestNotificationRef.set("Refunded: " + entryAmount);
 
 								var balanceRef = usersRef.child(singleEntry.key).child("accountBalance");

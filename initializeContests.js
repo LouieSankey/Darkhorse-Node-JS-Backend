@@ -55,6 +55,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 				
 							var loopsCompleted = 0;
+							var contestOrder = 0;
 
 
 
@@ -93,8 +94,8 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameTypeShort": "Battle Royal",
-														"gameType": " NBA 10 Token Battle Royal",
+														"gameTypeShort": "1 on 1 Tournement",
+														"gameType": " NBA 10 Token 1 on 1 Tournement",
 														"scoring": "[Double-Up]",
 														"positionsPaid": 4,
 					    								"entryAmnt": 10,
@@ -104,7 +105,8 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 														"contestStatus": "Accepting...",
 														"nbaGamesAmnt": gamesAmnt,
 														"buyingEnds": buyingWindow,
-														"firstContestGame": buyingPeriodEnds
+														"firstContestGame": buyingPeriodEnds,
+														"contestOrder": ++contestOrder
 
 													});
 
@@ -116,8 +118,8 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameTypeShort": "Battle Royal",
-														"gameType": " NBA 20 Token Battle Royal",
+														"gameTypeShort": "1 on 1 Tournement",
+														"gameType": " NBA 20 Token 1 on 1 Tournement",
 														"scoring": "[Double-Up]",
 														"positionsPaid": 3,
 					    								"entryAmnt": 20,
@@ -128,15 +130,16 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 														"nbaGamesAmnt": gamesAmnt,
 														"buyingEnds": buyingWindow,
 														"buyingEndsUtc": buyingPeriodEnds,
-														"firstContestGame": buyingPeriodEnds
+														"firstContestGame": buyingPeriodEnds,
+														"contestOrder": ++contestOrder
 
 													});
 
 													contestsRef.child(formattedScheduleDate).push({
 
 														"Entries": "",
-														"gameTypeShort": "Battle Royal",
-														"gameType": " NBA 20 Token Battle Royal",
+														"gameTypeShort": "1 on 1 Tournement",
+														"gameType": " NBA 20 Token 1 on 1 Tournement",
 														"scoring": "[Double-Up]",
 														"positionsPaid": 2,
 					    								"entryAmnt": 20,
@@ -146,7 +149,8 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 														"contestStatus": "Accepting...",
 														"nbaGamesAmnt": gamesAmnt,
 														"buyingEnds": buyingWindow,
-														"firstContestGame": buyingPeriodEnds
+														"firstContestGame": buyingPeriodEnds,
+														"contestOrder": ++contestOrder
 													});
 
 
@@ -164,7 +168,8 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 														"contestStatus": "Accepting...",
 														"nbaGamesAmnt": gamesAmnt,
 														"buyingEnds": buyingWindow,
-														"firstContestGame": buyingPeriodEnds
+														"firstContestGame": buyingPeriodEnds,
+														"contestOrder": ++contestOrder
 
 													});
 
@@ -182,7 +187,8 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 														"contestStatus": "Accepting...",
 														"nbaGamesAmnt": gamesAmnt,
 														"buyingEnds": buyingWindow,
-														"firstContestGame": buyingPeriodEnds
+														"firstContestGame": buyingPeriodEnds,
+														"contestOrder": ++contestOrder
 													});
 									
 
