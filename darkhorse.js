@@ -47,8 +47,6 @@ contestRef.on('child_added', function (contestSnapshot) {
             
     });
 
-
-
               var contest = contestSnapshot.val();
               var accepting = contest.accepting;
               var draftEnds = contest.draftEnds;

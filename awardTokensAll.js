@@ -20,10 +20,7 @@ firebase.initializeApp({
 var firebaseDb = firebase.database();
 var scheduleDate = moment().utc().subtract(1, "days").format('YYYY_MM_DD');
 
-firebaseDb.ref("InjuredPlayers").child("Player Name").set("");
 
-
-console.log(scheduleDate);
 
 var contestsRef = firebaseDb.ref('Contests').child(scheduleDate);
 var usersRef = firebaseDb.ref("Users");

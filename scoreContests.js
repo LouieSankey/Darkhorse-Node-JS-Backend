@@ -1,22 +1,22 @@
 /*jslint node: true */
 'use strict';
 
-function update(){
+function update(firebase, scheduleDate){
 
 
 var http = require('http');
 var moment =require('moment');
 var firebase = require("./node_modules/firebase");
 
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello World\n');
-}).listen(process.env.PORT, '0.0.0.0');
+// http.createServer(function (req, res) {
+//   res.writeHead(200, {'Content-Type': 'text/plain'});
+//   res.end('Hello World\n');
+// }).listen(process.env.PORT, '0.0.0.0');
 
-firebase.initializeApp({
-  serviceAccount: "serviceAccountCredentials.json",
-  databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
-});
+// firebase.initializeApp({
+//   serviceAccount: "serviceAccountCredentials.json",
+//   databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
+// });
 
 
 //in heroku scheduler will be after utc day changes so +1 day more than running during the day i.e. 282 for heroku 281 local/day time
@@ -30,17 +30,21 @@ console.log(scheduleDate);
 var contestsRef = firebaseDb.ref('Contests').child(scheduleDate);
 var playerStats = firebaseDb.ref("PlayerStats").child(scheduleDate);
 
-
+var contestCounter = 0;
 contestsRef.once('value', function(allContests){
-
+	
 
 	allContests.forEach(function(singleContest) {
+		++contestCounter;
 
     var entriesRef = contestsRef.child(singleContest.key).child('Entries');
 
     entriesRef.once('value', function(entries){
 
+    	var entriesCounter = 0;
+
     	entries.forEach(function(singleEntry){
+    		entriesCounter++;
 
 
     		var singleEntryRef = entriesRef.child(singleEntry.key);
@@ -113,9 +117,12 @@ contestsRef.once('value', function(allContests){
 
 
     		vsRef.once('value', function(entryVS){
+    			var vsCounter = 0;
+
 
 
     			entryVS.forEach(function(opponent){
+    				vsCounter++;
 
     				
     				console.log(opponent.val()[0].playerId);
@@ -211,7 +218,6 @@ contestsRef.once('value', function(allContests){
 							    	if(rebTotal === oppRebTotal){
 										rebScore = rebScore + 0.5;
 										totalContestScore = totalContestScore + 0.5;
-										console.log("equal " + rebScore);
 
 									}else if(rebTotal > oppRebTotal){
 							    		++rebScore;
@@ -237,7 +243,6 @@ contestsRef.once('value', function(allContests){
 									if(astTotal === oppAstTotal){
 										astScore = astScore + 0.5;
 										totalContestScore = totalContestScore + 0.5;
-										console.log("equal " + astScore);
 
 									}else if(astTotal > oppAstTotal){
 
@@ -266,7 +271,6 @@ contestsRef.once('value', function(allContests){
 									if(stlTotal === oppStlTotal){
 										stlScore = stlScore + 0.5;
 										totalContestScore = totalContestScore + 0.5;
-										console.log("equal " + stlScore);
 									}else if(stlTotal > oppStlTotal){
 										++stlScore;
 										++totalContestScore;
@@ -291,7 +295,6 @@ contestsRef.once('value', function(allContests){
 									if(blkTotal === oppBlkTotal){
 										blkScore = blkScore + 0.5;
 										totalContestScore = totalContestScore + 0.5;
-										console.log("equal " + blkScore);										
 									}else if(blkTotal > oppBlkTotal){
 										++blkScore;
 										++totalContestScore;
@@ -368,21 +371,44 @@ contestsRef.once('value', function(allContests){
     					singleEntryRef.child("score_Total").set(totalContestScore);
     					contestsRef.child(singleContest.key).child("contestStatus").set("Results");
 
+    			// 		if(
+    			// 			(allContests.numChildren() === contestCounter)
+    			// 		 && (entries.numChildren() === entriesCounter) 
+    			// 			&& (entryVS.numChildren() === vsCounter)){
+
+    			// 			console.log(contestCounter + " contest counter " + allContests.numChildren());
+    			// 			console.log(entriesCounter + " entries counter " + entries.numChildren());
+    			// 			console.log(vsCounter + " vs counter " + entryVS.numChildren());
+
+
+    			// 			var awardTokensAll = require("./awardTokensAll.js");
+							// awardTokensAll.update(firebase, scheduleDate);
+    			// 		}else{
+    						
+    					}
+
+
+
+
 
 	    				});
-}
 
 
+    					
+					}
+
+				
 						
 
  	    			}); // end for each opponent
 
-					
+				
 
 
 
 
 	    		}); //
+
 
 						
 
@@ -390,30 +416,28 @@ contestsRef.once('value', function(allContests){
     		});
 
 
+	
+
+
 					
 						
     	});  // end for each single entry
-
-
-						
+			
 
 		});
-
-
-
 
 
   }); //ends single contest
 
 
 });
-firebaseDb.ref("UpdateResults").set(scheduleDate);
+
 
 
 
 }
 
-update();
+//update();
 
 
 module.exports.update = update;

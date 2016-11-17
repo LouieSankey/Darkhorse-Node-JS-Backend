@@ -15,14 +15,10 @@ firebase.initializeApp({
 });
 
 
-
 var scheduleDate = moment().utc().format('YYYY_MM_DD');
-
 var firebaseDb = firebase.database();
 var serverTime = firebaseDb.ref('serverTime');
 var updateResults = firebaseDb.ref('UpdateResults');
-
-
 
 serverTime.set(firebase.database.ServerValue.TIMESTAMP);
 updateResults.set(scheduleDate);

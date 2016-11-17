@@ -22,19 +22,14 @@ var firebaseDb = firebase.database();
 
 var firebaseFormatDate = moment().subtract(1, 'days').utc().format('YYYY_MM_DD');
 var httpDate = moment().utc().subtract(1, 'days').format('MM/DD/YYYY');
-
-
-
 var PlayerStatsRef = firebaseDb.ref("PlayerStats");
-
 
 
 console.log("get stats at " + httpDate);
 
 console.log("put stats as " + firebaseFormatDate);
 
-
-// //first get game ids by date then for each game idea get player box scores and add them to firebase
+// //first get game ids by date then for each game id get player box scores and add them to firebase
 
 var request = require('request');
 
@@ -66,8 +61,6 @@ console.log(jsonData);
                  } },
 
                 function (error, response, body) {
-
-                    //console.log(JSON.parse(body));
                     
                     if (!error && response.statusCode == 200) {
                         var jsonArray = JSON.parse(body);
@@ -75,13 +68,10 @@ console.log(jsonData);
                         for (var i = 0; i < jsonArray.length; i++) {
                             var object = jsonArray[i];
 
-
-
                             PlayerStatsRef.child(firebaseFormatDate).child(object.player_id).set(object);
 
-
-                            
                         }
+
                             
                     }
                 });
@@ -89,18 +79,22 @@ console.log(jsonData);
 
             }
 
+            
+                        
+                        console.log("called scoreContests.js");
+
+                        var scoreContests = require("./scoreContests.js");
+
+                        scoreContests.update(firebase, firebaseFormatDate);
+
+
         }
     }
 );
 
-//then
-
 }
 
 update();
-
-
-
 
 module.exports.update = update;
 

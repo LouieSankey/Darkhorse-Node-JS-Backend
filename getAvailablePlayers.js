@@ -43,8 +43,6 @@ nbaSchedule.on('value', function (snapshot){
 //loops through the raw player data to establish an organic upper bound
 	rawPlayersRef.on('value', function (snapshot) {
 
-		//availablePlayersRef.remove();
-
 
 		var allPlayers = snapshot.val();
 
@@ -140,6 +138,7 @@ nbaSchedule.on('value', function (snapshot){
 
 
 			}
+
 		}
 
 
@@ -148,12 +147,11 @@ nbaSchedule.on('value', function (snapshot){
 
 });
 
-		
-
 });
 
 
-	
+var initializeContests = require("./initializeContests.js");
+initializeContests.update(firebase);
 
 
 }

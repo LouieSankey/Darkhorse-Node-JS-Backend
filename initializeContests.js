@@ -1,21 +1,21 @@
 //depending on popularity 
 //no more contests should be created less than 5 min before DRAFT ENDS to allow time for full draft
 
-function update(){
+function update(firebase){
 
 var http = require('http');
 var moment =require('moment');
 var firebase = require("./node_modules/firebase");
 
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello World\n');
-}).listen(process.env.PORT, '0.0.0.0');
+// http.createServer(function (req, res) {
+//   res.writeHead(200, {'Content-Type': 'text/plain'});
+//   res.end('Hello World\n');
+// }).listen(process.env.PORT, '0.0.0.0');
 
-firebase.initializeApp({
-  serviceAccount: "serviceAccountCredentials.json",
-  databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
-});
+// firebase.initializeApp({
+//   serviceAccount: "serviceAccountCredentials.json",
+//   databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
+// });
 
 
 
@@ -26,7 +26,6 @@ var userRef = firebaseDb.ref("Users");
 var formattedScheduleDate = moment().utc().format('YYYY_MM_DD');
 
 console.log(formattedScheduleDate);
-
 
 schedule.child(formattedScheduleDate).once('value', function (snapshot){
 	
@@ -207,28 +206,34 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 					});
 
 
-
 		});
 
 
 
-	function updateContestStatus(time){
-		console.log("set with " + time + "to scoring");
+	// function updateContestStatus(time){
+	// 	console.log("set with " + time + "to scoring");
 
-			setTimeout(function() {
+	// 		setTimeout(function() {
 
-			//scoreContests.update(firebase, formattedScheduleDate);
+	// 		//scoreContests.update(firebase, formattedScheduleDate);
 
-			}, time);
+	// 		}, time);
 
-		}
+	// 	}
 
-	//});
+
+
+var serverTime = firebaseDb.ref('serverTime');
+var updateResults = firebaseDb.ref('UpdateResults');
+
+serverTime.set(firebase.database.ServerValue.TIMESTAMP);
+updateResults.set(scheduleDate);
+
 
 
 }
 
-update();
+//update();
 
 
 module.exports.update = update;
