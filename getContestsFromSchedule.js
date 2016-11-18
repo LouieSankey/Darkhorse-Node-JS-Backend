@@ -27,9 +27,9 @@ var formattedScheduleDate = moment().utc().format('YYYY_MM_DD');
 
 console.log(formattedScheduleDate);
 
-schedule.child(formattedScheduleDate).once('once', function (snapshot){
+schedule.child(formattedScheduleDate).once('value', function (snapshot){
 	
-				contestsRef.on("once", function(location) {
+				contestsRef.once("value", function(location) {
 
 						var utc = moment.utc().valueOf();
 						var buyingWindow = 60000 * 30;
