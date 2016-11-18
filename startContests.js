@@ -29,6 +29,48 @@ var nbaSchedule = firebaseDb.ref("2016Schedule");
 var availablePlayersRef = firebaseDb.ref("AvailablePlayers");
 
 
+var express = require('express');
+var fs = require('fs');
+var request = require('request');
+var cheerio = require('cheerio');
+var app     = express();
+
+var injuredPlayers = [];
+var questionablePlayers = [];
+
+request('http://www.cbssports.com/nba/injuries/daily', function (error, response, html) {
+  if (!error && response.statusCode == 200) {
+    var $ = cheerio.load(html);
+
+    $('tr.row1').each(function(i, element){
+
+		var injuredPlayer = $(this).children('td').eq(2);
+    	var questionable = $(this).children('td').eq(5);
+    	if(questionable.text() === "Game Time Decision"){
+    		questionablePlayers.push(injuredPlayer.text().replace(/\./g,''));
+    	}else{
+    		injuredPlayers.push(injuredPlayer.text().replace(/\./g,''));
+
+    	}
+
+    });
+
+       $('tr.row2').each(function(i, element){
+    			var injuredPlayer = $(this).children('td').eq(2);
+    	var questionable = $(this).children('td').eq(5);
+    	if(questionable.text() === "Game Time Decision"){
+    		questionablePlayers.push(injuredPlayer.text().replace(/\./g,''));
+    	}else{
+    		injuredPlayers.push(injuredPlayer.text().replace(/\./g,''));
+
+    	}
+
+    });
+
+  }
+});
+
+
 nbaSchedule.on('value', function (snapshot){
 	var allGames = snapshot.val();
 
@@ -85,7 +127,6 @@ nbaSchedule.on('value', function (snapshot){
 
 	  	var normalizedPlayer = allPlayers[j];
 
-
 	  	var normalizedValue = 0.5 + (normalizedPlayer.Value - lowerBound) * (0.95 - 0.5) / (upperBound - lowerBound);
 	  	var price = normalizedValue * 10000;
 
@@ -102,6 +143,17 @@ nbaSchedule.on('value', function (snapshot){
 	  	if(normalizedPlayer.Team === "NOR"){
 	  		normalizedPlayer.Team = "NOP";
 	  	}
+
+
+
+			if(injuredPlayers.contains(normalizedPlayer.Name)){
+				normalizedPlayer.Inj = "Injured";
+			}else if(questionablePlayers.contains(normalizedPlayer.Name)){
+				normalizedPlayer.Inj = "Questionable";
+			}else{
+				normalizedPlayer.Inj = "";
+			}
+	
 
 	
 
@@ -150,10 +202,22 @@ nbaSchedule.on('value', function (snapshot){
 });
 
 
+
+
 var initializeContests = require("./getContestsFromSchedule.js");
 initializeContests.update(firebase);
 
 
+}
+
+	Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
 }
 update();
 
