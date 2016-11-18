@@ -27,7 +27,7 @@ var formattedScheduleDate = moment().utc().format('YYYY_MM_DD');
 
 console.log(formattedScheduleDate);
 
-schedule.child(formattedScheduleDate).once('value', function (snapshot){
+schedule.child(formattedScheduleDate).once('once', function (snapshot){
 	
 				contestsRef.on("value", function(location) {
 
