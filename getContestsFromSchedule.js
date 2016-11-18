@@ -47,7 +47,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 							}
 
 
-							//gameTimes.reverse();
+							gameTimes.reverse();
 							var setGameTime;
 
 							if(!location.child(formattedScheduleDate).exists()){
@@ -223,11 +223,11 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 
 
-var serverTime = firebaseDb.ref('serverTime');
-var updateResults = firebaseDb.ref('UpdateResults');
+// var serverTime = firebaseDb.ref('serverTime');
+// var updateResults = firebaseDb.ref('UpdateResults');
 
-serverTime.set(firebase.database.ServerValue.TIMESTAMP);
-updateResults.set(formattedScheduleDate);
+// serverTime.set(firebase.database.ServerValue.TIMESTAMP);
+// updateResults.set(formattedScheduleDate);
 
 
 
