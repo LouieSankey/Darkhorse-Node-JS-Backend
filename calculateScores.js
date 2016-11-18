@@ -385,7 +385,7 @@ contestsRef.once('value', function(allContests){
 							// awardTokensAll.update(firebase, scheduleDate);
     			// 		}else{
     						
-    					}
+    			//		}
 
 
 

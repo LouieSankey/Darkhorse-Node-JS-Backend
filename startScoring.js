@@ -81,9 +81,8 @@ console.log(jsonData);
 
             
                         
-                        console.log("called scoreContests.js");
 
-                        var scoreContests = require("./processScores.js");
+                        var scoreContests = require("./calculateScores.js");
 
                         scoreContests.update(firebase, firebaseFormatDate);
 

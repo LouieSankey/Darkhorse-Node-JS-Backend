@@ -227,7 +227,7 @@ var serverTime = firebaseDb.ref('serverTime');
 var updateResults = firebaseDb.ref('UpdateResults');
 
 serverTime.set(firebase.database.ServerValue.TIMESTAMP);
-updateResults.set(scheduleDate);
+updateResults.set(formattedScheduleDate);
 
 
 

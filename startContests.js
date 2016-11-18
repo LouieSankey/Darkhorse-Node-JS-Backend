@@ -150,7 +150,7 @@ nbaSchedule.on('value', function (snapshot){
 });
 
 
-var initializeContests = require("./initializeContests.js");
+var initializeContests = require("./getContestsFromSchedule.js");
 initializeContests.update(firebase);
 
 
