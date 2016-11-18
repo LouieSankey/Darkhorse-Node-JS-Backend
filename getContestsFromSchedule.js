@@ -47,7 +47,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 							}
 
 
-							//gameTimes.reverse();
+							gameTimes.reverse();
 							var setGameTime;
 
 							if(!location.child(formattedScheduleDate).exists()){
