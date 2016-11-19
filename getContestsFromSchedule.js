@@ -31,7 +31,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 	
 				contestsRef.once("value", function(location) {
 
-						var utc = moment.utc().valueOf();
+						//var utc = moment.utc().valueOf();
 						var buyingWindow = 60000 * 30;
 
 							var gameTimes = [];
