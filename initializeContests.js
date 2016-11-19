@@ -15,7 +15,6 @@ firebase.initializeApp({
 });
 
 
-
 var firebaseDb = firebase.database();
 var schedule = firebaseDb.ref('2016DatedSchedule');
 var contestsRef = firebaseDb.ref("Contests");
@@ -45,7 +44,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 							}
 
 
-							gameTimes.reverse();
+							//gameTimes.reverse();
 							var setGameTime;
 
 							if(!location.child(formattedScheduleDate).exists()){
