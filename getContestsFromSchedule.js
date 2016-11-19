@@ -223,11 +223,11 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 
 
-var serverTime = firebaseDb.ref('serverTime');
-var updateResults = firebaseDb.ref('UpdateResults');
+// var serverTime = firebaseDb.ref('serverTime');
+// var updateResults = firebaseDb.ref('UpdateResults');
 
-serverTime.set(firebase.database.ServerValue.TIMESTAMP);
-updateResults.set(formattedScheduleDate);
+// serverTime.set(firebase.database.ServerValue.TIMESTAMP);
+// updateResults.set(formattedScheduleDate);
 
 
 
