@@ -64,18 +64,18 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 //possibly add "&& i < 3 to shrink number of contests"
 								if(gameTimes[i] !== gameTimes[i + Number(1)] || i <= 2){
 
-									console.log(gameTimes[i] + " times");
-									console.log(i + " i");
+							
 
 									if((i === gameTimes.length) || (gameTimes[i].charAt(3) === "0") || i <= 2){
 
-										console.log(gameTimes[i] + " inside");
 
 									var gamesAmnt = i + Number(1);
 
 
 									//these two variables are the same but formatted differently
 									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().valueOf();
+
+									//console.log("buying perdiod ends : " + moment(gameTimes[i], 'HH:mm A').utc().format('HH:mm A'));
 
 
 											if(loopsCompleted < 2){
