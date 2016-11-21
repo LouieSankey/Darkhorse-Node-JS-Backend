@@ -73,7 +73,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 
 									//these two variables are the same but formatted differently
-									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').subtract(3, "hours").utc().valueOf();
+									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().valueOf();
 
 									console.log("buying perdiod ends : " + gameTimes[i]);
 
