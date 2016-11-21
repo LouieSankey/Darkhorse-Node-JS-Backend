@@ -47,7 +47,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 							}
 
 
-							gameTimes.reverse();
+							//gameTimes.reverse();
 							var setGameTime;
 
 							if(!location.child(formattedScheduleDate).exists()){
@@ -73,9 +73,9 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 
 									//these two variables are the same but formatted differently
-									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().valueOf();
+									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').subtract(3, "hours").utc().valueOf();
 
-									//console.log("buying perdiod ends : " + moment(gameTimes[i], 'HH:mm A').utc().format('HH:mm A'));
+									console.log("buying perdiod ends : " + gameTimes[i]);
 
 
 											if(loopsCompleted < 2){
