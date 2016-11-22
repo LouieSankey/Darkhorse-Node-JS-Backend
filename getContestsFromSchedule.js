@@ -23,7 +23,7 @@ var firebaseDb = firebase.database();
 var schedule = firebaseDb.ref('2016DatedSchedule');
 var contestsRef = firebaseDb.ref("Contests");
 var userRef = firebaseDb.ref("Users");
-var formattedScheduleDate = moment().utc().format('YYYY_MM_DD');
+var formattedScheduleDate = moment().utc().add(2, "days").format('YYYY_MM_DD');
 
 console.log(formattedScheduleDate);
 
@@ -62,9 +62,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 
 //possibly add "&& i < 3 to shrink number of contests"
-								if(gameTimes[i] !== gameTimes[i + Number(1)] || i <= 2){
-
-							
+								if(gameTimes[i] !== gameTimes[i + Number(1)] || gameTimes.length <= 2){
 
 									if((i === gameTimes.length) || (gameTimes[i].charAt(3) === "0") || i <= 2){
 

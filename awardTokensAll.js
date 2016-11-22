@@ -25,8 +25,15 @@ var scheduleDate = moment().utc().subtract(1, "days").format('YYYY_MM_DD');
 var contestsRef = firebaseDb.ref('Contests').child(scheduleDate);
 var usersRef = firebaseDb.ref("Users");
 
-contestsRef.once('value', function(allContests){
+var playerStatsRef = firebaseDb.ref("PlayerStats").child(scheduleDate);
+var availablePlayersRef = firebaseDb.ref("AvailablePlayers").child(scheduleDate);
 
+availablePlayersRef.on('value', function(allAvailableSnapshot){
+playerStatsRef.on('value', function(allReportedSnapshot){
+
+if(allAvailableSnapshot.numChildren() < allReportedSnapshot.numChildren()){
+	
+contestsRef.once('value', function(allContests){
 
 	allContests.forEach(function(singleContest) {
 
@@ -235,6 +242,14 @@ contestsRef.once('value', function(allContests){
         }
     }
     return false;
+
+//three closing tages for availablePlayers, reportedPlayers, comparative if statement
+}
+
+});
+
+});
+
 }
 
 update();
