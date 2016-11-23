@@ -32,7 +32,7 @@ availablePlayersRef.on('value', function(allAvailableSnapshot){
 playerStatsRef.on('value', function(allReportedSnapshot){
 
 if(allAvailableSnapshot.numChildren() < allReportedSnapshot.numChildren()){
-	
+
 contestsRef.once('value', function(allContests){
 
 	allContests.forEach(function(singleContest) {
@@ -201,6 +201,10 @@ contestsRef.once('value', function(allContests){
 
 					//refund all users their buy in
 					entries.forEach(function(singleEntry){
+
+						var contestNotificationRef = usersRef.child(singleEntry.key).child("Notifications").child(scheduleDate).child(singleContest.key).child("StatusNotification");
+						var contestPlayerNotificationRef = entriesRef.child(singleEntry.key).child("StatusNotification");
+
 						var refundedUser = singleEntry.key;
 
 						contestPlayerNotificationRef.set("Refunded: " + entryAmount);
