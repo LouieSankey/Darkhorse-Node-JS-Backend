@@ -20,8 +20,8 @@ var firebaseDb = firebase.database();
 //in heroku SCHEDULER will be after utc day changes so +1 day more than running DURING THE DAY i.e. 282 for scheduler 281 for local/day time
 //leave set to scheduler time
 
-var firebaseFormatDate = moment().subtract(0, 'days').utc().format('YYYY_MM_DD');
-var httpDate = moment().utc().subtract(0, 'days').format('MM/DD/YYYY');
+var firebaseFormatDate = moment().subtract(2, 'days').utc().format('YYYY_MM_DD');
+var httpDate = moment().utc().subtract(2, 'days').format('MM/DD/YYYY');
 var PlayerStatsRef = firebaseDb.ref("PlayerStats");
 
 
@@ -68,6 +68,7 @@ console.log(jsonData);
                             var object = jsonArray[i];
 
                             PlayerStatsRef.child(firebaseFormatDate).child(object.player_id).set(object);
+
 
                         }
 
