@@ -371,21 +371,10 @@ contestsRef.once('value', function(allContests){
     					singleEntryRef.child("score_Total").set(totalContestScore);
     					contestsRef.child(singleContest.key).child("contestStatus").set("Results");
 
-    			// 		if(
-    			// 			(allContests.numChildren() === contestCounter)
-    			// 		 && (entries.numChildren() === entriesCounter) 
-    			// 			&& (entryVS.numChildren() === vsCounter)){
+    			
 
-    			// 			console.log(contestCounter + " contest counter " + allContests.numChildren());
-    			// 			console.log(entriesCounter + " entries counter " + entries.numChildren());
-    			// 			console.log(vsCounter + " vs counter " + entryVS.numChildren());
-
-
-    			// 			var awardTokensAll = require("./awardTokensAll.js");
-							// awardTokensAll.update(firebase, scheduleDate);
-    			// 		}else{
-    						
-    			//		}
+    					
+    					
 
 
 
@@ -433,6 +422,12 @@ contestsRef.once('value', function(allContests){
 });
 
 
+						setTimeout(function(){
+							var awardTokensAll = require("./awardTokensAll.js");
+							awardTokensAll.update(firebase, scheduleDate);
+						}, 30000);
+
+              			
 
 
 }

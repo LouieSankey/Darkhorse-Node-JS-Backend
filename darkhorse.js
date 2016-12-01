@@ -16,20 +16,21 @@ firebase.initializeApp({
   databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
 });
 
-      
-var ScheduleDate = moment().subtract('hours', 1).utc().format('YYYY_MM_DD');
+
 var firebaseDb = firebase.database();
 var request = require('request');
-var allContestsRef = firebaseDb.ref("Contests");
-var contestRef = allContestsRef.child(ScheduleDate);
-
 var FCM = require('fcm-node');
 var serverKey = 'AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s';  
 var fcm = new FCM(serverKey);
+var serverTimeRef = firebaseDb.ref("serverTime");
+
+serverTimeRef.on("value",  function (){
+
+  var ScheduleDate = moment().subtract('hours', 1).utc().format('YYYY_MM_DD');
+  var allContestsRef = firebaseDb.ref("Contests");
+  var contestRef = allContestsRef.child(ScheduleDate);
 
 console.log(ScheduleDate);
-
-
 
 //sets up to listen for new contests
 contestRef.on('child_added', function (contestSnapshot) {
@@ -305,6 +306,8 @@ contestRef.on('child_added', function (contestSnapshot) {
 
     });
 }, function (error) {
+
+});
 
 });
 

@@ -1,7 +1,7 @@
 /*jslint node: true */
 'use strict';
 
-function update(){
+function update(firebase){
 
 var http = require('http');
 var moment =require('moment');
@@ -18,8 +18,8 @@ firebase.initializeApp({
 });
 
 var firebaseDb = firebase.database();
-var scheduleDate = moment().utc().subtract(1, "days").format('YYYY_MM_DD');
-
+var scheduleDate = moment().utc().subtract(7, "days").format('YYYY_MM_DD');
+console.log(scheduleDate);
 
 
 var contestsRef = firebaseDb.ref('Contests').child(scheduleDate);
@@ -32,6 +32,8 @@ availablePlayersRef.on('value', function(allAvailableSnapshot){
 playerStatsRef.on('value', function(allReportedSnapshot){
 
 if(allAvailableSnapshot.numChildren() < allReportedSnapshot.numChildren()){
+
+	var playerAwardTotals = {}
 
 contestsRef.once('value', function(allContests){
 
@@ -105,9 +107,6 @@ contestsRef.once('value', function(allContests){
 
 					});
 
-
-
-
 					var count = 0;
 					var prizePoolsAwarded = 0;
 
@@ -115,12 +114,14 @@ contestsRef.once('value', function(allContests){
 
 					entries.forEach(function(singleEntry){
 
+						var playerName = singleEntry.key;
+
 						++count;
 						
 						if(count <= positionsPaid){
 
-						var contestNotificationRef = usersRef.child(singleEntry.key).child("Notifications").child(scheduleDate).child(singleContest.key).child("StatusNotification");
-						var contestPlayerNotificationRef = entriesRef.child(singleEntry.key).child("StatusNotification");
+						var contestNotificationRef = usersRef.child(playerName).child("Notifications").child(scheduleDate).child(singleContest.key).child("StatusNotification");
+						var contestPlayerNotificationRef = entriesRef.child(playerName).child("StatusNotification");
 
 						// contestNotificationRef.set("Lost");
 						// contestPlayerNotificationRef.set("Lost");
@@ -130,15 +131,24 @@ contestsRef.once('value', function(allContests){
 
 								prizePoolsAwarded++;
 
-							var balanceRef = usersRef.child(singleEntry.key).child("accountBalance");
-							balanceRef.once('value', function(balance){
+							// var balanceRef = usersRef.child(singleEntry.key).child("accountBalance");
+							// balanceRef.once('value', function(balance){
 
-								var newBalance = balance.val() + prize;
-								balanceRef.set(newBalance);
+							// 	var newBalance = balance.val() + prize;
+							// 	balanceRef.set(newBalance);
 								
-								console.log(newBalance + ":" + singleEntry.key + " is a winner of " + prize + " in " + singleContest.key);
+							// 	console.log(newBalance + ":" + singleEntry.key + " is a winner of " + prize + " in " + singleContest.key);
 
-							});
+							// });
+
+							if(!playerAwardTotals.playerName){
+								console.log(playerName + " initialized with " + prize);
+								playerAwardTotals.playerName = prize;
+							}else{
+								var newTotal = playerAwardTotals.playerName + prize;
+								console.log(playerName + " new total is " + newTotal);
+								playerAwardTotals.playerName === newTotal;
+							}
 
 
 							contestPlayerNotificationRef.set("Won: " + prize);
@@ -146,24 +156,18 @@ contestsRef.once('value', function(allContests){
 
 							}else if(!awardedTiedUsers){
 								awardedTiedUsers = true;
-
 								var prizePoolsSplit = positionsPaid - prizePoolsAwarded;
 								var totalPrizePoolAmount = prizePoolsSplit * prize;
 								var prizeForEach = totalPrizePoolAmount / tiedWinningUsers.length;
 
-								
-
+						//awards each tied user in the money with correct amount
 								for (var i = 0; i < tiedWinningUsers.length; i++) {
-					
 								var balanceRef = usersRef.child(tiedWinningUsers[i]).child("accountBalance");
 								balanceRef.once('value', function(balance){
-
 								var newBalance = balance.val() + prize;
 								balanceRef.set(newBalance);
-
-
-								
 							});
+
 
 						var notificationTiedRef = usersRef.child(tiedWinningUsers[i]).child("Notifications").child(scheduleDate).child(singleContest.key).child("StatusNotification");
 						var playerTiedRef = entriesRef.child(tiedWinningUsers[i]).child("StatusNotification");
@@ -186,7 +190,7 @@ contestsRef.once('value', function(allContests){
 					});
 
 
-
+				//award 10% from each viable contest to darkhorse account
 				firebaseDb.ref("DarkhorseBalance").once('value', function(darkhorseBalance){
 					var newDarkhorseBalance = darkhorseBalance.val() + ((singleContest.val().accepting * singleContest.val().entryAmnt) * 0.1);
 					firebaseDb.ref("DarkhorseBalance").set(newDarkhorseBalance);
@@ -195,11 +199,13 @@ contestsRef.once('value', function(allContests){
 				console.log("darkhorse gets " + (singleContest.val().accepting * singleContest.val().entryAmnt) * 0.1);
 
 
-				}else{
+				}
+				//refund all users their buy in if contest did not fill
+				else{
 					
 					var entryAmount = singleContest.val().entryAmnt;
 
-					//refund all users their buy in
+					
 					entries.forEach(function(singleEntry){
 
 						var contestNotificationRef = usersRef.child(singleEntry.key).child("Notifications").child(scheduleDate).child(singleContest.key).child("StatusNotification");
@@ -233,9 +239,12 @@ contestsRef.once('value', function(allContests){
 				});
 
 
+
 			});
 
+
 		});
+
 	}
 
 	Array.prototype.contains = function(obj) {
@@ -247,12 +256,22 @@ contestsRef.once('value', function(allContests){
     }
     return false;
 
+
+
+      
+
 //three closing tages for availablePlayers, reportedPlayers, comparative if statement
 }
 
+
+
 });
 
 });
+
+
+var serverTime = firebaseDb.ref('serverTime');
+serverTime.set(firebase.database.ServerValue.TIMESTAMP);
 
 }
 

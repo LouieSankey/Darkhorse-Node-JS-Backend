@@ -79,12 +79,19 @@ console.log(jsonData);
 
             }
 
-            
-                        
 
+                        setTimeout(function(){
+                    
                         var scoreContests = require("./calculateScores.js");
-
                         scoreContests.update(firebase, firebaseFormatDate);
+                        }, 30000);
+
+                      
+
+
+                         
+
+                  
 
 
         }
