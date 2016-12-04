@@ -28,8 +28,8 @@ var rawPlayersRef = firebaseDb.ref("RawPlayerData").child("Sheet 1");
 var nbaSchedule = firebaseDb.ref("2016Schedule");
 var availablePlayersRef = firebaseDb.ref("AvailablePlayers");
 
-// var serverTime = firebaseDb.ref('serverTime');
-// serverTime.set(firebase.database.ServerValue.TIMESTAMP);
+var serverTime = firebaseDb.ref('serverTime');
+serverTime.set(firebase.database.ServerValue.TIMESTAMP);
 
 
 var express = require('express');

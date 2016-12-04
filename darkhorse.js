@@ -23,7 +23,11 @@ var serverKey = 'AIzaSyDgYtB8klH4KbDgeml3YmzpAnhb2_m6Y8s';
 var fcm = new FCM(serverKey);
 var serverTimeRef = firebaseDb.ref("serverTime");
 
+var lastScheduleDate = null;
+
+
 serverTimeRef.on("value",  function (){
+
 
   var ScheduleDate = moment().utc().format('YYYY_MM_DD');
   var allContestsRef = firebaseDb.ref("Contests");
@@ -32,8 +36,10 @@ serverTimeRef.on("value",  function (){
 console.log(ScheduleDate);
 
 
-var contestListener = contestRef.once('value', function (refSnapshot){
+if(lastScheduleDate != ScheduleDate){
+contestRef.once('value', function (refSnapshot){
 
+    lastScheduleDate = ScheduleDate;
  
 
     if(!refSnapshot.hasChildren()){
@@ -318,6 +324,8 @@ contestRef.on('child_added', function (contestSnapshot) {
 
     }
 });
+
+}
 
 });
 
