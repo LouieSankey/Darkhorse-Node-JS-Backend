@@ -31,7 +31,7 @@ serverTimeRef.on("value",  function (){
 
 console.log(ScheduleDate);
 
-contestRef.on('value', function (refSnapshot){
+contestRef.once('value', function (refSnapshot){
 
     if(!refSnapshot.hasChildren()){
     
