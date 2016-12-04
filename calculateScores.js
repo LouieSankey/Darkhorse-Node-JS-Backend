@@ -1,12 +1,12 @@
 /*jslint node: true */
 'use strict';
 
-function update(firebase, scheduleDate){
+function update(firebaseDb, scheduleDate){
 
 
 var http = require('http');
 var moment =require('moment');
-var firebase = require("./node_modules/firebase");
+//var firebase = require("./node_modules/firebase");
 
 // http.createServer(function (req, res) {
 //   res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -22,8 +22,8 @@ var firebase = require("./node_modules/firebase");
 //in heroku scheduler will be after utc day changes so +1 day more than running during the day i.e. 282 for heroku 281 local/day time
 //leave set to heroku time
 
-var firebaseDb = firebase.database();
-var scheduleDate = moment().utc().subtract(1, 'days').format('YYYY_MM_DD');
+//var firebaseDb = firebase.database();
+//var scheduleDate = moment().utc().subtract(2, 'days').format('YYYY_MM_DD');
 
 console.log(scheduleDate);
 
@@ -124,9 +124,6 @@ contestsRef.once('value', function(allContests){
     			entryVS.forEach(function(opponent){
     				vsCounter++;
 
-    				
-    				console.log(opponent.val()[0].playerId);
-
     				if(opponent.val()[0].playerId != null){
 
 					playerStats.child(opponent.val()[0].playerId).once('value', function(oppStats){
@@ -136,8 +133,7 @@ contestsRef.once('value', function(allContests){
 
 					if(!oppStats.exists()){
 
-						   console.log("player is equal to null");
-
+						console.log("no opponent stats")
 
 			    			oppPts = 0;
 			    			oppReb = 0;
@@ -149,6 +145,8 @@ contestsRef.once('value', function(allContests){
     					
     				}else{
 
+    					console.log("found opp stats")
+
 							oppPts = oppStat.pts;
 			    			oppReb = oppStat.oreb + oppStat.dreb;
 			    			oppAst = oppStat.ast;
@@ -156,13 +154,19 @@ contestsRef.once('value', function(allContests){
 			    			oppBlk = oppStat.blk;
 			    			opp_3 = oppStat.fg3m;
 			    			oppTo = oppStat.to;
-    				}
+    				
 
 
 	    				for (var i = 0; i < opponent.val().length; i++) {
-	    				
+
 	    					var scoreRef = vsRef.child(opponent.key).child(i);
 	    					var scoreObject = opponent.val()[i];
+
+
+	    					if(!oppStats.exists){
+	    						scoreRef.child("totalScore").set(0);
+	    						
+	    					}else{
 
 
 ///begin switch statment
@@ -196,6 +200,8 @@ contestsRef.once('value', function(allContests){
 										++ptsScore;
 										++totalContestScore;
 									}	
+
+
 									
 
 							
@@ -356,6 +362,9 @@ contestsRef.once('value', function(allContests){
 							         
 								} //end switch statment
 
+							}
+						}
+
 	
 
 		    				} //end for loop
@@ -372,13 +381,6 @@ contestsRef.once('value', function(allContests){
     					contestsRef.child(singleContest.key).child("contestStatus").set("Results");
 
     			
-
-    					
-    					
-
-
-
-
 
 	    				});
 
@@ -422,10 +424,10 @@ contestsRef.once('value', function(allContests){
 });
 
 
-						setTimeout(function(){
-							var awardTokensAll = require("./awardTokensAll.js");
-							awardTokensAll.update(firebase, scheduleDate);
-						}, 30000);
+						// setTimeout(function(){
+						// 	var awardTokensAll = require("./awardTokensAll.js");
+						// 	awardTokensAll.update(firebase, scheduleDate);
+						// }, 30000);
 
               			
 

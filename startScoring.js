@@ -20,8 +20,8 @@ var firebaseDb = firebase.database();
 //in heroku SCHEDULER will be after utc day changes so +1 day more than running DURING THE DAY i.e. 282 for scheduler 281 for local/day time
 //leave set to scheduler time
 
-var firebaseFormatDate = moment().subtract(1, 'days').utc().format('YYYY_MM_DD');
-var httpDate = moment().utc().subtract(1, 'days').format('MM/DD/YYYY');
+var firebaseFormatDate = moment().subtract(10, 'days').utc().format('YYYY_MM_DD');
+var httpDate = moment().utc().subtract(10, 'days').format('MM/DD/YYYY');
 var PlayerStatsRef = firebaseDb.ref("PlayerStats");
 
 
@@ -44,13 +44,15 @@ request.post(
         if (!error && response.statusCode == 200) {
             
             var jsonData = JSON.parse(body);
-console.log(jsonData);
+
             for (var i = 0; i < jsonData.length; i++) {
                 var game_id = jsonData[i].id;
                 game_ids.push(game_id);
             }
 // create a new request for each of the game_ids
             for (var j =0; j < game_ids.length; j++) {
+
+
 
       request.post(
                 'http://api.probasketballapi.com/boxscore/player',
@@ -60,19 +62,23 @@ console.log(jsonData);
                  } },
 
                 function (error, response, body) {
+
                     
                     if (!error && response.statusCode == 200) {
+
                         var jsonArray = JSON.parse(body);
 
                         for (var i = 0; i < jsonArray.length; i++) {
+                            
                             var object = jsonArray[i];
-
                             PlayerStatsRef.child(firebaseFormatDate).child(object.player_id).set(object);
 
 
                         }
 
                             
+                    }else{
+                        console.log("error: " +error);
                     }
                 });
 
@@ -83,7 +89,7 @@ console.log(jsonData);
                         setTimeout(function(){
                     
                         var scoreContests = require("./calculateScores.js");
-                        scoreContests.update(firebase, firebaseFormatDate);
+                        scoreContests.update(firebaseDb, firebaseFormatDate);
                         }, 30000);
 
                       
