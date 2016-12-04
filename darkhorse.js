@@ -1,6 +1,5 @@
 function update(){
 
-  console.log("listening to new contest ");
 
 var http = require('http');
 var moment =require('moment');
@@ -26,11 +25,16 @@ var serverTimeRef = firebaseDb.ref("serverTime");
 
 serverTimeRef.on("value",  function (){
 
-  var ScheduleDate = moment().subtract('hours', 1).utc().format('YYYY_MM_DD');
+  var ScheduleDate = moment().utc().format('YYYY_MM_DD');
   var allContestsRef = firebaseDb.ref("Contests");
   var contestRef = allContestsRef.child(ScheduleDate);
 
 console.log(ScheduleDate);
+
+contestRef.on('value', function (refSnapshot){
+
+    if(!refSnapshot.hasChildren()){
+    
 
 //sets up to listen for new contests
 contestRef.on('child_added', function (contestSnapshot) {
@@ -307,6 +311,9 @@ contestRef.on('child_added', function (contestSnapshot) {
     });
 }, function (error) {
 
+});
+
+    }
 });
 
 });
