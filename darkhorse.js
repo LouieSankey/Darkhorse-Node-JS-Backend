@@ -31,7 +31,10 @@ serverTimeRef.on("value",  function (){
 
 console.log(ScheduleDate);
 
-contestRef.once('value', function (refSnapshot){
+
+var contestListener = contestRef.once('value', function (refSnapshot){
+
+ 
 
     if(!refSnapshot.hasChildren()){
     
