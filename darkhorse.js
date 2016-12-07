@@ -37,18 +37,21 @@ console.log(ScheduleDate);
 
 
 if(lastScheduleDate != ScheduleDate){
+  console.log("last and new schedule dates are different, hurray!")
 contestRef.once('value', function (refSnapshot){
 
     lastScheduleDate = ScheduleDate;
  
 
     if(!refSnapshot.hasChildren()){
+
+      console.log("the contest ref does not have children, hurray!");
     
 
 //sets up to listen for new contests
 contestRef.on('child_added', function (contestSnapshot) {
 
-      console.log("listening to new contest ");
+      console.log("listening to new contest, hurray!");
 
     var entries = contestRef.child(contestSnapshot.key).child("Entries");
     var playersInContest = [];

@@ -424,10 +424,10 @@ contestsRef.once('value', function(allContests){
 });
 
 
-						// setTimeout(function(){
-						// 	var awardTokensAll = require("./awardTokensAll.js");
-						// 	awardTokensAll.update(firebase, scheduleDate);
-						// }, 30000);
+						setTimeout(function(){
+							var awardTokensAll = require("./awardTokensAll.js");
+							awardTokensAll.update(firebaseDb, scheduleDate);
+						}, 60000);
 
               			
 

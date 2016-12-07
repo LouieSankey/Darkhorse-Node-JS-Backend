@@ -1,27 +1,27 @@
 /*jslint node: true */
 'use strict';
 
-function update(firebase, scheduleDate){
+function update(firebaseDb, scheduleDate){
 
 var http = require('http');
 var moment =require('moment');
-var firebase = require("./node_modules/firebase");
+//var firebase = require("./node_modules/firebase");
 
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello World\n');
-}).listen(process.env.PORT, '0.0.0.0');
+// http.createServer(function (req, res) {
+//   res.writeHead(200, {'Content-Type': 'text/plain'});
+//   res.end('Hello World\n');
+// }).listen(process.env.PORT, '0.0.0.0');
 
-firebase.initializeApp({
-  serviceAccount: "serviceAccountCredentials.json",
-  databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
-});
+// firebase.initializeApp({
+//   serviceAccount: "serviceAccountCredentials.json",
+//   databaseURL: "https://darkhorsefantasysports.firebaseio.com/"
+// });
 
 
-var scheduleDate = moment().utc().subtract(1, "days").format('YYYY_MM_DD');
+//var scheduleDate = moment().utc().subtract(1, "days").format('YYYY_MM_DD');
 console.log(scheduleDate);
 
-var firebaseDb = firebase.database();
+//var firebaseDb = firebase.database();
 
 
 var contestsRef = firebaseDb.ref('Contests').child(scheduleDate);
@@ -346,7 +346,8 @@ contestsRef.once('value', function(allContests){
     }
     return false;
 
-
+// var serverTime = firebaseDb.ref('serverTime');
+// serverTime.set(firebase.database.ServerValue.TIMESTAMP);
 
       
 
@@ -362,12 +363,11 @@ contestsRef.once('value', function(allContests){
 
 
 
-var serverTime = firebaseDb.ref('serverTime');
-serverTime.set(firebase.database.ServerValue.TIMESTAMP);
+
 
 }
 
-update();
+//update();
 
 
 module.exports.update = update;
