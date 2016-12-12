@@ -73,6 +73,8 @@ contestsRef.once('value', function(allContests){
 					var compareCount = 0;
 					var positionCount = 0;
 
+					var noStatsForPlayer = false;
+
 
 
 					entries.forEach(function(singleEntry){
@@ -83,6 +85,7 @@ contestsRef.once('value', function(allContests){
 
 
 						if(singleEntry.val().score_Total === 0){
+							noStatsForPlayer = true;
 
 						
 						contestNotificationRef.set("Pending");
@@ -147,7 +150,7 @@ contestsRef.once('value', function(allContests){
 
 						var playerName = singleEntry.key;
 
-						if(singleEntry.val().score_Total === 0){
+						if(noStatsForPlayer){
 
 						var contestNotificationRef = usersRef.child(singleEntry.key).child("Notifications").child(scheduleDate).child(singleContest.key).child("StatusNotification");
 						var contestPlayerNotificationRef = entriesRef.child(singleEntry.key).child("StatusNotification");
