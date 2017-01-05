@@ -28,8 +28,18 @@ var rawPlayersRef = firebaseDb.ref("RawPlayerData").child("Sheet 1");
 var nbaSchedule = firebaseDb.ref("2016Schedule");
 var availablePlayersRef = firebaseDb.ref("AvailablePlayers");
 
-var serverTime = firebaseDb.ref('serverTime');
-serverTime.set(firebase.database.ServerValue.TIMESTAMP);
+// var contestRef = firebaseDb.ref("Contests").child(firebaseFormatDate);
+// contestRef.once('value', function(snap){
+// 	if(!snap.exists()){
+// 		var serverTime = firebaseDb.ref('serverTime');
+// 		serverTime.set(firebase.database.ServerValue.TIMESTAMP);
+// 	}else{
+// 		console.log("no need to reset server time");
+// 	}
+
+// });
+
+
 
 
 var express = require('express');

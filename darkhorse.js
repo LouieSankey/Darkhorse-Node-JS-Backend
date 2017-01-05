@@ -37,6 +37,7 @@ console.log(ScheduleDate);
 
 
 if(lastScheduleDate != ScheduleDate){
+  
   console.log("last and new schedule dates are different, hurray!")
 contestRef.once('value', function (refSnapshot){
 
