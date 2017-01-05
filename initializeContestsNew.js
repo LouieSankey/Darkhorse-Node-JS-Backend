@@ -112,7 +112,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 														"Entries": "",
 														"gameTypeShort": "1 on 1 Tourney",
-														"gameType": " NBA 10 Token 1 on 1 Tournement " + gameTimes[i],
+														"gameType": " NBA 10 Token 1 on 1 Tournement ",
 														"scoring": "[Double-Up]",
 														"positionsPaid": 4,
 					    								"entryAmnt": 10,
@@ -132,7 +132,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 														"Entries": "",
 														"gameTypeShort": "1 on 1 Tourney",
-														"gameType": " NBA 10 Token 1 on 1 Tournement " + gameTimes[i],
+														"gameType": " NBA 10 Token 1 on 1 Tournement ",
 														"scoring": "[Double-Up]",
 														"positionsPaid": 4,
 					    								"entryAmnt": 20,
@@ -156,7 +156,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 														"Entries": "",
 														"gameTypeShort": "1 on 1 Tourney",
-														"gameType": " NBA 20 Token 1 on 1 Tournement " + gameTimes[i],
+														"gameType": " NBA 20 Token 1 on 1 Tournement ",
 														"scoring": "[Double-Up]",
 														"positionsPaid": 3,
 					    								"entryAmnt": 20,
@@ -177,7 +177,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 														"Entries": "",
 														"gameTypeShort": "1 on 1 Tourney",
-														"gameType": " NBA 20 Token 1 on 1 Tournement " + gameTimes[i],
+														"gameType": " NBA 20 Token 1 on 1 Tournement ",
 														"scoring": "[Double-Up]",
 														"positionsPaid": 3,
 					    								"entryAmnt": 20,
@@ -197,7 +197,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 														"Entries": "",
 														"gameTypeShort": "1 on 1 Tourney",
-														"gameType": " NBA 20 Token 1 on 1 Tournement " + gameTimes[i],
+														"gameType": " NBA 20 Token 1 on 1 Tournement ",
 														"scoring": "[Double-Up]",
 														"positionsPaid": 2,
 					    								"entryAmnt": 20,
@@ -215,7 +215,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 														"Entries": "",
 														"gameTypeShort": "1 on 1 Tourney",
-														"gameType": " NBA 20 Token 1 on 1 Tournement " + gameTimes[i],
+														"gameType": " NBA 20 Token 1 on 1 Tournement ",
 														"scoring": "[Double-Up]",
 														"positionsPaid": 2,
 					    								"entryAmnt": 20,
@@ -234,7 +234,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 														"Entries": "",
 														"gameTypeShort": "1 on 1",
-														"gameType": " NBA 20 Token 1 on 1 " + gameTimes[i],
+														"gameType": " NBA 20 Token 1 on 1 ",
 														"scoring": "[H2H]",
 														"positionsPaid": 1,
 					    								"entryAmnt": 20,
@@ -254,7 +254,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 														"Entries": "",
 														"gameTypeShort": "1 on 1",
-														"gameType": " NBA 20 Token 1 on 1 " + gameTimes[i],
+														"gameType": " NBA 20 Token 1 on 1 ",
 														"scoring": "[H2H]",
 														"positionsPaid": 1,
 					    								"entryAmnt": 20,
@@ -273,7 +273,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 														"Entries": "",
 														"gameTypeShort": "1 on 1",
-														"gameType": " NBA 30 Token 1 on 1 " + gameTimes[i],
+														"gameType": " NBA 30 Token 1 on 1 ",
 														"scoring": "[H2H]",
 														"positionsPaid": 1,
 					    								"entryAmnt": 30,
@@ -291,7 +291,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 														"Entries": "",
 														"gameTypeShort": "1 on 1",
-														"gameType": " NBA 30 Token 1 on 1 " + gameTimes[i],
+														"gameType": " NBA 30 Token 1 on 1 ",
 														"scoring": "[H2H]",
 														"positionsPaid": 1,
 					    								"entryAmnt": 30,
