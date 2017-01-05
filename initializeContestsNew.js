@@ -19,7 +19,7 @@ var firebaseDb = firebase.database();
 var schedule = firebaseDb.ref('2016DatedSchedule');
 var contestsRef = firebaseDb.ref("Contests");
 var userRef = firebaseDb.ref("Users");
-var formattedScheduleDate = moment().add(0, 'days').utc().format('YYYY_MM_DD');
+var formattedScheduleDate = moment().add(1, 'days').utc().format('YYYY_MM_DD');
 var contestsKey = firebaseDb.ref("ContestsKey");
 
 
