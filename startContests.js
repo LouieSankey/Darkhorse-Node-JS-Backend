@@ -17,7 +17,7 @@ firebase.initializeApp({
 });
 
 
-var ScheduleDate = moment().add(1, 'hours').utc();
+var ScheduleDate = moment().add(1, 'days').utc();
 
 var date = ScheduleDate.format('MMMM D, YYYY');
 var firebaseFormatDate = ScheduleDate.format('YYYY_MM_DD');

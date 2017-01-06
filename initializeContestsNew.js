@@ -2,7 +2,7 @@ function update(firebase){
 
 var http = require('http');
 var moment =require('moment');
-var firebase = require("./node_modules/firebase");
+//var firebase = require("./node_modules/firebase");
 
 // http.createServer(function (req, res) {
 //   res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -19,7 +19,7 @@ var firebaseDb = firebase.database();
 var schedule = firebaseDb.ref('2016DatedSchedule');
 var contestsRef = firebaseDb.ref("Contests");
 var userRef = firebaseDb.ref("Users");
-var formattedScheduleDate = moment().add(1, 'days').utc().format('YYYY_MM_DD');
+var formattedScheduleDate = moment().utc().format('YYYY_MM_DD');
 var contestsKey = firebaseDb.ref("ContestsKey");
 
 
@@ -341,7 +341,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 }
 
-update();
+//update();
 
 
 module.exports.update = update;
