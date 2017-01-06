@@ -17,7 +17,7 @@ firebase.initializeApp({
 });
 
 
-var ScheduleDate = moment().utc();
+var ScheduleDate = moment().add(1, 'hours').utc();
 
 var date = ScheduleDate.format('MMMM D, YYYY');
 var firebaseFormatDate = ScheduleDate.format('YYYY_MM_DD');
@@ -219,7 +219,7 @@ nbaSchedule.on('value', function (snapshot){
 
 
 
-var initializeContests = require("./getContestsFromSchedule.js");
+var initializeContests = require("./initializeContestsNew.js");
 initializeContests.update(firebase);
 
 
