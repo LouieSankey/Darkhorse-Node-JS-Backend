@@ -29,7 +29,7 @@ var lastScheduleDate = null;
 serverTimeRef.on("value",  function (){
 
 
-  var ScheduleDate = moment().utc().format('YYYY_MM_DD');
+  var ScheduleDate = moment().add(1, 'days').utc().format('YYYY_MM_DD');
   var allContestsRef = firebaseDb.ref("Contests");
   var contestRef = allContestsRef.child(ScheduleDate);
 

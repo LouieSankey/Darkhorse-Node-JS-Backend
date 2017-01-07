@@ -19,7 +19,7 @@ var firebaseDb = firebase.database();
 var schedule = firebaseDb.ref('2016DatedSchedule');
 var contestsRef = firebaseDb.ref("Contests");
 var userRef = firebaseDb.ref("Users");
-var formattedScheduleDate = moment().utc().add(1, 'days').format('YYYY_MM_DD');
+var formattedScheduleDate = moment().utc().format('YYYY_MM_DD');
 var contestsKey = firebaseDb.ref("ContestsKey");
 
 
@@ -94,7 +94,7 @@ schedule.child(formattedScheduleDate).once('value', function (snapshot){
 
 									//these two variables are the same but formatted differently
 									//need to add 24 + 5 hours for next day contests plus utc time difference
-									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().add(29, 'hours').valueOf();
+									var buyingPeriodEnds = moment(gameTimes[i], 'HH:mm A').utc().add(24 + 5, 'hours').valueOf();
 
 
 											//if(loopsCompleted < 2){

@@ -19,7 +19,7 @@ firebase.initializeApp({
 
 var ScheduleDate = moment().utc();
 
-var date = ScheduleDate.format('MMMM D, YYYY');
+var date = ScheduleDate.add(1, "days").format('MMMM D, YYYY');
 var firebaseFormatDate = ScheduleDate.format('YYYY_MM_DD');
 console.log(firebaseFormatDate);
 
