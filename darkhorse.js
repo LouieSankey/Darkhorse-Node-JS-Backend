@@ -44,7 +44,7 @@ contestRef.once('value', function (refSnapshot){
     lastScheduleDate = ScheduleDate;
  
 
-    if(!refSnapshot.hasChildren()){
+    //if(!refSnapshot.hasChildren()){
 
       console.log("the contest ref does not have children, hurray!");
     
@@ -326,7 +326,7 @@ contestRef.on('child_added', function (contestSnapshot) {
 
 });
 
-    }
+    //}
 });
 
 }
